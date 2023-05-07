@@ -1,0 +1,112 @@
+<!-- {
+  "imageId": "unique_identifier",
+  "imageName": "Image Name",
+  "imageDescription": "Image Description",
+  "imageUrl": "https://example.com/image.jpg",
+  "imageCategory": "Wildlife/Portrait/Landscape/",
+  This can also be a theme name that includes fpr example: Winter 2023: Predators, Raptors & Reptiles
+  OR
+Spring 2023 - Grazers and Browsers
+  "imageLocation": "Location",
+  "imageTags": ["tag1", "tag2", "tag3"],
+  "imageOwner": "User ID",
+  "imageStatus": "pending",
+  "imageVotes": 0,
+  "imageLikes": 0,
+  "imageViews": 0,
+  "imageUploadDate": Timestamp,
+  "imageUpdateDate": Timestamp,
+ 
+} -->
+
+<!-- Maybe not needed - nice to have -->
+<!--  "imageMetadata": {
+     "cameraSettings": "Settings",
+     "exposure": "Exposure",
+     "aperture": "Aperture"
+  } -->
+
+<!-- USERS  (image uploader for competition)-->
+<!-- {
+  "userId": "unique_identifier",
+  "firstName": "Jane",
+  "lastName": "Tarzan",
+  "email": "jt@user.com",
+  "password": "hashed_password",
+  "profilePicture": "https://example.com/profile.jpg",
+  "registrationDate": Timestamp,
+  "status": "active",
+  "role": "user"
+} -->
+
+<!-- Judges (judging images) -->
+<!--   "judgeId": "unique_identifier",
+  "firstName": "Jane",
+  "lastName": "Smith",
+  "email": "janesmith@example.com",
+  "password": "hashed_password",
+  "profilePicture": "https://example.com/profile.jpg",
+  "registrationDate": Timestamp,
+  "status": "active",
+  "role": "judge" -->
+
+<!-- Image Scored/Voted For -->
+<!-- {
+  "judgeId": "unique_identifier",
+  "imageId": "unique_identifier",
+  "voteScore": 8,
+  "voteComment": "Great composition and lighting!"
+} -->
+<!-- OR
+{
+  "imageId": "unique_identifier",
+  "imageName": "Image Name",
+  "imageDescription": "Image Description",
+  "imageUrl": "https://example.com/image.jpg",
+  "imageCategory": "Wildlife",
+  "imageLocation": "Location",
+  "imageTags": ["tag1", "tag2", "tag3"],
+  "imageOwner": "User ID",
+  "imageStatus": "pending",
+  "imageVotes": [
+    {
+      "userId": "unique_identifier",
+      "voteScore": 1, id score is 0 || 1
+      "voteComment": "Great composition and lighting!"
+    },
+    {
+      "userId": "unique_identifier",
+      "voteScore": 7, (if score is from 1-10)
+      "voteComment": "Nice shot, but could be sharper."
+    }
+  ],
+  "imageLikes": 10,
+  "imageViews": 100,
+  "imageUploadDate": Timestamp,
+}
+
+-->
+
+<!-- Photography Prizes!!
+
+"prizes": [
+    {
+      "place": 1,
+      "prizeType": "Safari",
+      "prizeLocation": "Location of 1st prize safari",
+      "prizeDetails": "Details of 1st prize safari"
+    },
+    {
+      "place": 2,
+      "prizeType": "Safari",
+      "prizeLocation": "Location of 2nd prize safari",
+      "prizeDetails": "Details of 2nd prize safari"
+    },
+    {
+      "place": 3,
+      "prizeType": "Stay",
+      "prizeLocation": "Location of 3rd prize stay",
+      "prizeDetails": "Details of 3rd prize stay"
+    }
+  ]
+-->
