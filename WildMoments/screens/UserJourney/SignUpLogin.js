@@ -11,6 +11,8 @@ import { Alegreya } from "@expo-google-fonts/dev";
 import { Inter } from "@expo-google-fonts/dev";
 import { Roboto } from "@expo-google-fonts/dev";
 
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
+
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
@@ -38,31 +40,41 @@ const SignUpLogin = () => {
                         style={styles.logo}>
                     </Image>
 
-                    <Text style={styles.Intro}>
-                        Celebrating Wildlife Through Photography
-                    </Text>
+                    <View style={{ marginTop: 20 }}>
+                        <Text style={styles.Intro}>
+                            Celebrating Wildlife Through Photography
+                        </Text>
 
-                    <Text style={styles.heading} >
-                        FRAME THE UNTAMED
-                    </Text>
-                    <Image source={require("../../assets/line.png")}
-                        style={styles.horisontalLine}>
-                    </Image>
-                    <Text style={styles.exploreCaptureShare}>
-                        Explore  Capture  Share
-                    </Text>
+
+                    </View>
+
+                    <View style={{ marginTop: 20 }}>
+                        <Text style={styles.heading} >
+                            FRAME THE UNTAMED
+                        </Text>
+                        <Image source={require("../../assets/line.png")}
+                            style={styles.horisontalLine}>
+                        </Image>
+                        <Text style={styles.exploreCaptureShare}>
+                            Explore  Capture  Share
+                        </Text>
+                    </View>
 
 
 
                     <View style={styles.butonContainer}>
 
                         <TouchableOpacity activeOpacity={0.2} style={styles.signUpButton}>
-
+                            <View >
+                                <Text style={styles.signUpButtonText}>Sign  Up</Text>
+                            </View>
                         </TouchableOpacity >
 
-                        <TouchableOpacity activeOpacity={0.2} style={styles.loginButton}>
-                            <View style={{ textAlign: 'center', padding: 7, marginTop: -2 }}>
-                                <Text>Sign  Up</Text>
+                        <View style={{ height: RFPercentage(3) }}></View>
+
+                        <TouchableOpacity activeOpacity={0.2} style={styles.signInButton}>
+                            <View >
+                                <Text style={styles.signInButtonText}>Sign In</Text>
                             </View>
                         </TouchableOpacity>
 
@@ -70,7 +82,7 @@ const SignUpLogin = () => {
 
 
                 </View>
-            </ImageBackground>
+            </ImageBackground >
         )
     }
 
@@ -94,31 +106,77 @@ const styles = StyleSheet.create({
         height: windowHeight,
     },
     heading: {
+        marginTop: RFPercentage(3),
         fontFamily: 'RobotoBold',
-        fontSize: 17,
+        fontSize: RFPercentage(3),
         fontWeight: 900,
         textAlign: 'center',
         marginBottom: 20,
         marginTop: 20,
     },
     logo: {
-        height: 50,
-        width: 80,
+        height: RFPercentage(15),
+        width: RFPercentage(24),
         alignSelf: 'center',
         marginBottom: 20,
 
         resizeMode: 'cover',
     },
+    Intro: {
+        color: '#A27A51',
+    },
     horisontalLine: {
         width: 90,
         height: 1,
+        justifyContent: 'center',
+        alignContent: 'center',
+        alignSelf: 'center'
     },
     exploreCaptureShare: {
         marginTop: 10,
-        fontSize: 14,
+        fontSize: RFPercentage(4),
         fontWeight: 'bold',
     },
-    buttonContainer: {
-        marginTop: 20,
+    butonContainer: {
+        marginTop: 80,
+        // display: 'flex',
+        // flexDirection: 'row',
+        // flexWrap: 'wrap'
+        // display: 'flex',
+        // flexDirection: 'column',
+        // flexWrap: 'wrap'
+    },
+    signInButton: {
+        borderRadius: 50,
+        shadowColor: 'gray',
+        shadowRadius: RFPercentage(8),
+        backgroundColor: '#A27A51',
+        position: 'relative',
+        height: RFPercentage(8),
+        width: RFPercentage(16),
+    },
+    signInButtonText: {
+        textAlign: 'center',
+
+        padding: RFPercentage(2),
+        fontSize: RFPercentage(3),
+    },
+    signUpButton: {
+        borderRadius: 50,
+        shadowColor: 'gray',
+        shadowRadius: RFPercentage(8),
+        height: RFPercentage(8),
+        width: RFPercentage(16),
+        borderWidth: 1,
+        borderColor: '#F2C440',
+        borderStyle: 'dashed',
+        position: 'relative',
+
+    },
+    signUpButtonText: {
+        textAlign: 'center',
+
+        padding: RFPercentage(1.9),
+        fontSize: RFPercentage(3),
     }
 })
