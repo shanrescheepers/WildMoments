@@ -26,7 +26,7 @@ const windowHeight = Dimensions.get('window').height;
 
 
 const Login = () => {
-
+    // Sound
     const [sound, setSound] = React.useState();
 
     async function playSound() {
