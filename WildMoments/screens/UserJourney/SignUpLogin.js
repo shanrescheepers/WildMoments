@@ -52,24 +52,21 @@ const SignUpLogin = () => {
                         Explore  Capture  Share
                     </Text>
 
-                     
-                    
-                        <View style={styles.bu
-                            tonContainer}>
 
-                                <Touchabl eOpa c ity activeOpacity={0.2} style={styles.signUpButton}>
-                            <View  style={{ textAlign: 'center', padding: 7, marginTop: -2 }}>
-                                <Text>Sign  Up</Text>
-    w>
-    </TouchableOpacity>
+
+                    <View style={styles.butonContainer}>
+
+                        <TouchableOpacity activeOpacity={0.2} style={styles.signUpButton}>
+
+                        </TouchableOpacity >
 
                         <TouchableOpacity activeOpacity={0.2} style={styles.loginButton}>
-                            <View  style={{ textAlign: 'center', padding: 7, marginTop: -2 }}>
+                            <View style={{ textAlign: 'center', padding: 7, marginTop: -2 }}>
                                 <Text>Sign  Up</Text>
                             </View>
                         </TouchableOpacity>
-      
-                    </View >  
+
+                    </View >
 
 
                 </View>
@@ -80,43 +77,43 @@ const SignUpLogin = () => {
 }
 export default SignUpLogin
 
-    // styling component
-    
-    yles = StyleSheet.create({
-    
-    ainer: {
-    margin: 20,
+
+
+const styles = StyleSheet.create({
+
+    container: {
+        margin: 20,
         marginTop: 32,
         justifyContent: 'center',
-    alignItems: 'center',
-    
-    ground: {
+        alignItems: 'center',
+    },
+    background: {
 
         resizeMode: 'contain', // or 'contain' to maintain aspect ratio
-    width: windowWidth,
-    height: windowHeight,
-    
-    ing: {
-    fontFamily: 'RobotoBold',
-    fontSize: 17,
-    fontWeight: 900,
+        width: windowWidth,
+        height: windowHeight,
+    },
+    heading: {
+        fontFamily: 'RobotoBold',
+        fontSize: 17,
+        fontWeight: 900,
         textAlign: 'center',
-    marginBottom: 20,
-    marginTop: 20,
-    
-    : {
-        height: 50,
-    width: 80,
-    alignSelf: 'center',
         marginBottom: 20,
-    
-    resizeMode: 'cover',
-},
+        marginTop: 20,
+    },
+    logo: {
+        height: 50,
+        width: 80,
+        alignSelf: 'center',
+        marginBottom: 20,
+
+        resizeMode: 'cover',
+    },
     horisontalLine: {
-    width: 90,
-    height: 1,
-    
-exploreCaptureShare: {
+        width: 90,
+        height: 1,
+    },
+    exploreCaptureShare: {
         marginTop: 10,
         fontSize: 14,
         fontWeight: 'bold',
