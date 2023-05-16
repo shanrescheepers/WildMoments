@@ -3,6 +3,7 @@ import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { SplashScreen } from 'expo';
 import SignUpLogin from './screens/UserJourney/SignUpLogin';
 import SignUp from './screens/UserJourney/SignUp';
+import Login from './screens/UserJourney/Login';
 export default function App() {
 
   // // Prevent the app from rendering until the splash screen is hidden
@@ -24,7 +25,8 @@ export default function App() {
 
     <SafeAreaView>
       {/* <SignUpLogin /> */}
-      <SignUp />
+      {/* <SignUp /> */}
+      <Login />
     </SafeAreaView>
   );
 }
