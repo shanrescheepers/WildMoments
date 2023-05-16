@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { SplashScreen } from 'expo';
 import SignUpLogin from './screens/UserJourney/SignUpLogin';
-
+import SignUp from './screens/UserJourney/SignUp';
 export default function App() {
 
   // // Prevent the app from rendering until the splash screen is hidden
@@ -23,7 +23,8 @@ export default function App() {
     // </View>
 
     <SafeAreaView>
-      <SignUpLogin />
+      {/* <SignUpLogin /> */}
+      <SignUp />
     </SafeAreaView>
   );
 }
