@@ -15,6 +15,8 @@ import { Roboto } from "@expo-google-fonts/dev";
 
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
+import { registerNewUser } from '../../services/firebaseAuth';
+
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
@@ -33,6 +35,12 @@ const SignUp = ({ navigation }) => {
     const [password, setPassword] = useState('')
     const [username, setUsername] = useState('')
 
+    const registerUser = () => {
+        console.log("REgistering");
+        console.log(email)
+        registerNewUser(email, password);
+
+    }
     return (
         <SafeAreaView>
             <ImageBackground
@@ -88,7 +96,7 @@ const SignUp = ({ navigation }) => {
 
                     <View>
                         {/* Validation here */}
-                        <TouchableOpacity style={styles.submitButton}>
+                        <TouchableOpacity style={styles.submitButton} onPress={registerUser}>
                             <Text style={styles.submitButtonText}>Create Account</Text>
                         </TouchableOpacity>
 

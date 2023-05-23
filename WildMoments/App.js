@@ -14,13 +14,27 @@ import RulesScreen from './screens/UserJourney/RulesScreen';
 import GalleryScreen from './screens/UserJourney/GalleryScreen';
 import ImagesVotingScreen from './screens/UserJourney/ImagesVotingScreen';
 import HomeTab from './navigators/HomeTab';
+import { useEffect, useState } from 'react';
+import { onAuthStateChanged } from 'firebase/auth';
+import { set } from 'react-hook-form';
+import { auth } from './firebase';
 
 // for each nav header that we have, we need to go create it
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const loggedIn = true;
-
+  const [loggedIn, setLoggedIn] = useState(false);
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // use logged in
+        setLoggedIn(true)
+      } else {
+        setLoggedIn(false)
+      }
+    })
+    return unsubscribe;
+  }, [])
   return (
     // <View style={styles.container}>
     //   <Text>Open up App.js to start working on your app!</Text>

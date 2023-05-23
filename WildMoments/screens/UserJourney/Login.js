@@ -2,7 +2,7 @@ import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { useState, useEffect } from 'react';
 import { globalStylesheet, TextInput, TouchableOpacity, Button, Image } from 'react-native';
-import { SafeAreaView, StyleSheet, Text, View, ImageBackground } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, ImageBackground, Alert, ActivityIndicator } from 'react-native';
 // import { styles } from '../utils/styles';
 
 import { Dimensions } from 'react-native';
@@ -17,6 +17,8 @@ import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 // sound click
 import { Audio } from 'expo-av';
+import { signInUser } from '../../services/firebaseAuth';
+import { async } from '@firebase/util';
 // import dings from '../../soundEffects/btn1.mp3';
 
 
@@ -37,6 +39,7 @@ const Login = ({ navigation }) => {
 
         console.log('Playing Sound');
         await sound.playAsync();
+        logOn();
     }
 
     React.useEffect(() => {
@@ -57,12 +60,27 @@ const Login = ({ navigation }) => {
         'RobotoBold': require('../../fonts/Roboto-Bold.ttf'),
     });
 
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [username, setUsername] = useState('')
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [username, setUsername] = useState('');
+    const [loading, setLoading] = useState(false);
 
-    // sound click
+    const logOn = async () => {
+        setLoading(true);
+        if (!email || !password) {
+            //warning alert
+            Alert.alert("Try again", "Please fill in your email and password.", [
+                { text: 'Try Again', onPress: () => { setLoading(false) } }
+            ])
+        } else {
+            await signInUser(email, password)
+            setLoading(false)
+            // auth call
 
+            //success alert
+
+        }
+    }
 
     return (
         <SafeAreaView>
@@ -110,12 +128,14 @@ const Login = ({ navigation }) => {
                             onChangeText={newValue => setPassword(newValue)}
                         ></TextInput>
                     </View>
-
-                    {/* Validation here */}
-                    <TouchableOpacity style={styles.submitButton} onPress={playSound} >
-                        <Text style={styles.submitButtonText}>Log In</Text>
-                    </TouchableOpacity>
-
+                    {!loading ? (
+                        <View>
+                            {/* Validation here */}
+                            < TouchableOpacity style={styles.submitButton} onPress={playSound} >
+                                <Text style={styles.submitButtonText}>Log In</Text>
+                            </TouchableOpacity>
+                        </View>
+                    ) : <ActivityIndicator animating={loading} size={40} />}
 
 
                     <TouchableOpacity onPress={() => navigation.navigate('SignUp')} style={styles.needAccountButton}>
@@ -124,7 +144,7 @@ const Login = ({ navigation }) => {
 
                 </View >
             </ImageBackground>
-        </SafeAreaView>
+        </SafeAreaView >
     );
 }
 // Exporting the components
