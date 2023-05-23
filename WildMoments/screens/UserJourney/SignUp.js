@@ -34,77 +34,79 @@ const SignUp = ({ navigation }) => {
     const [username, setUsername] = useState('')
 
     return (
-        <ImageBackground
-            source={require('../../assets/backgroundImage.png')} // Replace with the actual path to your image
-            style={styles.background}
-        >
-            <View style={styles.container}>
-                <Image source={require("../../assets/log.png")} style={styles.logo}></Image>
+        <SafeAreaView>
+            <ImageBackground
+                source={require('../../assets/backgroundImage.png')} // Replace with the actual path to your image
+                style={styles.background}
+            >
+                <View style={styles.container}>
+                    <Image source={require("../../assets/log.png")} style={styles.logo}></Image>
 
-                <View style={styles.introView}>
-                    <Text style={styles.Intro}>
-                        Celebrating Wildlife Through Photography
-                    </Text>
-                    <Text style={styles.enterDetailsText}>Enter your details below & join the Ultimate Wildlife Photo Competition</Text>
-                </View>
+                    <View style={styles.introView}>
+                        <Text style={styles.Intro}>
+                            Celebrating Wildlife Through Photography
+                        </Text>
+                        <Text style={styles.enterDetailsText}>Enter your details below & join the Ultimate Wildlife Photo Competition</Text>
+                    </View>
 
 
 
-                <View style={styles.inputView}>
-                    <Text style={styles.inputLabel}>Username</Text>
-                    <TextInput
-                        style={styles.inputStyle}
-                        keyboardType='default'
-                        placeholder='John Doe'
-                        placeholderTextColor='#554433'
-                        defaultValue={username}
-                        onChangeText={newValue => setUsername(newValue)}
-                    >
-                    </TextInput>
+                    <View style={styles.inputView}>
+                        <Text style={styles.inputLabel}>Username</Text>
+                        <TextInput
+                            style={styles.inputStyle}
+                            keyboardType='default'
+                            placeholder='John Doe'
+                            placeholderTextColor='#554433'
+                            defaultValue={username}
+                            onChangeText={newValue => setUsername(newValue)}
+                        >
+                        </TextInput>
 
-                    <Text style={styles.inputLabel}>Email</Text>
-                    <TextInput
-                        style={styles.inputStyle}
-                        keyboardType='email-address'
-                        placeholder='john@mail.com'
-                        placeholderTextColor='#554433'
-                        defaultValue={email}
-                        onChangeText={newValue => setEmail(newValue)}
-                    >
-                    </TextInput>
+                        <Text style={styles.inputLabel}>Email</Text>
+                        <TextInput
+                            style={styles.inputStyle}
+                            keyboardType='email-address'
+                            placeholder='john@mail.com'
+                            placeholderTextColor='#554433'
+                            defaultValue={email}
+                            onChangeText={newValue => setEmail(newValue)}
+                        >
+                        </TextInput>
 
-                    <Text style={styles.inputLabel}>Password</Text>
-                    <TextInput
-                        style={styles.inputStyle}
-                        keyboardType='default'
-                        secureTextEntry={true} //great way to show/hide password
-                        placeholder='Minumim 6 characters'
-                        placeholderTextColor='#554433'
-                        defaultValue={password}
-                        onChangeText={newValue => setPassword(newValue)}
-                    ></TextInput>
-                </View>
+                        <Text style={styles.inputLabel}>Password</Text>
+                        <TextInput
+                            style={styles.inputStyle}
+                            keyboardType='default'
+                            secureTextEntry={true} //great way to show/hide password
+                            placeholder='Minumim 6 characters'
+                            placeholderTextColor='#554433'
+                            defaultValue={password}
+                            onChangeText={newValue => setPassword(newValue)}
+                        ></TextInput>
+                    </View>
 
-                <View>
-                    {/* Validation here */}
-                    <TouchableOpacity style={styles.submitButton}>
-                        <Text style={styles.submitButtonText}>Create Account</Text>
-                    </TouchableOpacity>
+                    <View>
+                        {/* Validation here */}
+                        <TouchableOpacity style={styles.submitButton}>
+                            <Text style={styles.submitButtonText}>Create Account</Text>
+                        </TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-                        <Text style={styles.needAccountButton}>Already have an Account?</Text>
-                    </TouchableOpacity>
-                </View>
+                        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                            <Text style={styles.needAccountButton}>Already have an Account?</Text>
+                        </TouchableOpacity>
+                    </View>
 
-                {/* <Toucha
+                    {/* <Toucha
                 <Button style={styles.needAccountButton}
                     title="Need an account?" color={'black'}>
 
                 </Button> */}
 
 
-            </View >
-        </ImageBackground>
+                </View >
+            </ImageBackground>
+        </SafeAreaView>
     );
 }
 // Exporting the components

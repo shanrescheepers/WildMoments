@@ -32,65 +32,67 @@ const SignUpLogin = ({ navigation }) => {
     } else {
         return (
 
-            <ImageBackground
-                source={require('../../assets/backgroundImage.png')} // Replace with the actual path to your image
-                style={styles.background}
-            >
-                <View style={styles.container}>
-                    <Image source={require("../../assets/log.png")}
-                        style={styles.logo}>
-                    </Image>
-
-                    <View style={{ marginTop: 20 }}>
-                        <Text style={styles.Intro}>
-                            Celebrating Wildlife Through Photography
-                        </Text>
-
-
-                    </View>
-
-                    <View style={{ marginTop: 20 }}>
-                        <Text style={styles.heading} >
-                            FRAME THE UNTAMED
-                        </Text>
-                        <Image source={require("../../assets/line.png")}
-                            style={styles.horisontalLine}>
+            <SafeAreaView>
+                <ImageBackground
+                    source={require('../../assets/backgroundImage.png')} // Replace with the actual path to your image
+                    style={styles.background}
+                >
+                    <View style={styles.container}>
+                        <Image source={require("../../assets/log.png")}
+                            style={styles.logo}>
                         </Image>
-                        <Text style={styles.exploreCaptureShare}>
-                            Explore  Capture  Share
-                        </Text>
+
+                        <View style={{ marginTop: 20 }}>
+                            <Text style={styles.Intro}>
+                                Celebrating Wildlife Through Photography
+                            </Text>
+
+
+                        </View>
+
+                        <View style={{ marginTop: 20 }}>
+                            <Text style={styles.heading} >
+                                FRAME THE UNTAMED
+                            </Text>
+                            <Image source={require("../../assets/line.png")}
+                                style={styles.horisontalLine}>
+                            </Image>
+                            <Text style={styles.exploreCaptureShare}>
+                                Explore  Capture  Share
+                            </Text>
+                        </View>
+
+
+
+                        <View style={styles.butonContainer}>
+                            {/* Button to Navigation to Signup */}
+                            <TouchableOpacity activeOpacity={0.2}
+                                style={styles.signUpButton}
+                                onPress={() => navigation.navigate('SignUp')}
+                            >
+                                <View >
+                                    <Text style={styles.signUpButtonText}>Sign Up</Text>
+                                </View>
+                            </TouchableOpacity >
+
+                            <View style={{ height: RFPercentage(3) }}></View>
+
+                            {/* Button to Navigation to Login */}
+                            <TouchableOpacity activeOpacity={0.2}
+                                style={styles.signInButton}
+                                onPress={() => navigation.navigate('Login')}
+                            >
+                                <View >
+                                    <Text style={styles.signInButtonText}>Login</Text>
+                                </View>
+                            </TouchableOpacity>
+
+                        </View >
+
+
                     </View>
-
-
-
-                    <View style={styles.butonContainer}>
-                        {/* Button to Navigation to Signup */}
-                        <TouchableOpacity activeOpacity={0.2}
-                            style={styles.signUpButton}
-                            onPress={() => navigation.navigate('SignUp')}
-                        >
-                            <View >
-                                <Text style={styles.signUpButtonText}>Sign Up</Text>
-                            </View>
-                        </TouchableOpacity >
-
-                        <View style={{ height: RFPercentage(3) }}></View>
-
-                        {/* Button to Navigation to Login */}
-                        <TouchableOpacity activeOpacity={0.2}
-                            style={styles.signInButton}
-                            onPress={() => navigation.navigate('Login')}
-                        >
-                            <View >
-                                <Text style={styles.signInButtonText}>Login</Text>
-                            </View>
-                        </TouchableOpacity>
-
-                    </View >
-
-
-                </View>
-            </ImageBackground >
+                </ImageBackground >
+            </SafeAreaView>
         )
     }
 

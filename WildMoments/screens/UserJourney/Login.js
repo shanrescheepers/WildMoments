@@ -65,65 +65,66 @@ const Login = ({ navigation }) => {
 
 
     return (
-        <ImageBackground
-            source={require('../../assets/backgroundImage.png')} // Replace with the actual path to your image
-            style={styles.background}
-        >
-            <View style={styles.container}>
-                <Image source={require("../../assets/log.png")} style={styles.logo}></Image>
+        <SafeAreaView>
+            <ImageBackground
+                source={require('../../assets/backgroundImage.png')} // Replace with the actual path to your image
+                style={styles.background}
+            >
+                <View style={styles.container}>
+                    <Image source={require("../../assets/log.png")} style={styles.logo}></Image>
 
-                <View style={styles.introView}>
-                    <Text style={styles.Intro}>
-                        Celebrating Wildlife Through Photography
-                    </Text>
-                    <Text style={styles.enterDetailsText}>Enter your details below to continue your Ultimate Wildlife Photo Competition journey</Text>
+                    <View style={styles.introView}>
+                        <Text style={styles.Intro}>
+                            Celebrating Wildlife Through Photography
+                        </Text>
+                        <Text style={styles.enterDetailsText}>Enter your details below to continue your Ultimate Wildlife Photo Competition journey</Text>
 
-                </View>
-                <Image source={require("../../assets/line.png")}
-                    style={styles.horisontalLine}>
-                </Image>
-
-
-                <View style={styles.inputView}>
+                    </View>
+                    <Image source={require("../../assets/line.png")}
+                        style={styles.horisontalLine}>
+                    </Image>
 
 
-                    <Text style={styles.inputLabel}>Email</Text>
-                    <TextInput
-                        style={styles.inputStyle}
-                        keyboardType='email-address'
-                        placeholder='john@mail.com'
-                        placeholderTextColor='#554433'
-                        defaultValue={email}
-                        onChangeText={newValue => setEmail(newValue)}
-                    >
-                    </TextInput>
-
-                    <Text style={styles.inputLabel}>Password</Text>
-                    <TextInput
-                        style={styles.inputStyle}
-                        keyboardType='default'
-                        secureTextEntry={true} //great way to show/hide password
-                        placeholder='Minumim 6 characters'
-                        placeholderTextColor='#554433'
-                        defaultValue={password}
-                        onChangeText={newValue => setPassword(newValue)}
-                    ></TextInput>
-                </View>
-
-                {/* Validation here */}
-                <TouchableOpacity style={styles.submitButton} onPress={playSound} >
-                    <Text style={styles.submitButtonText}>Log In</Text>
-                </TouchableOpacity>
+                    <View style={styles.inputView}>
 
 
+                        <Text style={styles.inputLabel}>Email</Text>
+                        <TextInput
+                            style={styles.inputStyle}
+                            keyboardType='email-address'
+                            placeholder='john@mail.com'
+                            placeholderTextColor='#554433'
+                            defaultValue={email}
+                            onChangeText={newValue => setEmail(newValue)}
+                        >
+                        </TextInput>
 
-                <TouchableOpacity onPress={() => navigation.navigate('SignUp')} style={styles.needAccountButton}>
-                    <Text>Need an account?</Text>
-                </TouchableOpacity>
+                        <Text style={styles.inputLabel}>Password</Text>
+                        <TextInput
+                            style={styles.inputStyle}
+                            keyboardType='default'
+                            secureTextEntry={true} //great way to show/hide password
+                            placeholder='Minumim 6 characters'
+                            placeholderTextColor='#554433'
+                            defaultValue={password}
+                            onChangeText={newValue => setPassword(newValue)}
+                        ></TextInput>
+                    </View>
+
+                    {/* Validation here */}
+                    <TouchableOpacity style={styles.submitButton} onPress={playSound} >
+                        <Text style={styles.submitButtonText}>Log In</Text>
+                    </TouchableOpacity>
 
 
-            </View >
-        </ImageBackground>
+
+                    <TouchableOpacity onPress={() => navigation.navigate('SignUp')} style={styles.needAccountButton}>
+                        <Text>Need an account?</Text>
+                    </TouchableOpacity>
+
+                </View >
+            </ImageBackground>
+        </SafeAreaView>
     );
 }
 // Exporting the components
