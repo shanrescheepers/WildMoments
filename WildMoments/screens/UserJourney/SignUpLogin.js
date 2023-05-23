@@ -6,6 +6,7 @@ import { SafeAreaView, StyleSheet, Text, View, ImageBackground } from 'react-nat
 import { Dimensions } from 'react-native';
 import { useFonts } from 'expo-font';
 import AppLoading from 'expo-app-loading';
+
 // fonts import for systems
 import { Alegreya } from "@expo-google-fonts/dev";
 import { Inter } from "@expo-google-fonts/dev";
@@ -18,7 +19,7 @@ const windowHeight = Dimensions.get('window').height;
 
 
 
-const SignUpLogin = () => {
+const SignUpLogin = ({ navigation }) => {
     const [fontsLoaded] = useFonts({
         'Alegreya': require('../../fonts/Alegreya.ttf'),
         'Inter': require('../../fonts/Inter.ttf'),
@@ -63,18 +64,25 @@ const SignUpLogin = () => {
 
 
                     <View style={styles.butonContainer}>
-
-                        <TouchableOpacity activeOpacity={0.2} style={styles.signUpButton}>
+                        {/* Button to Navigation to Signup */}
+                        <TouchableOpacity activeOpacity={0.2}
+                            style={styles.signUpButton}
+                            onPress={() => navigation.navigate('SignUp')}
+                        >
                             <View >
-                                <Text style={styles.signUpButtonText}>Sign  Up</Text>
+                                <Text style={styles.signUpButtonText}>Sign Up</Text>
                             </View>
                         </TouchableOpacity >
 
                         <View style={{ height: RFPercentage(3) }}></View>
 
-                        <TouchableOpacity activeOpacity={0.2} style={styles.signInButton}>
+                        {/* Button to Navigation to Login */}
+                        <TouchableOpacity activeOpacity={0.2}
+                            style={styles.signInButton}
+                            onPress={() => navigation.navigate('Login')}
+                        >
                             <View >
-                                <Text style={styles.signInButtonText}>Sign In</Text>
+                                <Text style={styles.signInButtonText}>Login</Text>
                             </View>
                         </TouchableOpacity>
 

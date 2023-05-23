@@ -4,30 +4,34 @@ import { SplashScreen } from 'expo';
 import SignUpLogin from './screens/UserJourney/SignUpLogin';
 import SignUp from './screens/UserJourney/SignUp';
 import Login from './screens/UserJourney/Login';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+// for each nav header that we have, we need to go create it
+const Stack = createNativeStackNavigator();
+
 export default function App() {
 
-  // // Prevent the app from rendering until the splash screen is hidden
-  // SplashScreen.preventAutoHideAsync()
-  //   .then(() => {
-  //     // Perform any async tasks or initialize app state
-  //   })
-  //   .catch(console.warn)
-  //   .finally(() => {
-  //     // Hide the splash screen once your app is ready
-  //     SplashScreen.hideAsync();
-  //   });
 
   return (
     // <View style={styles.container}>
     //   <Text>Open up App.js to start working on your app!</Text>
     //   <StatusBar style="auto" />
+
     // </View>
 
-    <SafeAreaView>
-      {/* <SignUpLogin /> */}
-      {/* <SignUp /> */}
-      <Login />
-    </SafeAreaView>
+    <NavigationContainer>
+
+      <Stack.Navigator initialRouteName='SignUpLogin'>
+
+        <Stack.Screen name="SignUpLogin" component={SignUpLogin} options={{ headerShown: false }} ></Stack.Screen>
+
+        <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} ></Stack.Screen>
+        <Stack.Screen name="SignUp" component={SignUp} options={{ headerShown: false }} ></Stack.Screen>
+      </Stack.Navigator>
+      {/*  */}
+    </NavigationContainer>
+
   );
 }
 

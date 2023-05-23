@@ -25,7 +25,7 @@ const windowHeight = Dimensions.get('window').height;
 
 
 
-const Login = () => {
+const Login = ({ navigation }) => {
     // Sound
     const [sound, setSound] = React.useState();
 
@@ -110,16 +110,16 @@ const Login = () => {
                     ></TextInput>
                 </View>
 
+                {/* Validation here */}
                 <TouchableOpacity style={styles.submitButton} onPress={playSound} >
                     <Text style={styles.submitButtonText}>Log In</Text>
                 </TouchableOpacity>
 
 
-                {/* <Toucha
-                <Button style={styles.needAccountButton}
-                    title="Need an account?" color={'black'}>
 
-                </Button> */}
+                <TouchableOpacity onPress={() => navigation.navigate('SignUp')} style={styles.needAccountButton}>
+                    <Text>Need an account?</Text>
+                </TouchableOpacity>
 
 
             </View >

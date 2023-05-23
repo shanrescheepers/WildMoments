@@ -18,7 +18,7 @@ import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-const SignUp = () => {
+const SignUp = ({ navigation }) => {
     // TODO: Setup our Navigation Here. This is Center Point of App
     //TODO: Check if User is Logged In
     // Fonts
@@ -85,12 +85,16 @@ const SignUp = () => {
                     ></TextInput>
                 </View>
 
-                <TouchableOpacity style={styles.submitButton}>
-                    <Text style={styles.submitButtonText}>Create Account</Text>
-                </TouchableOpacity>
-                <TouchableOpacity>
-                    <Text style={styles.needAccountButton}>Need an Account?</Text>
-                </TouchableOpacity>
+                <View>
+                    {/* Validation here */}
+                    <TouchableOpacity style={styles.submitButton}>
+                        <Text style={styles.submitButtonText}>Create Account</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                        <Text style={styles.needAccountButton}>Already have an Account?</Text>
+                    </TouchableOpacity>
+                </View>
 
                 {/* <Toucha
                 <Button style={styles.needAccountButton}
@@ -127,6 +131,10 @@ const styles = StyleSheet.create({
         marginBottom: 20,
 
         resizeMode: 'cover',
+    },
+    dropdown: {
+        borderColor: "#B7B7B7",
+        height: 50,
     },
     introView: {
         textAlign: 'center',
