@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         borderStyle: 'dashed',
         borderColor: '#71563A',
-        borderWidth: 1,
+        borderWidth: 1.5,
         padding: 10,
         color: '#A27A51',
         textDecorationLine: 'none',

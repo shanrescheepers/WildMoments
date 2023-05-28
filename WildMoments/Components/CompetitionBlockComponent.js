@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     competitionsEnter: {
         backgroundColor: '#F2C440',
         height: RFPercentage(5),
-        width: RFPercentage(10),
+        width: RFPercentage(12),
 
         borderRadius: 50,
         marginBottom: 20,
@@ -91,8 +91,9 @@ const styles = StyleSheet.create({
     competitionsEnterText: {
         color: '#2b2b2b',
         fontSize: RFValue(12),
-        paddingHorizontal: RFValue(14),
+        paddingHorizontal: RFValue(20),
         paddingVertical: RFValue(9),
+        fontWeight: 900
     },
 
     competitionsButtons: {
@@ -108,19 +109,21 @@ const styles = StyleSheet.create({
         shadowOffset: { width: -2, height: 4 },
         shadowOpacity: 0.2,
         shadowRadius: 3,
+
     },
     Browse: {
         shadowColor: '#171717',
         shadowOffset: { width: -2, height: 4 },
         shadowOpacity: 0.2,
         shadowRadius: 3,
+
     },
     competitionsBrowse: {
-        borderWidth: 1,
+        borderWidth: 1.5,
         borderColor: '#F2C440',
         borderStyle: 'dashed',
         height: RFPercentage(5),
-        width: RFPercentage(10),
+        width: RFPercentage(12),
 
         borderRadius: 50,
         marginBottom: 20,
@@ -134,8 +137,9 @@ const styles = StyleSheet.create({
     competitionsBrowseText: {
         color: '#2b2b2b',
         fontSize: RFValue(12),
-        paddingHorizontal: RFValue(8),
+        paddingHorizontal: RFValue(12),
         paddingVertical: RFValue(9),
+        fontWeight: 900
     },
     photocompTimeView: {
         marginVertical: RFValue(-8),

@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
         shadowRadius: RFPercentage(8),
         height: RFPercentage(8),
         width: RFPercentage(16),
-        borderWidth: 1,
+        borderWidth: 1.5,
         borderColor: '#F2C440',
         borderStyle: 'dashed',
         position: 'relative',

@@ -34,9 +34,9 @@ const HomeScreen = ({ navigation }) => {
                     <View style={styles.headingsView}>
                         <Text style={styles.headingsView_h1}>WildMoments</Text>
                         <Text style={styles.headingsView_h2}>The premier for amazing wildlife photos & conservation.</Text>
-                        <Text style={styles.headingsView_h3}>Put your images out into the world by entering  competitions. </Text>
-                        <Text style={styles.headingsView_h4}>Vote for your most favourite photo. </Text>
-                        <Text style={styles.headingsView_h5}>Winners stand a chance to win spectacular prizes.</Text>
+                        <Text style={styles.headingsView_h3}>Put your images out into the world by entering, voting and winning competitions! </Text>
+                        {/* <Text style={styles.headingsView_h4}>Vote for your most favourite photo. </Text>
+                        <Text style={styles.headingsView_h5}>Winners stand a chance to win spectacular prizes.</Text> */}
                     </View>
                     <View style={styles.rulesView}>
                         <Text style={styles.rulesText}>PLEASE READ THE RULES BEFORE ENTERING COMPETITIONS</Text>
@@ -125,10 +125,13 @@ const styles = StyleSheet.create({
     headingsView_h3: {
         marginTop: RFValue(3),
         textAlign: 'center',
-        fontSize: RFPercentage(1.8),
+        fontSize: RFPercentage(2),
         windowWidth: windowWidth,
         paddingLeft: RFPercentage(3),
-        paddingRight: RFPercentage(3)
+        paddingRight: RFPercentage(3),
+        color: '#111',
+        fontWeight: 'bold',
+
     },
     headingsView_h4: {
         marginTop: RFValue(3),
@@ -141,6 +144,7 @@ const styles = StyleSheet.create({
     headingsView_h5: {
         marginTop: RFValue(3),
         textAlign: 'center',
+        color: '#fff',
         fontSize: RFPercentage(2),
         windowWidth: windowWidth,
         paddingLeft: RFPercentage(3),
@@ -154,14 +158,25 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
     },
     rulesText: {
-        fontSize: RFPercentage(1.1)
+        fontSize: RFPercentage(1.6),
+        color: '#fff',
+        marginTop: -2,
+        marginBottom: 8,
     },
     rulesButton: {
-        backgroundColor: '#A27A51',
+
         marginTop: RFValue(3),
         height: RFPercentage(5),
         width: RFPercentage(11),
         padding: RFValue(1),
+
+
+        borderStyle: 'dashed',
+        borderColor: '#fff',
+        borderWidth: 1.5,
+
+        color: '#A27A51',
+
         borderRadius: 50,
         marginBottom: 20,
         shadowColor: 'gray',
@@ -169,7 +184,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     rulesButtonText: {
-        color: '#2b2b2b',
+        color: '#fff',
         fontSize: RFValue(10),
         textAlign: 'center',
         fontWeight: 'bold',
