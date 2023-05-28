@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ImageBackground, Button, TouchableHighlight, Platform, StatusBar } from 'react-native'
+import { StyleSheet, Text, View, ImageBackground, Button, TouchableHighlight, Platform, StatusBar, SafeAreaView } from 'react-native'
 import React from 'react';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import { TouchableOpacity, } from 'react-native-gesture-handler';
@@ -41,33 +41,39 @@ const HeaderComponent = (props) => {
 
 
     return (
+        <SafeAreaView>
+            < View style={{
+                alignSelf: 'flex-end',
+                padding: RFValue(10),
+                width: windowWidth,
+                backgroundColor: showBack ? 'transparent' : '#202022',
+            }} >
 
-        < View style={styles.backgroundView} >
+                <View style={styles.header}>
+                    {/*  */}
+                    {!showBack &&
+                        <TouchableComponent onPress={() => navigation.goBack()} style={styles.backbutton}>
+                            <TouchableOpacity >
+                                <ImageBackground source={require('../assets/AppIcons/back.png')} // Replace with the actual path to your image
+                                    style={styles.back}>
 
-            <View style={styles.header}>
-                {/*  */}
-                {!showBack &&
-                    <TouchableComponent onPress={() => navigation.goBack()} style={styles.backbutton}>
-                        <TouchableOpacity >
-                            <ImageBackground source={require('../assets/AppIcons/back.png')} // Replace with the actual path to your image
-                                style={styles.back}>
+                                </ImageBackground>
+                            </TouchableOpacity>
+                        </TouchableComponent>
+                    }
+                    <View style={styles.spacer} />
+                    {/* Logo */}
+                    <View>
+                        <ImageBackground
+                            source={require('../assets/AppIcons/dropdownImage.png')} // Replace with the actual path to your image
+                            style={styles.logo}
+                        ></ImageBackground>
+                    </View>
 
-                            </ImageBackground>
-                        </TouchableOpacity>
-                    </TouchableComponent>
-                }
-                <View style={styles.spacer} />
-                {/* Logo */}
-                <View>
-                    <ImageBackground
-                        source={require('../assets/AppIcons/dropdownImage.png')} // Replace with the actual path to your image
-                        style={styles.logo}
-                    ></ImageBackground>
                 </View>
 
-            </View>
-
-        </View >
+            </View >
+        </SafeAreaView>
     );
 }
 
@@ -82,12 +88,11 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     backgroundView: {
-        alignSelf: 'flex-end',
-        padding: RFValue(10),
-        backgroundColor: '#202022',
 
-        width: windowWidth
+
     },
+
+
 
     back: {
 

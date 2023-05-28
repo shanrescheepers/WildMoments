@@ -38,9 +38,9 @@ export default function App() {
   }, [])
   return (
     <>
-      {/* <View style={styles.container}>
+      <View style={styles.container}>
 
-      </View> */}
+      </View>
 
       <NavigationContainer>
 
