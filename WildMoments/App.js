@@ -1,5 +1,5 @@
-import { StatusBar } from 'expo-status-bar';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+// import { StatusBar } from 'expo-status-bar';
+import { SafeAreaView, StyleSheet, Text, View, StatusBar } from 'react-native';
 import { SplashScreen } from 'expo';
 import SignUpLogin from './screens/UserJourney/SignUpLogin';
 import SignUp from './screens/UserJourney/SignUp';
@@ -19,6 +19,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { set } from 'react-hook-form';
 import { auth } from './firebase';
 
+
 // for each nav header that we have, we need to go create it
 const Stack = createNativeStackNavigator();
 
@@ -30,56 +31,67 @@ export default function App() {
         // use logged in
         setLoggedIn(true)
       } else {
-        setLoggedIn(false)
+        setLoggedIn(true)
       }
     })
     return unsubscribe;
   }, [])
   return (
-    // <View style={styles.container}>
-    //   <Text>Open up App.js to start working on your app!</Text>
-    //   <StatusBar style="auto" />
+    <>
+      <View style={styles.container}>
 
-    // </View>
+      </View>
 
-    <NavigationContainer>
+      <NavigationContainer>
 
-      <Stack.Navigator initialRouteName='SignUpLogin'>
-        {!loggedIn ? (
-          <>
-            <Stack.Screen name="SignUpLogin" component={SignUpLogin} options={{ headerShown: false }} />
+        <Stack.Navigator initialRouteName='SignUpLogin' style={styles.stacknav} screenOptions={{
+          headerStyle: { backgroundColor: '#202022' },
+          headerTintColor: '#9C7B57'
+        }}>
+          {!loggedIn ? (
+            <>
+              <Stack.Screen name="SignUpLogin" component={SignUpLogin} options={{ headerShown: false }} />
 
-            <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
-            <Stack.Screen name="SignUp" component={SignUp} options={{ headerShown: false }} />
-          </>
-        ) : (
-          <>
-            {/* <Stack.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }} /> */}
-            <Stack.Screen name="Home" component={HomeTab} options={{ headerShown: false }} />
+              <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
+              <Stack.Screen name="SignUp" component={SignUp} options={{ headerShown: false }} />
+            </>
+          ) : (
+            <>
+              {/* <Stack.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }} /> */}
+              <Stack.Screen name="Home" component={HomeTab} options={{ headerShown: false }} style={styles.hometab} />
 
-            <Stack.Screen name="CompsScreen" component={CompsScreen} options={{ headerShown: false }} />
-            <Stack.Screen name="ExploreScreen" component={ExploreScreen} options={{ headerShown: false }} />
-            <Stack.Screen name="GalleryScreen" component={GalleryScreen} options={{ headerShown: false }} />
-            <Stack.Screen name="RulesScreen" component={RulesScreen} options={{ headerShown: false }} />
-            <Stack.Screen name="ImagesVotingScreen" component={ImagesVotingScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="CompsScreen" component={CompsScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="ExploreScreen" component={ExploreScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="GalleryScreen" component={GalleryScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="RulesScreen" component={RulesScreen} options={{
+                headerShown: true, title: 'Rules & Regulations',
+                headerTitleStyle: { color: '#FFE4E4' },
+                headerTintColor: '#9C7B57',
 
-          </>
+              }} />
+              <Stack.Screen name="ImagesVotingScreen" component={ImagesVotingScreen} options={{ headerShown: false }} />
 
+            </>
 
-        )}
+          )}
 
-      </Stack.Navigator>
+        </Stack.Navigator>
 
-    </NavigationContainer>
+      </NavigationContainer>
+    </>
+
 
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
   },
+  hometab: {
+    backgroundColor: 'transparent',
+  },
+  stacknav: {
+
+  }
 });

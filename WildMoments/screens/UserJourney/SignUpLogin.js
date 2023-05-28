@@ -124,6 +124,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginBottom: 20,
         marginTop: 20,
+        color: '#A27A51',
     },
     logo: {
         height: RFPercentage(15),
@@ -147,6 +148,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
         fontSize: RFPercentage(4),
         fontWeight: 'bold',
+        color: 'white',
     },
     butonContainer: {
         marginTop: 80,
@@ -186,7 +188,7 @@ const styles = StyleSheet.create({
     },
     signUpButtonText: {
         textAlign: 'center',
-
+        color: '#F2C440',
         padding: RFPercentage(1.9),
         fontSize: RFPercentage(3),
     }

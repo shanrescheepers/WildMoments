@@ -1,5 +1,5 @@
 // Tab Bar for Home Screens
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, StatusBar } from 'react-native'
 import React from 'react'
 import { Image } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
@@ -14,19 +14,30 @@ const Tab = createBottomTabNavigator();
 
 const HomeTab = () => {
     return (
-        <Tab.Navigator style={styles.tabbar}
+        <Tab.Navigator style={styles.tabBarStyle}
+
             screenOptions={{
                 tabBarActiveTintColor: "#FA993B",
-                tabBarStyle: { backgroundColor: '#202022', height: 90, borderTopLeftRadius: 35, borderTopRightRadius: 35, padding: 8 }
-            }} >
+                tabBarStyle: {
+                    marginHorizontal: 0,
+                    paddingTop: 10,
+                    position: 'absolute',
+                    backgroundColor: '#202022',
+                    borderTopLeftRadius: 20,
+                    borderTopRightRadius: 20,
+                    borderTopWidth: 0,
+                },
+
+            }}
+        >
             {/*  options={{ headerShown: false }} */}
-            <Tab.Screen name='Home' component={HomeScreen}
+            <Tab.Screen name='Home' component={HomeScreen} style={styles.tabScreen}
                 options={({ focused, size }) =>
                 ({
                     tabBarIcon: ({ size, tabInfo }) => (
                         <TouchableOpacity>
                             <Image
-                                style={{ width: 30, height: 30 }}
+                                style={{ width: 30, height: 30, }}
                                 source={require('../assets/AppIcons/homeIcon.png')}
                             />
                         </TouchableOpacity>
@@ -76,5 +87,15 @@ export default HomeTab
 const styles = StyleSheet.create({
     tabbar: {
         height: RFPercentage(50),
+        position: 'absolute',
+        backgroundColor: 'transparent',
     },
+    tabBarStyle: {
+        paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
+
+    },
+    tabScreen: {
+        backgroundColor: 'red',
+    }
+
 })

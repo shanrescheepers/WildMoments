@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
     inputLabel: {
         fontSize: 14,
         marginLeft: 4,
-        color: 'black',
+        color: '#D9D9D9',
         marginBottom: 5,
         fontWeight: 600,
     },
@@ -186,8 +186,11 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     submitButton: {
-        backgroundColor: 'black',
+
+        backgroundColor: '#A27A51',
         marginTop: 30,
+        height: RFPercentage(8),
+        width: RFPercentage(30),
 
         padding: 15,
         borderRadius: 50,
@@ -195,9 +198,11 @@ const styles = StyleSheet.create({
         shadowColor: 'gray',
     },
     submitButtonText: {
-        color: '#F2C440',
+        color: '#2b2b2b',
         fontSize: 20,
         textAlign: 'center',
+        fontWeight: 'bold'
+        ,
     },
     needAccountButton: {
         alignItems: 'center',
@@ -205,7 +210,7 @@ const styles = StyleSheet.create({
         color: 'black',
         fontSize: RFPercentage(2),
         fontWeight: 'bold',
-        height: RFPercentage(2),
+        height: RFPercentage(4),
         width: RFPercentage(30),
     }
 
