@@ -12,7 +12,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const Tab = createBottomTabNavigator();
 
-const HomeTab = () => {
+const HomeTab = ({ }) => {
     return (
         <Tab.Navigator style={styles.tabBarStyle}
 

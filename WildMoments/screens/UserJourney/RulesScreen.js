@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import HomeTab from '../../navigators/HomeTab'
 import { Dimensions } from 'react-native';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
+import HeaderComponent from '../../Components/HeaderComponent';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -11,6 +12,9 @@ const windowHeight = Dimensions.get('window').height;
 const RulesScreen = ({ }) => {
     return (
         <View>
+            <View style={styles.headercomponent}>
+                <HeaderComponent />
+            </View>
             <ImageBackground
                 source={require('../../assets/backgroundImage.png')} // Replace with the actual path to your image
                 style={styles.background}

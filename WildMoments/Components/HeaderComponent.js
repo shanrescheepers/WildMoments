@@ -1,30 +1,109 @@
-import { StyleSheet, Text, View, ImageBackground } from 'react-native'
+import { StyleSheet, Text, View, ImageBackground, Button, TouchableHighlight, Platform, StatusBar } from 'react-native'
 import React from 'react';
-import { RFPercentage } from 'react-native-responsive-fontsize';
+import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
+import { TouchableOpacity, } from 'react-native-gesture-handler';
+import { useState, useEffect } from 'react';
+import { Dimensions } from 'react-native';
+import { useRoute, useNavigation } from '@react-navigation/native';
 
-const HeaderComponent = () => {
+const TouchableComponent = Platform.OS === 'android' ? TouchableHighlight : TouchableOpacity;
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+
+const HeaderComponent = (props) => {
+    // const { navigation } = props;
+    const navigation = useNavigation();
+    const [showBack, setShowBack] = useState(true);
+
+    const route = useRoute();
+    const routeName = route.name;
+    console.log(routeName);
+
+    // const homeRoute = route.name
+    useEffect(() => {
+        if (
+            routeName !== 'Home' &&
+            routeName !== 'Login' &&
+            routeName !== 'SignUp' &&
+            routeName !== 'SignUpLogin' &&
+            routeName !== 'CompsScreen' &&
+            routeName !== 'ExploreScreen' &&
+            routeName !== 'GalleryScreen'
+        ) {
+            console.log("Show back button");
+            setShowBack(false)
+
+        } else {
+            console.log("Hide back button");
+            setShowBack(true)
+        }
+    }, [routeName])
+
+
     return (
-        <View style={styles.backgroundView}>
-            <ImageBackground
-                source={require('../assets/AppIcons/dropdownImage.png')} // Replace with the actual path to your image
-                style={styles.background}
-            ></ImageBackground>
-        </View>
-    )
+
+        < View style={styles.backgroundView} >
+
+            <View style={styles.header}>
+                {/*  */}
+                {!showBack &&
+                    <TouchableComponent onPress={() => navigation.goBack()} style={styles.backbutton}>
+                        <TouchableOpacity >
+                            <ImageBackground source={require('../assets/AppIcons/back.png')} // Replace with the actual path to your image
+                                style={styles.back}>
+
+                            </ImageBackground>
+                        </TouchableOpacity>
+                    </TouchableComponent>
+                }
+                <View style={styles.spacer} />
+                {/* Logo */}
+                <View>
+                    <ImageBackground
+                        source={require('../assets/AppIcons/dropdownImage.png')} // Replace with the actual path to your image
+                        style={styles.logo}
+                    ></ImageBackground>
+                </View>
+
+            </View>
+
+        </View >
+    );
 }
 
 export default HeaderComponent
 
 const styles = StyleSheet.create({
+    backbutton: {
+
+    },
+    header: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
     backgroundView: {
         alignSelf: 'flex-end',
-        marginTop: RFPercentage(1),
+        padding: RFValue(10),
+        backgroundColor: '#202022',
+
+        width: windowWidth
     },
-    background: {
+
+    back: {
 
         marginRight: RFPercentage(2),
-        height: RFPercentage(4.4),
+        height: RFPercentage(3),
+        width: RFPercentage(7),
+        alignContent: 'flex-start',
+    },
+    logo: {
+
+        marginRight: RFPercentage(2),
+        height: RFPercentage(4.6),
         width: RFPercentage(10),
         alignContent: 'flex-end',
-    }
+    },
+    spacer: {
+        marginHorizontal: RFPercentage(14),
+    },
 })

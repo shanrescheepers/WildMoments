@@ -38,9 +38,9 @@ export default function App() {
   }, [])
   return (
     <>
-      <View style={styles.container}>
+      {/* <View style={styles.container}>
 
-      </View>
+      </View> */}
 
       <NavigationContainer>
 
@@ -64,7 +64,7 @@ export default function App() {
               <Stack.Screen name="ExploreScreen" component={ExploreScreen} options={{ headerShown: false }} />
               <Stack.Screen name="GalleryScreen" component={GalleryScreen} options={{ headerShown: false }} />
               <Stack.Screen name="RulesScreen" component={RulesScreen} options={{
-                headerShown: true, title: 'Rules & Regulations',
+                headerShown: false, title: 'Rules & Regulations',
                 headerTitleStyle: { color: '#FFE4E4' },
                 headerTintColor: '#9C7B57',
 

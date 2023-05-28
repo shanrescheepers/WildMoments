@@ -25,11 +25,11 @@ const HomeScreen = ({ navigation }) => {
                 source={require('../../assets/bg2.png')}
                 style={styles.background}>
 
-                <ScrollView style={styles.homescreenscrollview}>
+                <ScrollView style={styles.homescreenscrollview} showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}>
 
 
                     <View style={styles.headercomponent}>
-                        <HeaderComponent />
+                        <HeaderComponent navigation={navigation} />
                     </View>
                     <View style={styles.headingsView}>
                         <Text style={styles.headingsView_h1}>WildMoments</Text>
