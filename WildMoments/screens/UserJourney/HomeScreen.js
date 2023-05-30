@@ -9,6 +9,12 @@ import { globalStylesheet, TextInput, TouchableOpacity, Button, Image, StatusBar
 
 // import { styles } from '../utils/styles';
 
+
+
+// fonts import for systems
+import { Alegreya } from "@expo-google-fonts/dev";
+import { Inter } from "@expo-google-fonts/dev";
+import { Roboto } from "@expo-google-fonts/dev";
 import { Dimensions } from 'react-native';
 import { useFonts } from 'expo-font';
 
@@ -159,9 +165,11 @@ const styles = StyleSheet.create({
     },
     rulesText: {
         fontSize: RFPercentage(1.6),
-        color: '#fff',
+        color: '#111',
+        textTransform: 'lowercase',
         marginTop: -2,
-        marginBottom: 8,
+        marginBottom: 6,
+        fontFamily: Roboto,
     },
     rulesButton: {
 
@@ -169,26 +177,27 @@ const styles = StyleSheet.create({
         height: RFPercentage(5),
         width: RFPercentage(11),
         padding: RFValue(1),
-
+        // backgroundColor: '#C89E7B',
 
         borderStyle: 'dashed',
-        borderColor: '#fff',
-        borderWidth: 1.5,
+        borderColor: '#C69F7A',
+        borderWidth: 1,
 
         color: '#A27A51',
 
         borderRadius: 50,
-        marginBottom: 20,
+        marginBottom: 6,
         shadowColor: 'gray',
         alignSelf: 'center',
         justifyContent: 'center',
     },
     rulesButtonText: {
-        color: '#fff',
+        color: '#C69F7A',
         fontSize: RFValue(10),
         textAlign: 'center',
-        fontWeight: 'bold',
+        fontWeight: '900',
         alignSelf: 'center',
+        fontFamily: Alegreya,
     },
 
 })

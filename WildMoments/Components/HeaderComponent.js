@@ -22,11 +22,11 @@ const HeaderComponent = (props) => {
     // const homeRoute = route.name
     useEffect(() => {
         if (
-            routeName !== 'Home' &&
+
             routeName !== 'Login' &&
             routeName !== 'SignUp' &&
             routeName !== 'SignUpLogin' &&
-            routeName !== 'CompsScreen' &&
+            routeName !== 'Competitions' &&
             routeName !== 'ExploreScreen' &&
             routeName !== 'GalleryScreen'
         ) {

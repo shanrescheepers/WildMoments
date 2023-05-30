@@ -18,6 +18,8 @@ import { useEffect, useState } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { set } from 'react-hook-form';
 import { auth } from './firebase';
+import BrowseAndEnterScreen from './screens/UserJourney/BrowseAndEnterScreen';
+import HeaderComponent from './Components/HeaderComponent';
 
 
 // for each nav header that we have, we need to go create it
@@ -60,7 +62,7 @@ export default function App() {
               {/* <Stack.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }} /> */}
               <Stack.Screen name="Home" component={HomeTab} options={{ headerShown: false }} style={styles.hometab} />
 
-              <Stack.Screen name="CompsScreen" component={CompsScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="Competitions" component={CompsScreen} options={{ headerShown: false }} />
               <Stack.Screen name="ExploreScreen" component={ExploreScreen} options={{ headerShown: false }} />
               <Stack.Screen name="GalleryScreen" component={GalleryScreen} options={{ headerShown: false }} />
               <Stack.Screen name="RulesScreen" component={RulesScreen} options={{
@@ -70,7 +72,7 @@ export default function App() {
 
               }} />
               <Stack.Screen name="ImagesVotingScreen" component={ImagesVotingScreen} options={{ headerShown: false }} />
-
+              <Stack.Screen name="BrowseAndEnterScreen" component={BrowseAndEnterScreen} options={{ headerShown: false }} />
             </>
 
           )}

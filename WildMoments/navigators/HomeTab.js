@@ -31,7 +31,7 @@ const HomeTab = ({ }) => {
             }}
         >
             {/*  options={{ headerShown: false }} */}
-            <Tab.Screen name='Home' component={HomeScreen} style={styles.tabScreen}
+            {/* <Tab.Screen name='Home' component={HomeScreen} style={styles.tabScreen}
                 options={({ focused, size }) =>
                 ({
                     tabBarIcon: ({ size, tabInfo }) => (
@@ -44,9 +44,9 @@ const HomeTab = ({ }) => {
                     ),
                     headerShown: false
                 })}
-            />
+            /> */}
 
-            <Tab.Screen name='Competitions' component={CompsScreen} options={({ focused, size }) =>
+            <Tab.Screen name='Competitions' component={HomeScreen} options={({ focused, size }) =>
             ({
                 tabBarIcon: ({ size, tabInfo }) => (
                     <Image
