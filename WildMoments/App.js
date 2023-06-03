@@ -20,6 +20,7 @@ import { set } from 'react-hook-form';
 import { auth } from './firebase';
 import BrowseAndEnterScreen from './screens/UserJourney/CompetitionJudgeScreen';
 import HeaderComponent from './Components/HeaderComponent';
+import EnterCompScreen from './screens/UserJourney/EnterCompScreen';
 
 
 // for each nav header that we have, we need to go create it
@@ -33,7 +34,7 @@ export default function App() {
         // use logged in
         setLoggedIn(true)
       } else {
-        setLoggedIn(true)
+        setLoggedIn(false)
       }
     })
     return unsubscribe;
@@ -73,6 +74,7 @@ export default function App() {
               }} />
               <Stack.Screen name="ImagesVotingScreen" component={ImagesVotingScreen} options={{ headerShown: false }} />
               <Stack.Screen name="BrowseAndEnterScreen" component={BrowseAndEnterScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="EnterCompScreen" component={EnterCompScreen} options={{ headerShown: false }} />
             </>
 
           )}

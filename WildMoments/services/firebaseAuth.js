@@ -1,42 +1,34 @@
 
 // import auth instance from my app
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
 import { auth } from '../firebase';
 import { Alert } from 'react-native';
+import { Audio } from 'expo-av';
+import { async } from '@firebase/util';
 import { useState, useEffect } from "react";
 
 import 'firebase/auth';
 import 'firebase/firestore';
-import { Audio } from 'expo-av';
+import { createUserInDB } from "./firebseDB";
 
-import { async } from '@firebase/util';
-// Sign in Existing Users:
-// const auth = getAuth();
-// signInWithEmailAndPassword(auth, email, password)
-//     .then((userCredential) => {
-//         // Signed in 
-//         const user = userCredential.user;
-//         // ...
-//     })
-//     .catch((error) => {
-//         const errorCode = error.code;
-//         const errorMessage = error.message;
-//     });
 
 // // // // // // //
 
-// Register a User functionality
-export const registerNewUser = (email, password) => {
+// Register a User functionality :: SIGN UP
+export const registerNewUser = (username, email, password) => {
     // this comes from register screen
     // Add registerNewUser to your Register.js!!! : registerNewUser(name,email,password)
 
     createUserWithEmailAndPassword(auth, email, password)
         // the then is when user was created successfully
-        .then((userCredential) => {
+        .then(async (userCredential) => {
             // Signed in 
             const user = userCredential.user;
             console.log("New user is :" + user)
-            // To Do: Create user in our DB
+            updateAuthProfile(username);
+
+            // TODO: Create user in our DB
+            await createUserInDB(username, email, user.uid)
 
         })
         .catch((error) => {
@@ -47,29 +39,6 @@ export const registerNewUser = (email, password) => {
         });
 }
 // // // // // // //
-
-// Sign in functionality
-// const [sound, setSound] = useState();
-
-// async function playSound() {
-//     console.log('Loading Sound');
-//     const { sound } = await Audio.Sound.createAsync(require('../soundEffects/btn.mp3')
-//     );
-//     setSound(sound);
-
-// console.log('Playing Sound');
-// await sound.playAsync();
-// logOn();
-// useEffect(() => {
-//     return sound
-//         ? () => {
-//             console.log('Unloading Sound');
-
-//         }
-//         : undefined;
-// }, [sound]);
-// }
-
 
 export const signInUser = async (email, password) => {
     await signInWithEmailAndPassword(auth, email, password)
@@ -96,9 +65,28 @@ export const signInUser = async (email, password) => {
 
 // Sign out functionality
 export const signOutUser = () => {
-    signOut(auth).then(() => {
-        console.log("Logged out successfully")
+    signOut(auth)
+        .then(() => {
+            console.log("Logged out successfully")
+        }).catch((error) => {
+            console.log(error.errorMessage)
+        })
+}
+
+const updateAuthProfile = (username) => {
+    updateProfile(auth.currentUser, {
+        displayName: username, photoURL: ""
+    }).then(() => {
+
+
+        //Profile Updated!!
+
+
     }).catch((error) => {
-        console.log(error.errorMessage)
-    })
+
+    });
+}
+
+export const getCurrentUser = () => {
+    return auth.currentUser;
 }

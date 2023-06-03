@@ -74,7 +74,7 @@ const SignUp = ({ navigation }) => {
     const registerUser = () => {
         console.log("REgistering");
         console.log(email)
-        registerNewUser(email, password);
+        registerNewUser(username, email, password);
         playSound()
     }
     return (

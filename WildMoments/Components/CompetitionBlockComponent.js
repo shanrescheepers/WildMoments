@@ -17,14 +17,18 @@ const CompetitionBlockComponent = ({ }) => {
 
             <View style={styles.competitionsButtons}>
                 <View style={styles.Enter} >
-                    <TouchableOpacity style={styles.competitionsEnter}
-                        onPress={() => navigation.navigate('BrowseAndEnterScreen')}>
+                    <TouchableOpacity
+                        style={styles.competitionsEnter}
+                        onPress={() => navigation.navigate('EnterCompScreen')}
+                    >
                         <Text style={styles.competitionsEnterText}>ENTER</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.buttonGap} />
                 <View style={styles.Browse}>
-                    <TouchableOpacity style={styles.competitionsBrowse}  >
+                    <TouchableOpacity
+                        style={styles.competitionsBrowse}
+                        onPress={() => navigation.navigate('BrowseAndEnterScreen')} >
                         <Text style={styles.competitionsBrowseText}>JUDGE</Text>
                     </TouchableOpacity>
                 </View>
