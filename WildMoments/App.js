@@ -18,7 +18,7 @@ import { useEffect, useState } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { set } from 'react-hook-form';
 import { auth } from './firebase';
-import BrowseAndEnterScreen from './screens/UserJourney/BrowseAndEnterScreen';
+import BrowseAndEnterScreen from './screens/UserJourney/CompetitionJudgeScreen';
 import HeaderComponent from './Components/HeaderComponent';
 
 
@@ -33,7 +33,7 @@ export default function App() {
         // use logged in
         setLoggedIn(true)
       } else {
-        setLoggedIn(false)
+        setLoggedIn(true)
       }
     })
     return unsubscribe;

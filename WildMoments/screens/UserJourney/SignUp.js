@@ -25,11 +25,38 @@ import leopard from '../../assets/ProfileImages/leopard_pfp.png';
 import buffalo from '../../assets/ProfileImages/buffalo_pfp.png';
 import rhino from '../../assets/ProfileImages/rhino_pfp.png';
 import photographer from '../../assets/ProfileImages/photographer_pfp.png';
+// Sound
+import { Audio } from 'expo-av';
+// import { signInUser } from '../../services/firebaseAuth';
+import { async } from '@firebase/util';
+// import dings from '../../soundEffects/btn1.mp3';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 const SignUp = ({ navigation }) => {
+
+    const [sound, setSound] = React.useState();
+
+    async function playSound() {
+        console.log('Loading Sound');
+        const { sound } = await Audio.Sound.createAsync(require('../../soundEffects/btn.mp3')
+        );
+        setSound(sound);
+
+        console.log('Playing Sound');
+        await sound.playAsync();
+
+    }
+
+    React.useEffect(() => {
+        return sound
+            ? () => {
+                console.log('Unloading Sound');
+                sound.unloadAsync();
+            }
+            : undefined;
+    }, [sound]);
     // TODO: Setup our Navigation Here. This is Center Point of App
     //TODO: Check if User is Logged In
     // Fonts
@@ -48,7 +75,7 @@ const SignUp = ({ navigation }) => {
         console.log("REgistering");
         console.log(email)
         registerNewUser(email, password);
-
+        playSound()
     }
     return (
         <SafeAreaView>
@@ -133,7 +160,7 @@ const SignUp = ({ navigation }) => {
 
                     <View style={styles.buttons}>
                         {/* Validation here */}
-                        <TouchableOpacity style={styles.submitButton} onPress={registerUser}>
+                        <TouchableOpacity style={styles.submitButton} onPress={registerUser} >
                             <Text style={styles.submitButtonText}>SIGN UP</Text>
                         </TouchableOpacity>
 

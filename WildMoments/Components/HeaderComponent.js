@@ -41,7 +41,7 @@ const HeaderComponent = (props) => {
 
 
     return (
-        <SafeAreaView>
+        <SafeAreaView style={styles.hc}>
             < View style={{
                 alignSelf: 'flex-end',
                 padding: RFValue(10),
@@ -49,7 +49,7 @@ const HeaderComponent = (props) => {
                 backgroundColor: showBack ? 'transparent' : '#202022',
             }} >
 
-                <View style={styles.header}>
+                <View style={styles.header} >
                     {/*  */}
                     {!showBack &&
                         <TouchableComponent onPress={() => navigation.goBack()} style={styles.backbutton}>

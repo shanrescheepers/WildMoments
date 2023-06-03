@@ -23,11 +23,11 @@ const CompetitionBlockComponent = ({ }) => {
                     </TouchableOpacity>
                 </View>
                 <View style={styles.buttonGap} />
-                {/* <View style={styles.Browse}>
+                <View style={styles.Browse}>
                     <TouchableOpacity style={styles.competitionsBrowse}  >
-                        <Text style={styles.competitionsBrowseText}>BROWSE</Text>
+                        <Text style={styles.competitionsBrowseText}>JUDGE</Text>
                     </TouchableOpacity>
-                </View> */}
+                </View>
             </View>
             <View style={styles.photocompTimeView}>
                 <Text style={styles.photocompTimeHeading}>Remaining Time for Entries</Text>
@@ -87,23 +87,44 @@ const styles = StyleSheet.create({
         shadowRadius: 20,
     },
     competitionsEnter: {
-        backgroundColor: '#FEB62C',
-        height: RFPercentage(5),
-        width: RFPercentage(18),
-        borderRadius: 50,
-        marginBottom: 15,
+        // backgroundColor: '#FEB62C',
+        // height: RFPercentage(5),
+        // width: RFPercentage(18),
+        // borderRadius: 50,
+        // marginBottom: 15,
+        // shadowColor: 'gray',
+        // textAlign: 'center',
+
+
+        alignItems: 'center',
+        alignSelf: 'center',
+        backgroundColor: '#A27A51',
+
+        // marginBottom: RFValue(5),
         shadowColor: 'gray',
+
+        borderRadius: 50,
+        shadowColor: 'gray',
+        shadowRadius: RFPercentage(8),
+        height: RFValue(35),
+        width: RFValue(120),
+
+        alignItems: 'center',
+        alignSelf: 'center',
         textAlign: 'center',
     },
     competitionsEnterText: {
-        color: '#111',
-        fontSize: RFValue(12),
-        paddingHorizontal: RFValue(40),
-        paddingVertical: RFValue(10),
-        fontWeight: 900
+        color: '#2b2b2b',
+        fontSize: RFValue(16),
+        alignSelf: 'center',
+        paddingVertical: RFValue(8),
+        fontWeight: '800',
     },
     competitionsButtons: {
         marginTop: RFValue(15),
+        marginBottom: RFValue(15),
+        flexDirection: 'row',
+        justifyContent: 'space-between',
     },
     buttonGap: {
         marginHorizontal: 10, // Adjust the margin value to set the desired gap
@@ -114,6 +135,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.2,
         shadowRadius: 3,
     },
+    // this is the button shadow
     Browse: {
         shadowColor: '#171717',
         shadowOffset: { width: -2, height: 4 },
@@ -121,15 +143,26 @@ const styles = StyleSheet.create({
         shadowRadius: 3,
     },
     competitionsBrowse: {
-        borderWidth: 2,
-        borderColor: '#598059',
-        // borderStyle: 'dashed',
-        height: RFPercentage(5),
-        width: RFPercentage(12),
-        backgroundColor: '#598059',
+        // borderWidth: 2,
+        // borderColor: '#598059',
+        // // borderStyle: 'dashed',
+        // height: RFPercentage(5),
+        // width: RFPercentage(12),
+        // backgroundColor: '#598059',
+        // borderRadius: 50,
+        // marginBottom: 20,
+        // // shadowColor: 'gray',
+
         borderRadius: 50,
-        marginBottom: 20,
-        // shadowColor: 'gray',
+        shadowColor: 'gray',
+        shadowRadius: RFPercentage(8),
+        height: RFValue(35),
+        width: RFValue(120),
+        borderWidth: 1.5,
+        borderColor: '#F2C440',
+        borderStyle: 'dashed',
+        alignItems: 'center',
+        alignSelf: 'center',
         textAlign: 'center',
         // elevation: 10, // Adjust the elevation value as per your preference
 
@@ -137,11 +170,11 @@ const styles = StyleSheet.create({
 
 
     competitionsBrowseText: {
-        color: '#eee',
-        fontSize: RFValue(12),
-        paddingHorizontal: RFValue(12),
-        paddingVertical: RFValue(9),
-        fontWeight: 900
+        color: '#F2C440',
+        fontSize: RFValue(16),
+        alignSelf: 'center',
+        paddingVertical: RFValue(8),
+        fontWeight: '800',
     },
     photocompTimeView: {
         marginVertical: RFValue(-2),

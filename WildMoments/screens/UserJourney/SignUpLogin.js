@@ -71,7 +71,7 @@ const SignUpLogin = ({ navigation }) => {
                                 onPress={() => navigation.navigate('SignUp')}
                             >
                                 <View >
-                                    <Text style={styles.signUpButtonText}>Sign Up</Text>
+                                    <Text style={styles.signUpButtonText}>SIGN UP</Text>
                                 </View>
                             </TouchableOpacity >
 
@@ -84,7 +84,7 @@ const SignUpLogin = ({ navigation }) => {
                                 onPress={() => navigation.navigate('Login')}
                             >
                                 <View >
-                                    <Text style={styles.signInButtonText} >Login</Text>
+                                    <Text style={styles.signInButtonText} >LOGIN</Text>
                                 </View>
                             </TouchableOpacity>
 
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
         fontSize: RFPercentage(4),
         fontWeight: 'bold',
-        color: 'white',
+        color: '#EBEBEB',
     },
     butonContainer: {
         marginTop: 80,
@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
     },
     signInButtonText: {
         textAlign: 'center',
-
+        fontWeight: '800',
         padding: RFPercentage(2),
         fontSize: RFPercentage(3),
     },

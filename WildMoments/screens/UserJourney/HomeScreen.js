@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
     },
     rulesText: {
         fontSize: RFPercentage(1.6),
-        color: '#111',
+        color: '#F2C440',
         textTransform: 'lowercase',
         marginTop: -2,
         marginBottom: 6,

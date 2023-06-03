@@ -132,7 +132,7 @@ const Login = ({ navigation }) => {
                         <View>
                             {/* Validation here */}
                             < TouchableOpacity style={styles.submitButton} onPress={playSound} >
-                                <Text style={styles.submitButtonText}>Log In</Text>
+                                <Text style={styles.submitButtonText}>LOG IN</Text>
                             </TouchableOpacity>
                         </View>
                     ) : <ActivityIndicator animating={loading} size={40} />}
@@ -198,13 +198,13 @@ const styles = StyleSheet.create({
     inputLabel: {
         fontSize: 14,
         marginLeft: 4,
-        color: '#D9D9D9',
+        color: '#9E9E9E',
         marginBottom: 5,
         fontWeight: 600,
     },
     inputStyle: {
         height: 40,
-        borderRadius: 5,
+        borderRadius: 11,
         borderStyle: 'dashed',
         borderColor: '#71563A',
         borderWidth: 1.5,
