@@ -16,6 +16,15 @@ import { Roboto } from "@expo-google-fonts/dev";
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 import { registerNewUser } from '../../services/firebaseAuth';
+import { ScrollView } from 'react-native-gesture-handler';
+
+// Profile Picture Images
+import lion from '../../assets/ProfileImages/lion_pfp.png';
+import elephant from '../../assets/ProfileImages/elephant_pfp.png';
+import leopard from '../../assets/ProfileImages/leopard_pfp.png';
+import buffalo from '../../assets/ProfileImages/buffalo_pfp.png';
+import rhino from '../../assets/ProfileImages/rhino_pfp.png';
+import photographer from '../../assets/ProfileImages/photographer_pfp.png';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -57,6 +66,34 @@ const SignUp = ({ navigation }) => {
                         <Text style={styles.enterDetailsText}>Enter your details below & join the Ultimate Wildlife Photo Competition</Text>
                     </View>
 
+                    <Text style={styles.pfpText}>Choose your Profile Picture</Text>
+                    <View
+                        style={styles.profilePictureSelectionScrollView}
+                        alwaysBounceHorizontal={true}
+                        contentContainerStyle={{ justifyContent: 'space-evenly', alignItems: 'flex-start', flexWrap: 'wrap', gap: 10 }}
+                        horizontal={true}
+                        showsHorizontalScrollIndicator={false}
+                    >
+
+                        <TouchableOpacity style={styles.profilePicture}>
+                            <Image source={lion} resizeMode="contain" style={styles.lion} />
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.profilePicture}>
+                            <Image source={elephant} resizeMode="contain" style={styles.elephant} />
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.profilePicture}>
+                            <Image source={rhino} resizeMode="contain" style={styles.rhino} />
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.profilePicture}>
+                            <Image source={buffalo} resizeMode="contain" style={styles.buffalo} />
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.profilePicture}>
+                            <Image source={leopard} resizeMode="contain" style={styles.leopard} />
+                        </TouchableOpacity >
+                        <TouchableOpacity style={styles.profilePicture}>
+                            <Image source={photographer} resizeMode="contain" style={styles.photographer} />
+                        </TouchableOpacity>
+                    </View>
 
 
                     <View style={styles.inputView}>
@@ -65,7 +102,7 @@ const SignUp = ({ navigation }) => {
                             style={styles.inputStyle}
                             keyboardType='default'
                             placeholder='John Doe'
-                            placeholderTextColor='#554433'
+                            placeholderTextColor='#71563A'
                             defaultValue={username}
                             onChangeText={newValue => setUsername(newValue)}
                         >
@@ -76,7 +113,7 @@ const SignUp = ({ navigation }) => {
                             style={styles.inputStyle}
                             keyboardType='email-address'
                             placeholder='john@mail.com'
-                            placeholderTextColor='#554433'
+                            placeholderTextColor='#71563A'
                             defaultValue={email}
                             onChangeText={newValue => setEmail(newValue)}
                         >
@@ -88,16 +125,16 @@ const SignUp = ({ navigation }) => {
                             keyboardType='default'
                             secureTextEntry={true} //great way to show/hide password
                             placeholder='Minumim 6 characters'
-                            placeholderTextColor='#554433'
+                            placeholderTextColor='#71563A'
                             defaultValue={password}
                             onChangeText={newValue => setPassword(newValue)}
                         ></TextInput>
                     </View>
 
-                    <View>
+                    <View style={styles.buttons}>
                         {/* Validation here */}
                         <TouchableOpacity style={styles.submitButton} onPress={registerUser}>
-                            <Text style={styles.submitButtonText}>Create Account</Text>
+                            <Text style={styles.submitButtonText}>SIGN UP</Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity onPress={() => navigation.navigate('Login')}>
@@ -122,6 +159,45 @@ export default SignUp
 
 // Styling of component
 const styles = StyleSheet.create({
+    buttons: {
+        marginVertical: RFValue(10),
+    },
+    pfpText: {
+        marginBottom: RFValue(6),
+        color: '#9E9E9E',
+    },
+    profilePictureSelectionScrollView: {
+        flexDirection: 'row',
+        gap: RFValue(6),
+        justifyContent: 'center',
+        height: RFValue(50),
+        width: windowWidth,
+        alignContent: 'center',
+    },
+    lion: {
+        width: RFValue(50),
+        height: RFValue(50)
+    },
+    elephant: {
+        width: RFValue(50),
+        height: RFValue(50)
+    },
+    rhino: {
+        width: RFValue(50),
+        height: RFValue(50)
+    },
+    leopard: {
+        width: RFValue(50),
+        height: RFValue(50)
+    },
+    buffalo: {
+        width: RFValue(50),
+        height: RFValue(50)
+    },
+    photographer: {
+        width: RFValue(50),
+        height: RFValue(50)
+    },
     background: {
 
         resizeMode: 'contain', // or 'contain' to maintain aspect ratio
@@ -152,66 +228,66 @@ const styles = StyleSheet.create({
         padding: RFPercentage(2),
     },
     Intro: {
-        color: '#A27A51',
+        color: '#EBEBEB',
         marginBottom: RFPercentage(1),
 
     },
     enterDetailsText: {
-        fontSize: RFPercentage(3),
+        fontSize: RFValue(16),
         textAlign: 'center',
         paddingLeft: RFPercentage(0.3),
         paddingRight: RFPercentage(0.3),
-        color: '#9E9E9E'
+        color: '#A27A51'
     },
     inputView: {
-        marginTop: RFPercentage(3),
+        marginTop: RFValue(8),
         width: RFPercentage(40),
     },
     inputLabel: {
-        fontSize: 14,
+        fontSize: RFValue(14),
         marginLeft: 4,
-        color: '#D9D9D9',
+        color: '#9E9E9E',
         marginBottom: 5,
         fontWeight: 600,
     },
     inputStyle: {
         height: 40,
-        borderRadius: 5,
+        borderRadius: 11,
         borderStyle: 'dashed',
         borderColor: '#71563A',
         borderWidth: 1.5,
+        fontSize: RFValue(14),
         padding: 10,
         color: '#A27A51',
         textDecorationLine: 'none',
         marginBottom: 10,
     },
     submitButton: {
-
+        alignItems: 'center',
+        alignSelf: 'center',
         backgroundColor: '#A27A51',
-        marginTop: 30,
-        height: RFPercentage(8),
-        width: RFPercentage(30),
-
-        padding: 15,
-        borderRadius: 50,
-        marginBottom: 20,
+        height: RFValue(45),
+        width: RFValue(150),
+        borderRadius: RFValue(50),
+        // marginBottom: RFValue(5),
         shadowColor: 'gray',
     },
     submitButtonText: {
         color: '#2b2b2b',
-        fontSize: 20,
-        textAlign: 'center',
-        fontWeight: 'bold'
-        ,
+        fontSize: RFValue(16),
+        alignSelf: 'center',
+        paddingVertical: RFValue(13),
+        fontWeight: '800',
     },
     needAccountButton: {
         alignItems: 'center',
         textAlign: 'center',
         color: 'black',
-        fontSize: RFPercentage(2),
-        fontWeight: 'bold',
+        fontSize: RFValue(16),
+        marginTop: RFValue(10),
         height: RFPercentage(4),
         width: RFPercentage(30),
+        fontWeight: '400',
     }
 
 })

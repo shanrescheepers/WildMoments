@@ -33,7 +33,7 @@ export default function App() {
         // use logged in
         setLoggedIn(true)
       } else {
-        setLoggedIn(true)
+        setLoggedIn(false)
       }
     })
     return unsubscribe;

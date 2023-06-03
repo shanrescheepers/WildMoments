@@ -139,7 +139,7 @@ const Login = ({ navigation }) => {
 
 
                     <TouchableOpacity onPress={() => navigation.navigate('SignUp')} style={styles.needAccountButton}>
-                        <Text>Need an account?</Text>
+                        <Text>Don't have an account?</Text>
                     </TouchableOpacity>
 
                 </View >
@@ -214,32 +214,32 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     submitButton: {
+        marginTop: RFValue(9),
+        alignItems: 'center',
+        alignSelf: 'center',
         backgroundColor: '#A27A51',
-        marginTop: 30,
-        height: RFPercentage(8),
-        width: RFPercentage(16),
-        padding: 15,
-        borderRadius: 50,
-        marginBottom: 20,
+        height: RFValue(45),
+        width: RFValue(150),
+        borderRadius: RFValue(50),
+        // marginBottom: RFValue(5),
         shadowColor: 'gray',
-        textAlign: 'center',
-        justifyContent: 'center',
     },
     submitButtonText: {
         color: '#2b2b2b',
-        fontSize: 20,
-        textAlign: 'center',
-        fontWeight: 'bold',
+        fontSize: RFValue(16),
         alignSelf: 'center',
+        paddingVertical: RFValue(13),
+        fontWeight: '800',
     },
     needAccountButton: {
         alignItems: 'center',
         textAlign: 'center',
         color: 'black',
-        fontSize: RFPercentage(2),
-        fontWeight: 'bold',
-        height: RFPercentage(2),
+        fontSize: RFValue(16),
+        marginTop: RFValue(10),
+        height: RFPercentage(4),
         width: RFPercentage(30),
+        fontWeight: '400',
     },
     horisontalLine: {
         width: 90,
