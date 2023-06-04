@@ -1,9 +1,10 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
-import { globalStylesheet, TextInput, TouchableOpacity, Button, Image, ActivityIndicator, Alert } from 'react-native';
+import { globalStylesheet, TextInput, TouchableOpacity, Button, Image, ActivityIndicator, Alert, } from 'react-native';
 import { SafeAreaView, StyleSheet, Text, View, ImageBackground, KeyboardAvoidingView } from 'react-native';
 import Checkbox from 'expo-checkbox';
+
 import { firebase } from '../../firebase';
 // import firebase from 'firebase/app';
 import 'firebase/compat/storage'
@@ -193,91 +194,98 @@ const EnterCompScreen = ({ navigation }) => {
                 source={require('../../assets/backgroundImage.png')} // Replace with the actual path to your image
                 style={styles.background}
             >
-                <View style={styles.container}>
-                    <View style={styles.heading}>
-                        <Text style={styles.headingText}>#PhotoCompetition - Autumn 2023 DB</Text>
-                        <Text style={styles.headingText2}>Please enter all the fields before uploading your image</Text>
-                    </View>
+                <KeyboardAvoidingView
+                    keyboardVerticalOffset={120}
+                    style={{ flex: 1 }}
+                    behavior="padding"
+                    enabled={true}
+                >
+                    <ScrollView>
+                        <View style={styles.container}>
+                            <View style={styles.heading}>
+                                <Text style={styles.headingText}>#PhotoCompetition - Autumn 2023 DB</Text>
+                                <Text style={styles.headingText2}>Please enter all the fields before uploading your image</Text>
+                            </View>
 
 
 
-                    <View style={styles.inputView}>
+                            <View style={styles.inputView}>
 
-                        <TextInput
-                            style={styles.inputStyle}
-                            keyboardType='default'
-                            placeholder='ENTER IMAGE TITLE HERE'
-                            placeholderTextColor='#8A8A8A'
-                            onChangeText={newValue => setTitle(newValue)}
-                            defaultValue={title}
-                        >
-                        </TextInput>
+                                <TextInput
+                                    style={styles.inputStyle}
+                                    keyboardType='default'
+                                    placeholder='ENTER IMAGE TITLE HERE'
+                                    placeholderTextColor='#8A8A8A'
+                                    onChangeText={newValue => setTitle(newValue)}
+                                    defaultValue={title}
+                                >
+                                </TextInput>
 
 
-                        <View style={styles.imageComponent}>
+                                <View style={styles.imageComponent}>
 
-                            <TouchableOpacity onPress={pickImage} style={styles.imageUploadCon}>
-                                {!imagePlaceholder ?
-                                    <Image source={require('../../assets/AppIcons/imageHolder.png')}
-                                        style={styles.imageUpload} /> :
-                                    <Image source={{ uri: image }}
-                                        style={styles.imageUpload} />}
-                                {uploading && <ActivityIndicator size={'large'} color='black' style={{ zIndex: RFValue(1), position: 'absolute', justifyContent: 'center', alignContent: 'center', alignItems: 'center', alignSelf: 'center', top: RFValue(120) }}
-                                />}
+                                    <TouchableOpacity onPress={pickImage} style={styles.imageUploadCon}>
+                                        {!imagePlaceholder ?
+                                            <Image source={require('../../assets/AppIcons/imageHolder.png')}
+                                                style={styles.imageUpload} /> :
+                                            <Image source={{ uri: image }}
+                                                style={styles.imageUpload} />}
+                                        {uploading && <ActivityIndicator size={'large'} color='black' style={{ zIndex: RFValue(1), position: 'absolute', justifyContent: 'center', alignContent: 'center', alignItems: 'center', alignSelf: 'center', top: RFValue(120) }}
+                                        />}
 
-                            </TouchableOpacity>
-                        </View>
+                                    </TouchableOpacity>
+                                </View>
 
-                        {/* <View style={styles.container}>
+                                {/* <View style={styles.container}>
                             {image && <Image source={{ uri: image }} style={{ width: 170, height: 200 }} />}
                             <Button title='Select Image' onPress={pickImage} />
                             {!uploading ? <Button title='Upload Image' onPress={uploadImage} /> : <ActivityIndicator size={'small'} color='black' />}
                         </View> */}
 
 
-                        <View style={styles.Tags}>
+                                <View style={styles.Tags}>
 
-                            <TextInput
-                                style={styles.inputStyleTagsSpecies}
-                                keyboardType='default'
-                                placeholder='SPECIES'
-                                placeholderTextColor='#8A8A8A'
-                                onChangeText={newValue => setSpecieDetail(newValue)}
-                                defaultValue={specieDetail}
-                            ></TextInput>
+                                    <TextInput
+                                        style={styles.inputStyleTagsSpecies}
+                                        keyboardType='default'
+                                        placeholder='SPECIES'
+                                        placeholderTextColor='#8A8A8A'
+                                        onChangeText={newValue => setSpecieDetail(newValue)}
+                                        defaultValue={specieDetail}
+                                    ></TextInput>
 
-                            <TextInput
-                                style={styles.inputStyleTagsCameraType}
-                                keyboardType='default'
-                                placeholder='CAMERA TYPE'
-                                placeholderTextColor='#8A8A8A'
-                                onChangeText={newValue => setCameraDetail(newValue)}
-                                defaultValue={cameraDetail}
-                            ></TextInput>
-                        </View>
-                        <View style={styles.Gap}></View>
-                        <View style={styles.Tags2}>
-                            <TextInput
-                                style={styles.inputStyleTagsLocation}
-                                keyboardType='default'
-                                placeholder='LOCATION'
-                                placeholderTextColor='#8A8A8A'
-                                onChangeText={newValue => setLocation(newValue)}
-                                defaultValue={location}
-                                onpre
-                            ></TextInput>
+                                    <TextInput
+                                        style={styles.inputStyleTagsCameraType}
+                                        keyboardType='default'
+                                        placeholder='CAMERA TYPE'
+                                        placeholderTextColor='#8A8A8A'
+                                        onChangeText={newValue => setCameraDetail(newValue)}
+                                        defaultValue={cameraDetail}
+                                    ></TextInput>
+                                </View>
+                                <View style={styles.Gap}></View>
+                                <View style={styles.Tags2}>
+                                    <TextInput
+                                        style={styles.inputStyleTagsLocation}
+                                        keyboardType='default'
+                                        placeholder='LOCATION'
+                                        placeholderTextColor='#8A8A8A'
+                                        onChangeText={newValue => setLocation(newValue)}
+                                        defaultValue={location}
+                                        onpre
+                                    ></TextInput>
 
-                            <TextInput
-                                style={styles.inputStyleTagsCategory}
-                                keyboardType='default'
-                                placeholder='CATEGORY'
-                                placeholderTextColor='#8A8A8A'
-                                onChangeText={newValue => setCategory(newValue)}
-                                defaultValue={category}
+                                    <TextInput
+                                        style={styles.inputStyleTagsCategory}
+                                        keyboardType='default'
+                                        placeholder='CATEGORY'
+                                        placeholderTextColor='#8A8A8A'
+                                        onChangeText={newValue => setCategory(newValue)}
+                                        defaultValue={category}
 
-                            ></TextInput>
-                        </View>
-                        {/* <TextInput
+                                    ></TextInput>
+                                </View>
+                                {/* <TextInput
                             style={styles.inputStyle}
                             keyboardType='default'
                             secureTextEntry={true} //great way to show/hide password
@@ -286,38 +294,40 @@ const EnterCompScreen = ({ navigation }) => {
                         // defaultValue={password}
                         //                 onChangeText={newValue => setPassword(newValue)}
                         ></TextInput> */}
-                    </View>
+                            </View>
 
-                    <View style={styles.buttons}>
-                        <View style={styles.buttonsCheckbox}>
-                            <Checkbox style={{ borderRadius: 20, borderStyle: 'dashed', borderColor: '#FA993B', width: RFValue(30), height: RFValue(30), borderWidth: RFValue(1), }} value={isChecked} onValueChange={setChecked} color={isChecked ? '#FA993B' : undefined} />
-                            <Text style={{ fontSize: RFValue(14), justifyContent: 'center', alignContent: 'center', alignItems: 'center', alignSelf: 'center', fontWeight: '500', color: '#FA993B' }}>I have read & agree to the competition rules</Text>
-                        </View>
-                        <View style={styles.buttonsSubmit}>
-                            <TouchableOpacity style={styles.submitButton} onPress={uploadImage} >
-                                <Text style={styles.submitButtonText}>SUBMIT</Text>
-                            </TouchableOpacity>
-                        </View>
+                            <View style={styles.buttons}>
+                                <View style={styles.buttonsCheckbox}>
+                                    <Checkbox style={{ borderRadius: 20, borderStyle: 'dashed', borderColor: '#FA993B', width: RFValue(30), height: RFValue(30), borderWidth: RFValue(1), }} value={isChecked} onValueChange={setChecked} color={isChecked ? '#FA993B' : undefined} />
+                                    <Text style={{ fontSize: RFValue(14), justifyContent: 'center', alignContent: 'center', alignItems: 'center', alignSelf: 'center', fontWeight: '500', color: '#FA993B' }}>I have read & agree to the competition rules</Text>
+                                </View>
+                                <View style={styles.buttonsSubmit}>
+                                    <TouchableOpacity style={styles.submitButton} onPress={uploadImage} >
+                                        <Text style={styles.submitButtonText}>SUBMIT</Text>
+                                    </TouchableOpacity>
+                                </View>
 
 
-                        {/* Validation here */}
-                        {/* <TouchableOpacity style={styles.submitButton}  >
+                                {/* Validation here */}
+                                {/* <TouchableOpacity style={styles.submitButton}  >
                             <Text style={styles.submitButtonText}>SIGN UP</Text>
                         </TouchableOpacity> */}
 
-                        {/* <TouchableOpacity >
+                                {/* <TouchableOpacity >
                             <Text style={styles.needAccountButton}>Already have an Account?</Text>
                         </TouchableOpacity> */}
-                    </View>
+                            </View>
 
-                    {/* <Toucha
+                            {/* <Toucha
                 <Button style={styles.needAccountButton}
                     title="Need an account?" color={'black'}>
 
                 </Button> */}
 
 
-                </View >
+                        </View >
+                    </ScrollView>
+                </KeyboardAvoidingView>
             </ImageBackground>
         </SafeAreaView >
     );
