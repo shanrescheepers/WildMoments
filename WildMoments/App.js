@@ -30,11 +30,16 @@ export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
+      console.log("User Changed");
       if (user) {
         // use logged in
+        console.log("User Login");
+
         setLoggedIn(true)
       } else {
-        setLoggedIn(true)
+        console.log("User logout");
+
+        setLoggedIn(false)
       }
     })
     return unsubscribe;
@@ -45,7 +50,7 @@ export default function App() {
 
       </View>
 
-      <NavigationContainer>
+      <NavigationContainer >
 
         <Stack.Navigator initialRouteName='SignUpLogin' style={styles.stacknav} screenOptions={{
           headerStyle: { backgroundColor: '#202022' },
@@ -75,6 +80,7 @@ export default function App() {
               <Stack.Screen name="ImagesVotingScreen" component={ImagesVotingScreen} options={{ headerShown: false }} />
               <Stack.Screen name="BrowseAndEnterScreen" component={BrowseAndEnterScreen} options={{ headerShown: false }} />
               <Stack.Screen name="EnterCompScreen" component={EnterCompScreen} options={{ headerShown: false }} />
+              {/* <Stack.Navigator name="" component={HeaderComponent} options={{ headerShown: false }} /> */}
             </>
 
           )}
@@ -83,6 +89,7 @@ export default function App() {
 
       </NavigationContainer>
     </>
+
 
 
   );

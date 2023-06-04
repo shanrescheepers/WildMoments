@@ -1,7 +1,7 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
-import { globalStylesheet, TextInput, TouchableOpacity, Button, Image } from 'react-native';
+import { globalStylesheet, TextInput, TouchableOpacity, Button, Image, Platform, KeyboardAvoidingView } from 'react-native';
 import { SafeAreaView, StyleSheet, Text, View, ImageBackground } from 'react-native';
 // import { styles } from '../utils/styles';
 
@@ -80,86 +80,106 @@ const SignUp = ({ navigation }) => {
         playSound()
     }
     return (
-        <SafeAreaView>
+        <SafeAreaView >
             <ImageBackground
                 source={require('../../assets/backgroundImage.png')} // Replace with the actual path to your image
                 style={styles.background}
             >
-                <View style={styles.container}>
+                <KeyboardAvoidingView
+                    keyboardVerticalOffset={RFValue(80)}
+                    style={{ flex: 1, }}
+                    behavior="padding"
+                    enabled={true}
+
+                >
                     <Image source={require("../../assets/log.png")} style={styles.logo}></Image>
-
-                    <View style={styles.introView}>
-                        <Text style={styles.Intro}>
-                            Celebrating Wildlife Through Photography
-                        </Text>
-                        <Text style={styles.enterDetailsText}>Enter your details below & join the Ultimate Wildlife Photo Competition</Text>
-                    </View>
-
-                    <Text style={styles.pfpText}>Choose your Profile Picture</Text>
-                    <View
-                        style={styles.profilePictureSelectionScrollView}
-                        alwaysBounceHorizontal={true}
-                        contentContainerStyle={{ justifyContent: 'space-evenly', alignItems: 'flex-start', flexWrap: 'wrap', gap: 10 }}
-                        horizontal={true}
-                        showsHorizontalScrollIndicator={false}
-                    >
-
-                        <TouchableOpacity style={styles.profilePicture}>
-                            <Image source={lion} resizeMode="contain" style={styles.lion} />
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.profilePicture}>
-                            <Image source={elephant} resizeMode="contain" style={styles.elephant} />
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.profilePicture}>
-                            <Image source={rhino} resizeMode="contain" style={styles.rhino} />
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.profilePicture}>
-                            <Image source={buffalo} resizeMode="contain" style={styles.buffalo} />
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.profilePicture}>
-                            <Image source={leopard} resizeMode="contain" style={styles.leopard} />
-                        </TouchableOpacity >
-                        <TouchableOpacity style={styles.profilePicture}>
-                            <Image source={photographer} resizeMode="contain" style={styles.photographer} />
-                        </TouchableOpacity>
-                    </View>
+                    <ScrollView contentContainerStyle={styles.contentContainer}>
+                        <View style={styles.container}>
 
 
-                    <View style={styles.inputView}>
-                        <Text style={styles.inputLabel}>Name & Surname</Text>
-                        <TextInput
-                            style={styles.inputStyle}
-                            keyboardType='default'
-                            placeholder='Name & Surname'
-                            placeholderTextColor='#71563A'
-                            defaultValue={username}
-                            onChangeText={newValue => setUsername(newValue)}
-                        >
-                        </TextInput>
+                            <View style={styles.introView}>
+                                <Text style={styles.Intro}>
+                                    Celebrating Wildlife Through Photography
+                                </Text>
+                                <Text style={styles.enterDetailsText}>Enter your details below & join the Ultimate Wildlife Photo Competition</Text>
+                            </View>
 
-                        <Text style={styles.inputLabel}>Email</Text>
-                        <TextInput
-                            style={styles.inputStyle}
-                            keyboardType='email-address'
-                            placeholder='mail@mail.com'
-                            placeholderTextColor='#71563A'
-                            defaultValue={email}
-                            onChangeText={newValue => setEmail(newValue)}
-                        >
-                        </TextInput>
+                            <Text style={styles.pfpText}>Choose your Profile Picture</Text>
+                            <View
+                                style={styles.profilePictureSelectionScrollView}
+                                alwaysBounceHorizontal={true}
+                                contentContainerStyle={{ justifyContent: 'space-evenly', alignItems: 'flex-start', flexWrap: 'wrap', gap: 10 }}
+                                horizontal={true}
+                                showsHorizontalScrollIndicator={false}
+                            >
 
-                        <Text style={styles.inputLabel}>Password</Text>
-                        <TextInput
-                            style={styles.inputStyle}
-                            keyboardType='default'
-                            secureTextEntry={true} //great way to show/hide password
-                            placeholder='Minumim 6 characters'
-                            placeholderTextColor='#71563A'
-                            defaultValue={password}
-                            onChangeText={newValue => setPassword(newValue)}
-                        ></TextInput>
-                    </View>
+                                <TouchableOpacity style={styles.profilePicture}>
+                                    <Image source={lion} resizeMode="contain" style={styles.lion} />
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.profilePicture}>
+                                    <Image source={elephant} resizeMode="contain" style={styles.elephant} />
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.profilePicture}>
+                                    <Image source={rhino} resizeMode="contain" style={styles.rhino} />
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.profilePicture}>
+                                    <Image source={buffalo} resizeMode="contain" style={styles.buffalo} />
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.profilePicture}>
+                                    <Image source={leopard} resizeMode="contain" style={styles.leopard} />
+                                </TouchableOpacity >
+                                <TouchableOpacity style={styles.profilePicture}>
+                                    <Image source={photographer} resizeMode="contain" style={styles.photographer} />
+                                </TouchableOpacity>
+                            </View>
 
+
+                            <View style={styles.inputView}>
+                                <Text style={styles.inputLabel}>Name & Surname</Text>
+                                <TextInput
+                                    style={styles.inputStyle}
+                                    keyboardType='default'
+                                    placeholder='Name & Surname'
+                                    placeholderTextColor='#71563A'
+                                    defaultValue={username}
+                                    onChangeText={newValue => setUsername(newValue)}
+                                >
+                                </TextInput>
+
+                                <Text style={styles.inputLabel}>Email</Text>
+                                <TextInput
+                                    style={styles.inputStyle}
+                                    keyboardType='email-address'
+                                    placeholder='mail@mail.com'
+                                    placeholderTextColor='#71563A'
+                                    defaultValue={email}
+                                    onChangeText={newValue => setEmail(newValue)}
+                                >
+                                </TextInput>
+
+                                <Text style={styles.inputLabel}>Password</Text>
+                                <TextInput
+                                    style={styles.inputStyle}
+                                    keyboardType='default'
+                                    secureTextEntry={true} //great way to show/hide password
+                                    placeholder='Minumim 6 characters'
+                                    placeholderTextColor='#71563A'
+                                    defaultValue={password}
+                                    onChangeText={newValue => setPassword(newValue)}
+                                ></TextInput>
+                            </View>
+
+
+
+                            {/* <Toucha
+                <Button style={styles.needAccountButton}
+                    title="Need an account?" color={'black'}>
+
+                </Button> */}
+
+
+                        </View >
+                    </ScrollView>
                     <View style={styles.buttons}>
                         {/* Validation here */}
                         <TouchableOpacity style={styles.submitButton} onPress={registerUser} >
@@ -170,15 +190,7 @@ const SignUp = ({ navigation }) => {
                             <Text style={styles.needAccountButton}>Already have an Account?</Text>
                         </TouchableOpacity>
                     </View>
-
-                    {/* <Toucha
-                <Button style={styles.needAccountButton}
-                    title="Need an account?" color={'black'}>
-
-                </Button> */}
-
-
-                </View >
+                </KeyboardAvoidingView>
             </ImageBackground>
         </SafeAreaView>
     );
@@ -188,11 +200,21 @@ export default SignUp
 
 // Styling of component
 const styles = StyleSheet.create({
+    contentContainer: {
+        position: 'relative',
+
+        zIndex: 1,
+
+    },
     buttons: {
-        marginVertical: RFValue(10),
+        alignSelf: 'center',
+        position: 'absolute',
+        bottom: Platform.OS === 'ios' ? 70 : 30,
+        //   top: 
     },
     pfpText: {
-        marginBottom: RFValue(6),
+        marginBottom: Platform.OS === 'ios' ? 10 : 10,
+        marginTop: Platform.OS === 'ios' ? 10 : 10,
         color: '#9E9E9E',
     },
     profilePictureSelectionScrollView: {
@@ -235,16 +257,16 @@ const styles = StyleSheet.create({
     },
     container: {
         margin: 20,
-        marginTop: 32,
+
         justifyContent: 'center',
         alignItems: 'center',
     },
     logo: {
-        height: RFPercentage(15),
-        width: RFPercentage(24),
+        height: RFPercentage(13),
+        width: RFPercentage(21),
         alignSelf: 'center',
         marginBottom: 20,
-
+        marginTop: Platform.OS === 'ios' ? 8 : 8,
         resizeMode: 'cover',
     },
     dropdown: {
@@ -254,22 +276,27 @@ const styles = StyleSheet.create({
     introView: {
         textAlign: 'center',
         alignItems: 'center',
-        padding: RFPercentage(2),
+        padding: RFValue(4),
+        bottom: Platform.OS === 'ios' ? 10 : 10,
     },
     Intro: {
         color: '#EBEBEB',
-        marginBottom: RFPercentage(1),
-
+        marginBottom: RFValue(4),
+        textTransform: 'uppercase',
+        textAlign: 'center',
+        top: Platform.OS === 'ios' ? 1 : 1,
+        fontWeight: '800',
     },
     enterDetailsText: {
         fontSize: RFValue(16),
         textAlign: 'center',
         paddingLeft: RFPercentage(0.3),
         paddingRight: RFPercentage(0.3),
-        color: '#A27A51'
+        color: '#A27A51',
+        top: Platform.OS === 'ios' ? 10 : 10,
     },
     inputView: {
-        marginTop: RFValue(8),
+        marginTop: Platform.OS === 'ios' ? 30 : 20,
         width: RFPercentage(40),
     },
     inputLabel: {

@@ -38,9 +38,9 @@ const HomeScreen = ({ navigation }) => {
                         <HeaderComponent navigation={navigation} />
                     </View>
                     <View style={styles.headingsView}>
-                        <Text style={styles.headingsView_h1}>WildMoments</Text>
-                        <Text style={styles.headingsView_h2}>The premier for amazing wildlife photos & conservation.</Text>
-                        <Text style={styles.headingsView_h3}>Put your images out into the world by entering, voting and winning competitions! </Text>
+                        {/* <Text style={styles.headingsView_h1}>Are you ready?</Text> */}
+                        <Text style={styles.headingsView_h2}>The premier of amazing wildlife photos & conservation.</Text>
+                        <Text style={styles.headingsView_h3}>Put your images out into the world by entering our competitions & stand a chance to win exclusive prizes.</Text>
                         {/* <Text style={styles.headingsView_h4}>Vote for your most favourite photo. </Text>
                         <Text style={styles.headingsView_h5}>Winners stand a chance to win spectacular prizes.</Text> */}
                     </View>
@@ -94,7 +94,6 @@ const styles = StyleSheet.create({
     competitionView: {
         flex: 1,
         padding: 10,
-
         backgroundColor: 'transparent',
     },
     spacer: {
@@ -116,27 +115,27 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
     headingsView_h1: {
-        fontSize: RFPercentage(5),
+        fontSize: RFValue(14),
         alignSelf: 'center',
         marginTop: RFValue(5)
     },
     headingsView_h2: {
-        fontSize: RFPercentage(2),
-
+        fontSize: RFValue(16),
         paddingLeft: RFPercentage(5),
         paddingRight: RFPercentage(5),
         textAlign: 'center',
-        fontWeight: 'bold',
+        fontWeight: '900',
+        textTransform: 'uppercase',
     },
     headingsView_h3: {
         marginTop: RFValue(3),
         textAlign: 'center',
-        fontSize: RFPercentage(2),
+        fontSize: RFValue(14),
 
         paddingLeft: RFPercentage(3),
         paddingRight: RFPercentage(3),
         color: '#111',
-        fontWeight: 'bold',
+        fontWeight: '400',
 
     },
     headingsView_h4: {
@@ -179,11 +178,11 @@ const styles = StyleSheet.create({
         padding: RFValue(1),
         // backgroundColor: '#C89E7B',
 
-        borderStyle: 'dashed',
-        borderColor: '#C69F7A',
-        borderWidth: 1,
+        borderStyle: 'dotted',
+        borderColor: '#0E0E0E',
+        borderWidth: 2,
 
-        color: '#A27A51',
+        color: '#0E0E0E',
 
         borderRadius: 50,
         marginBottom: 6,
@@ -192,7 +191,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     rulesButtonText: {
-        color: '#C69F7A',
+        color: '#0E0E0E',
         fontSize: RFValue(10),
         textAlign: 'center',
         fontWeight: '900',
