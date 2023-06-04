@@ -89,7 +89,7 @@ const ExploreScreen = ({ navigation }) => {
 
                         <View style={styles.comp1Heading}>
                             <TouchableOpacity style={styles.closedcompsButton}>
-                                <Text style={styles.comp2HeadingCatergory}>CLOSED COMPS</Text>
+                                <Text style={styles.comp2HeadingCatergory}>POPULAR IMAGES</Text>
                             </TouchableOpacity>
                         </View>
                         <View style={styles.comp2}>
@@ -100,13 +100,25 @@ const ExploreScreen = ({ navigation }) => {
                                 showsHorizontalScrollIndicator={false}
                             >
                                 <View style={styles.comp2ImageView}>
-                                    <TouchableOpacity>
-                                        <Image source={wildlifeImage1} resizeMode="contain" style={styles.comp2ImageViewImage} />
-                                    </TouchableOpacity>
+                                    <View style={styles.imageContainer}>
+                                        <TouchableOpacity style={styles.touchableOpacity}>
+                                            <Image source={wildlifeImage1} resizeMode="contain" style={styles.comp2ImageViewImage} />
 
-                                    <TouchableOpacity>
-                                        <Image source={wildlifeImage2} resizeMode="contain" style={styles.comp2ImageViewImage} />
-                                    </TouchableOpacity>
+                                        </TouchableOpacity>
+                                        <View style={styles.circle}>
+                                            <Text style={styles.circleText}>11</Text>
+                                        </View>
+                                    </View>
+
+                                    <View style={styles.imageContainer}>
+                                        <TouchableOpacity style={styles.touchableOpacity}>
+                                            <Image source={wildlifeImage1} resizeMode="contain" style={styles.comp2ImageViewImage} />
+
+                                        </TouchableOpacity>
+                                        <View style={styles.circle}>
+                                            <Text style={styles.circleText}>11</Text>
+                                        </View>
+                                    </View>
 
                                     <TouchableOpacity>
                                         <Image source={wildlifeImage3} resizeMode="contain" style={styles.comp2ImageViewImage} />
@@ -132,42 +144,64 @@ const ExploreScreen = ({ navigation }) => {
                     </TouchableOpacity> */}
 
                         </View>
+
                         <View style={styles.comp3}>
                             <ScrollView
                                 alwaysBounceHorizontal={true}
                                 contentContainerStyle={{ justifyContent: 'space-evenly', alignItems: 'flex-start', flexWrap: 'wrap', gap: 10 }}
                                 horizontal={true}
                                 showsHorizontalScrollIndicator={false}>
+
                                 <View style={styles.comp3ImageView}>
                                     {/* Block 1 */}
-                                    <TouchableOpacity>
-                                        <Image source={iconBackdrop} resizeMode="contain" style={styles.comp3ImageViewImage} />
-                                        <View style={styles.overlayContainer}>
-                                            <Image source={photographerIcon} resizeMode="contain" style={styles.comp3ImageViewImage2} />
+                                    <View style={styles.imageContainer}>
+                                        <TouchableOpacity style={styles.touchableOpacity}>
+                                            <Image source={iconBackdrop} resizeMode="contain" style={styles.comp3ImageViewImage} />
+                                            <View style={styles.overlayContainer}>
+                                                <Image source={photographerIcon} resizeMode="contain" style={styles.comp3ImageViewImage2} />
+                                            </View>
+                                        </TouchableOpacity>
+                                        <View style={styles.circle}>
+                                            <Text style={styles.circleText}>11</Text>
                                         </View>
-                                    </TouchableOpacity>
+                                    </View>
 
                                     {/* Block 2 */}
-                                    <TouchableOpacity>
-                                        <Image source={iconBackdrop} resizeMode="contain" style={styles.comp3ImageViewImage} />
-                                        <View style={styles.overlayContainer}>
-                                            <Image source={photographerIcon} resizeMode="contain" style={styles.comp3ImageViewImage2} />
+                                    <View style={styles.imageContainer}>
+                                        <TouchableOpacity style={styles.touchableOpacity}>
+                                            <Image source={iconBackdrop} resizeMode="contain" style={styles.comp3ImageViewImage} />
+                                            <View style={styles.overlayContainer}>
+                                                <Image source={photographerIcon} resizeMode="contain" style={styles.comp3ImageViewImage2} />
+                                            </View>
+                                        </TouchableOpacity>
+                                        <View style={styles.circle}>
+                                            <Text style={styles.circleText}>11</Text>
                                         </View>
-                                    </TouchableOpacity>
+                                    </View>
                                     {/* BLOCK 3 */}
-                                    <TouchableOpacity>
-                                        <Image source={iconBackdrop} resizeMode="contain" style={styles.comp3ImageViewImage} />
-                                        <View style={styles.overlayContainer}>
-                                            <Image source={photographerIcon} resizeMode="contain" style={styles.comp3ImageViewImage2} />
+                                    <View style={styles.imageContainer}>
+                                        <TouchableOpacity style={styles.touchableOpacity}>
+                                            <Image source={iconBackdrop} resizeMode="contain" style={styles.comp3ImageViewImage} />
+                                            <View style={styles.overlayContainer}>
+                                                <Image source={photographerIcon} resizeMode="contain" style={styles.comp3ImageViewImage2} />
+                                            </View>
+                                        </TouchableOpacity>
+                                        <View style={styles.circle}>
+                                            <Text style={styles.circleText}>11</Text>
                                         </View>
-                                    </TouchableOpacity>
+                                    </View>
                                     {/* BLOCK 4 */}
-                                    <TouchableOpacity>
-                                        <Image source={iconBackdrop} resizeMode="contain" style={styles.comp3ImageViewImage} />
-                                        <View style={styles.overlayContainer}>
-                                            <Image source={photographerIcon} resizeMode="contain" style={styles.comp3ImageViewImage2} />
+                                    <View style={styles.imageContainer}>
+                                        <TouchableOpacity style={styles.touchableOpacity}>
+                                            <Image source={iconBackdrop} resizeMode="contain" style={styles.comp3ImageViewImage} />
+                                            <View style={styles.overlayContainer}>
+                                                <Image source={photographerIcon} resizeMode="contain" style={styles.comp3ImageViewImage2} />
+                                            </View>
+                                        </TouchableOpacity>
+                                        <View style={styles.circle}>
+                                            <Text style={styles.circleText}>11</Text>
                                         </View>
-                                    </TouchableOpacity>
+                                    </View>
                                 </View>
                             </ScrollView>
                         </View>
@@ -182,6 +216,27 @@ export default ExploreScreen
 
 
 const styles = StyleSheet.create({
+    touchableOpacity: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    circle: {
+        width: Platform.OS === 'ios' ? RFValue(30) : RFValue(30),
+        height: Platform.OS === 'ios' ? RFValue(30) : RFValue(30),
+        borderRadius: 15,
+        borderWidth: 1.7,
+        borderColor: '#A29085',
+        borderStyle: 'dotted',
+        marginTop: 5,
+        marginLeft: 20, // Adjust the margin to control the spacing from the TouchableOpacity
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    circleText: {
+        color: '#A29085',
+        fontWeight: 'bold',
+        fontSize: Platform.OS === 'ios' ? RFValue(14) : RFValue(14),
+    },
     scrollViewContent: {
         // height: Platform.OS === 'ios' ? RFPercentage(100) : RFPercentage(100),
         height: Platform.OS === 'ios' ? RFValue(740) : RFValue(710),
@@ -349,6 +404,7 @@ const styles = StyleSheet.create({
         width: Platform.OS === 'ios' ? 435 : 415,
         height: RFValue(150),
         marginTop: Platform.OS === 'ios' ? 3 : 2,
+        marginBottom: Platform.OS === 'ios' ? 12 : 18,
     },
     comp1Scroll: {
         width: windowWidth,
@@ -378,6 +434,7 @@ const styles = StyleSheet.create({
         width: Platform.OS === 'ios' ? 435 : 415,
         height: RFValue(150),
         marginTop: Platform.OS === 'ios' ? 3 : 2,
+        marginBottom: Platform.OS === 'ios' ? 12 : 18,
     },
     comp2Scroll: {
         width: windowWidth,
