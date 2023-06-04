@@ -57,7 +57,7 @@ const HomeTab = ({ }) => {
                 headerShown: false
             })} />
 
-            <Tab.Screen name='Explore' component={ExploreScreen} options={({ focused, size }) =>
+            <Tab.Screen name='ExploreScreen' component={ExploreScreen} options={({ focused, size }) =>
             ({
                 tabBarIcon: ({ size, tabInfo }) => (
                     <Image

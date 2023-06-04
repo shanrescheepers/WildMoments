@@ -86,6 +86,7 @@ export default function App() {
               <Stack.Screen name="ImagesVotingScreen" component={ImagesVotingScreen} options={{ headerShown: false }} />
               <Stack.Screen name="BrowseAndEnterScreen" component={BrowseAndEnterScreen} options={{ headerShown: false }} />
               <Stack.Screen name="EnterCompScreen" component={EnterCompScreen} options={{ headerShown: false }} />
+              {/* <Stack.Screen name="ExploreScreen" component={ExploreScreen} options={{ headerShown: false }} /> */}
 
             </>
 
