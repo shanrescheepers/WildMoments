@@ -162,7 +162,7 @@ const SignUp = ({ navigation }) => {
                                     style={styles.inputStyle}
                                     keyboardType='default'
                                     secureTextEntry={true} //great way to show/hide password
-                                    placeholder='Minumim 6 characters'
+                                    placeholder='Minumim of 6 characters'
                                     placeholderTextColor='#71563A'
                                     defaultValue={password}
                                     onChangeText={newValue => setPassword(newValue)}
@@ -180,6 +180,7 @@ const SignUp = ({ navigation }) => {
 
                         </View >
                     </ScrollView>
+
                     <View style={styles.buttons}>
                         {/* Validation here */}
                         <TouchableOpacity style={styles.submitButton} onPress={registerUser} >
@@ -190,6 +191,7 @@ const SignUp = ({ navigation }) => {
                             <Text style={styles.needAccountButton}>Already have an Account?</Text>
                         </TouchableOpacity>
                     </View>
+
                 </KeyboardAvoidingView>
             </ImageBackground>
         </SafeAreaView>

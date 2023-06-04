@@ -2,7 +2,7 @@ import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { useState, useEffect } from 'react';
 import { globalStylesheet, TextInput, TouchableOpacity, Button, Image } from 'react-native';
-import { SafeAreaView, StyleSheet, Text, View, ImageBackground, Alert, ActivityIndicator } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, ImageBackground, Alert, ActivityIndicator, KeyboardAvoidingView } from 'react-native';
 // import { styles } from '../utils/styles';
 
 import { Dimensions } from 'react-native';
@@ -19,6 +19,7 @@ import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import { Audio } from 'expo-av';
 import { signInUser } from '../../services/firebaseAuth';
 import { async } from '@firebase/util';
+import { ScrollView } from 'react-native-gesture-handler';
 // import dings from '../../soundEffects/btn1.mp3';
 
 
@@ -88,61 +89,78 @@ const Login = ({ navigation }) => {
                 source={require('../../assets/backgroundImage.png')} // Replace with the actual path to your image
                 style={styles.background}
             >
-                <View style={styles.container}>
+                <KeyboardAvoidingView
+                    keyboardVerticalOffset={RFValue(80)}
+                    style={{ flex: 1, }}
+                    behavior="padding"
+                    enabled={true}
+
+                >
                     <Image source={require("../../assets/log.png")} style={styles.logo}></Image>
-
-                    <View style={styles.introView}>
-                        <Text style={styles.Intro}>
-                            Celebrating Wildlife Through Photography
-                        </Text>
-                        <Text style={styles.enterDetailsText}>Enter your details below to continue your Ultimate Wildlife Photo Competition journey</Text>
-
-                    </View>
-                    <Image source={require("../../assets/line.png")}
-                        style={styles.horisontalLine}>
-                    </Image>
+                    <ScrollView>
+                        <View style={styles.container}>
 
 
-                    <View style={styles.inputView}>
+                            <View style={styles.introView}>
+                                <Text style={styles.Intro}>
+                                    Celebrating Wildlife Through Photography
+                                </Text>
+                                <Text style={styles.enterDetailsText}>Enter your details below to continue your Ultimate Wildlife Photo Competition journey</Text>
+
+                            </View>
+                            {/* <Image source={require("../../assets/line.png")}
+                                style={styles.horisontalLine}>
+                            </Image> */}
 
 
-                        <Text style={styles.inputLabel}>Email</Text>
-                        <TextInput
-                            style={styles.inputStyle}
-                            keyboardType='email-address'
-                            placeholder='john@mail.com'
-                            placeholderTextColor='#554433'
-                            defaultValue={email}
-                            onChangeText={newValue => setEmail(newValue)}
-                        >
-                        </TextInput>
+                            <View style={styles.inputView}>
 
-                        <Text style={styles.inputLabel}>Password</Text>
-                        <TextInput
-                            style={styles.inputStyle}
-                            keyboardType='default'
-                            secureTextEntry={true} //great way to show/hide password
-                            placeholder='Minumim 6 characters'
-                            placeholderTextColor='#554433'
-                            defaultValue={password}
-                            onChangeText={newValue => setPassword(newValue)}
-                        ></TextInput>
-                    </View>
-                    {!loading ? (
+
+                                <Text style={styles.inputLabel}>Email</Text>
+                                <TextInput
+                                    style={styles.inputStyle}
+                                    keyboardType='email-address'
+                                    placeholder='john@mail.com'
+                                    placeholderTextColor='#71563A'
+                                    defaultValue={email}
+                                    onChangeText={newValue => setEmail(newValue)}
+                                >
+                                </TextInput>
+
+                                <Text style={styles.inputLabel}>Password</Text>
+                                <TextInput
+                                    style={styles.inputStyle}
+                                    keyboardType='default'
+                                    secureTextEntry={true} //great way to show/hide password
+                                    placeholder='Minumim of 6 characters'
+                                    placeholderTextColor='#71563A'
+                                    defaultValue={password}
+                                    onChangeText={newValue => setPassword(newValue)}
+                                ></TextInput>
+                            </View>
+
+
+                        </View >
+                    </ScrollView>
+                    <View style={styles.buttons}>
+                        {!loading ? (
+                            <View>
+                                {/* Validation here */}
+                                < TouchableOpacity style={styles.submitButton} onPress={playSound} >
+                                    <Text style={styles.submitButtonText}>LOG IN</Text>
+                                </TouchableOpacity>
+                            </View>
+                        ) : <ActivityIndicator animating={loading} size={40} />}
+
+
                         <View>
-                            {/* Validation here */}
-                            < TouchableOpacity style={styles.submitButton} onPress={playSound} >
-                                <Text style={styles.submitButtonText}>LOG IN</Text>
+                            <TouchableOpacity onPress={() => navigation.navigate('SignUp')} >
+                                <Text style={styles.needAccountButton}>Don't have an account?</Text>
                             </TouchableOpacity>
                         </View>
-                    ) : <ActivityIndicator animating={loading} size={40} />}
+                    </View>
 
-
-                    <TouchableOpacity onPress={() => navigation.navigate('SignUp')} style={styles.needAccountButton}>
-                        <Text>Don't have an account?</Text>
-                    </TouchableOpacity>
-
-                </View >
+                </KeyboardAvoidingView>
             </ImageBackground>
         </SafeAreaView >
     );
@@ -152,6 +170,13 @@ export default Login
 
 // Styling of component
 const styles = StyleSheet.create({
+    buttons: {
+        alignSelf: 'center',
+        textAlign: 'center',
+        position: 'absolute',
+        bottom: Platform.OS === 'ios' ? 70 : 30,
+        //   top: 
+    },
     background: {
 
         resizeMode: 'contain',
@@ -167,11 +192,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     logo: {
-        height: RFPercentage(15),
-        width: RFPercentage(24),
+        height: RFPercentage(13),
+        width: RFPercentage(21),
         alignSelf: 'center',
         marginBottom: 20,
-
+        marginTop: Platform.OS === 'ios' ? 8 : 8,
         resizeMode: 'cover',
     },
     introView: {
@@ -180,16 +205,21 @@ const styles = StyleSheet.create({
         padding: RFPercentage(2),
     },
     Intro: {
-        color: '#A27A51',
-        marginBottom: RFPercentage(1),
+        color: '#EBEBEB',
+        marginBottom: RFValue(4),
+        textTransform: 'uppercase',
+        textAlign: 'center',
+        top: Platform.OS === 'ios' ? 1 : 1,
+        fontWeight: '800',
 
     },
     enterDetailsText: {
-        fontSize: RFPercentage(3),
+        fontSize: RFValue(16),
         textAlign: 'center',
         paddingLeft: RFPercentage(0.3),
         paddingRight: RFPercentage(0.3),
-        color: '#9E9E9E'
+        color: '#A27A51',
+        top: Platform.OS === 'ios' ? 10 : 10,
     },
     inputView: {
         marginTop: RFPercentage(3),
