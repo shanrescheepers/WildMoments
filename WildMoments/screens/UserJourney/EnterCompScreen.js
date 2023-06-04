@@ -1,8 +1,9 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
-import { globalStylesheet, TextInput, TouchableOpacity, Button, Image, ActivityIndicator } from 'react-native';
-import { SafeAreaView, StyleSheet, Text, View, ImageBackground } from 'react-native';
+import { globalStylesheet, TextInput, TouchableOpacity, Button, Image, ActivityIndicator, Alert } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, ImageBackground, KeyboardAvoidingView } from 'react-native';
+import Checkbox from 'expo-checkbox';
 import { firebase } from '../../firebase';
 // import firebase from 'firebase/app';
 import 'firebase/compat/storage'
@@ -32,7 +33,7 @@ import leopard from '../../assets/ProfileImages/leopard_pfp.png';
 import buffalo from '../../assets/ProfileImages/buffalo_pfp.png';
 import rhino from '../../assets/ProfileImages/rhino_pfp.png';
 import photographer from '../../assets/ProfileImages/photographer_pfp.png';
-
+import imageHolder from '../../assets/AppIcons/imageHolder1.png';
 // Sound
 import { Audio } from 'expo-av';
 
@@ -48,7 +49,6 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 const EnterCompScreen = ({ navigation }) => {
-
     // const [sound, setSound] = React.useState();
 
     // async function playSound() {
@@ -91,11 +91,25 @@ const EnterCompScreen = ({ navigation }) => {
     //     playSound()
     // }
 
+    // Adding an entry's States
+    const [title, setTitle] = useState("")
+    const [photographerName, setPhotographerName] = useState("")
+    const [specieDetail, setSpecieDetail] = useState("")
+    const [location, setLocation] = useState("")
+    const [cameraDetail, setCameraDetail] = useState("")
+    const [category, setCategory] = useState("")
+    const [imageEntry, setImageEntry] = useState("")
 
-    const [image, setImage] = useState(null)
+    const [image, setImage] = useState()
+    const [imagePlaceholder, setImagePlaceholder] = useState(false)
+
     const [uploading, setUploading] = useState(false)
     const filename = `${Date.now()}.jpg`;
     const storageRef = firebase.storage().ref().child(filename);
+    const [isChecked, setChecked] = useState(false);
+
+
+    // registerNewCompetitionEntry(title, specieDetail, location, cameraDetail, category, imageEntry);
 
     const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -106,55 +120,74 @@ const EnterCompScreen = ({ navigation }) => {
 
         });
 
-        console.log(result);
+        setImagePlaceholder(true)
 
         if (!result.canceled) {
-            setImage(result.uri);
+            console.log("URI: ");
+            console.log(result.assets[0].uri);
+            setImage(result.assets[0].uri);
         }
     };
+    // const response = await fetch(imageUri);
+    //    const blob = await response.blob();
+    handleSubmit = () => {
+        Alert.alert("Error uploading, please make sure all fields are filled and checked.")
+    }
 
     const uploadImage = async () => {
-        const blob = await new Promise((resolve, reject) => {
-            const xhr = new XMLHttpRequest();
 
 
-            xhr.onload = function () {
-                resolve(xhr.response);
-            };
-            xhr.onerror = function () {
-                reject(new TypeError('Network request failed'));
-            };
-            xhr.responseType = 'blob';
-            xhr.open('GET', image, true);
-            xhr.send(null);
+        if (title == "" || specieDetail == "" || location == "" || cameraDetail == "" || category == "" || image == "" || isChecked === false) {
+            console.log("Empty Fields!");
+            Alert.alert("Error uploading, please make sure all fields are filled and checked.")
 
-        })
-        const ref = firebase.storage(filename).ref().child(filename)
-        const snapshot = ref.put(blob)
-        snapshot.on(firebase.storage.TaskEvent.STATE_CHANGED,
-            () => {
-                setUploading(true)
-            },
-            (error) => {
-                setUploading(false)
-                console.log(error)
-                blob.close()
-                return
-            },
-            () => {
-                snapshot.snapshot.ref.getDownloadURL().then((url) => {
+
+        } else {
+            const blob = await new Promise((resolve, reject) => {
+                const xhr = new XMLHttpRequest();
+                xhr.onload = function () {
+                    resolve(xhr.response);
+                };
+                xhr.onerror = function () {
+                    reject(new TypeError('Network request failed'));
+                };
+                xhr.responseType = 'blob';
+                xhr.open('GET', image, true);
+                xhr.send(null);
+
+            })
+            const ref = firebase.storage().ref().child(`Pictures/` + title + '-' + specieDetail)
+            const snapshot = ref.put(blob)
+            snapshot.on(firebase.storage.TaskEvent.STATE_CHANGED,
+                () => {
+                    setUploading(true)
+                },
+                (error) => {
                     setUploading(false)
-                    console.log("Download URL: ", url)
-                    setImage(url)
+                    console.log(error)
+                    Alert.alert("Error uploading, please try again.")
                     blob.close()
-                    return url
-                })
-            }
-        )
+                    return
+                },
+                () => {
+                    snapshot.snapshot.ref.getDownloadURL().then((url) => {
+                        setUploading(false)
+                        console.log("Download URL: ", url)
+                        Alert.alert("CONGRATULATIONS!", "Your photo was submitted. Goodluck!")
+                        setImage(url)
+
+                        blob.close()
+                        return url
+                    })
+                }
+            )
+        }
+
+
     }
 
     return (
-        <SafeAreaView>
+        <SafeAreaView style={styles.homescreensafearea}>
             <HeaderComponent />
             <ImageBackground
                 source={require('../../assets/backgroundImage.png')} // Replace with the actual path to your image
@@ -175,33 +208,75 @@ const EnterCompScreen = ({ navigation }) => {
                             keyboardType='default'
                             placeholder='ENTER IMAGE TITLE HERE'
                             placeholderTextColor='#8A8A8A'
-                        // defaultValue={username}
-                        /*     onChangeText={newValue => setUsername(newValue)} */
+                            onChangeText={newValue => setTitle(newValue)}
+                            defaultValue={title}
                         >
                         </TextInput>
+
 
                         <View style={styles.imageComponent}>
 
+                            <TouchableOpacity onPress={pickImage} style={styles.imageUploadCon}>
+                                {!imagePlaceholder ?
+                                    <Image source={require('../../assets/AppIcons/imageHolder.png')}
+                                        style={styles.imageUpload} /> :
+                                    <Image source={{ uri: image }}
+                                        style={styles.imageUpload} />}
+                                {uploading && <ActivityIndicator size={'large'} color='black' style={{ zIndex: RFValue(1), position: 'absolute', justifyContent: 'center', alignContent: 'center', alignItems: 'center', alignSelf: 'center', top: RFValue(120) }}
+                                />}
+
+                            </TouchableOpacity>
+                        </View>
+
+                        {/* <View style={styles.container}>
                             {image && <Image source={{ uri: image }} style={{ width: 170, height: 200 }} />}
                             <Button title='Select Image' onPress={pickImage} />
                             {!uploading ? <Button title='Upload Image' onPress={uploadImage} /> : <ActivityIndicator size={'small'} color='black' />}
+                        </View> */}
 
-                            <Image>
 
-                            </Image>
+                        <View style={styles.Tags}>
+
+                            <TextInput
+                                style={styles.inputStyleTagsSpecies}
+                                keyboardType='default'
+                                placeholder='SPECIES'
+                                placeholderTextColor='#8A8A8A'
+                                onChangeText={newValue => setSpecieDetail(newValue)}
+                                defaultValue={specieDetail}
+                            ></TextInput>
+
+                            <TextInput
+                                style={styles.inputStyleTagsCameraType}
+                                keyboardType='default'
+                                placeholder='CAMERA TYPE'
+                                placeholderTextColor='#8A8A8A'
+                                onChangeText={newValue => setCameraDetail(newValue)}
+                                defaultValue={cameraDetail}
+                            ></TextInput>
                         </View>
-                        <TextInput
-                            style={styles.inputStyle}
-                            keyboardType='email-address'
-                            placeholder='john@mail.com'
-                            placeholderTextColor='#8A8A8A'
-                        // defaultValue={email}
-                        /*   onChangeText={newValue => setEmail(newValue)} */
-                        >
+                        <View style={styles.Gap}></View>
+                        <View style={styles.Tags2}>
+                            <TextInput
+                                style={styles.inputStyleTagsLocation}
+                                keyboardType='default'
+                                placeholder='LOCATION'
+                                placeholderTextColor='#8A8A8A'
+                                onChangeText={newValue => setLocation(newValue)}
+                                defaultValue={location}
+                                onpre
+                            ></TextInput>
 
-                        </TextInput>
+                            <TextInput
+                                style={styles.inputStyleTagsCategory}
+                                keyboardType='default'
+                                placeholder='CATEGORY'
+                                placeholderTextColor='#8A8A8A'
+                                onChangeText={newValue => setCategory(newValue)}
+                                defaultValue={category}
 
-                        <Text style={styles.inputLabel}>Password</Text>
+                            ></TextInput>
+                        </View>
                         {/* <TextInput
                             style={styles.inputStyle}
                             keyboardType='default'
@@ -214,6 +289,17 @@ const EnterCompScreen = ({ navigation }) => {
                     </View>
 
                     <View style={styles.buttons}>
+                        <View style={styles.buttonsCheckbox}>
+                            <Checkbox style={{ borderRadius: 20, borderStyle: 'dashed', borderColor: '#FA993B', width: RFValue(30), height: RFValue(30), borderWidth: RFValue(1), }} value={isChecked} onValueChange={setChecked} color={isChecked ? '#FA993B' : undefined} />
+                            <Text style={{ fontSize: RFValue(14), justifyContent: 'center', alignContent: 'center', alignItems: 'center', alignSelf: 'center', fontWeight: '500', color: '#FA993B' }}>I have read & agree to the competition rules</Text>
+                        </View>
+                        <View style={styles.buttonsSubmit}>
+                            <TouchableOpacity style={styles.submitButton} onPress={uploadImage} >
+                                <Text style={styles.submitButtonText}>SUBMIT</Text>
+                            </TouchableOpacity>
+                        </View>
+
+
                         {/* Validation here */}
                         {/* <TouchableOpacity style={styles.submitButton}  >
                             <Text style={styles.submitButtonText}>SIGN UP</Text>
@@ -233,7 +319,7 @@ const EnterCompScreen = ({ navigation }) => {
 
                 </View >
             </ImageBackground>
-        </SafeAreaView>
+        </SafeAreaView >
     );
 }
 // Exporting the components
@@ -241,25 +327,132 @@ export default EnterCompScreen
 
 // Styling of component
 const styles = StyleSheet.create({
+    submitButton: {
+        alignItems: 'center',
+        alignSelf: 'center',
+        backgroundColor: '#A27A51',
+        height: RFValue(45),
+        width: RFValue(150),
+        borderRadius: RFValue(50),
+        // marginBottom: RFValue(5),
+        shadowColor: 'gray',
+    },
+    submitButtonText: {
+        color: '#2b2b2b',
+        fontSize: RFValue(16),
+        alignSelf: 'center',
+        paddingVertical: RFValue(13),
+        fontWeight: '800',
+    },
+    Gap: { height: RFValue(10), },
+    inputStyleTagsCategory: {
+        fontWeight: '800',
+        paddingLeft: RFValue(8),
+        height: 40,
+        width: RFValue(120),
+        borderRadius: 11,
+        backgroundColor: '#D9D9D9',
+    },
+    inputStyleTagsLocation: {
+        fontWeight: '800',
+        paddingLeft: RFValue(8),
+        height: 40,
+        width: RFValue(190),
+        borderRadius: 11,
+        backgroundColor: '#D9D9D9',
+    },
+    inputStyleTagsSpecies: {
+        fontWeight: '800',
+        paddingLeft: RFValue(8),
+        height: 40,
+        width: RFValue(160),
+        borderRadius: 11,
+        backgroundColor: '#D9D9D9',
+    },
+    inputStyleTagsCameraType: {
+        fontWeight: '800',
+        paddingLeft: RFValue(8),
+        height: 40,
+        width: RFValue(155),
+        borderRadius: 11,
+        backgroundColor: '#D9D9D9',
+        marginHorizontal: RFValue(2),
+    },
+    TagsHeading: {
+        fontSize: RFValue(14),
+        marginLeft: RFValue(-13),
+        color: '#FA993B',
+        marginBottom: 5,
+        fontWeight: 600,
+    },
+    homescreensafearea: {
+        backgroundColor: 'transparent',
+    },
+    Tags: {
+        flexDirection: 'row',
+        gap: RFValue(10),
+        alignItems: 'center',
+        alignSelf: 'center',
+    },
+    Tags2: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        alignSelf: 'center',
+        gap: RFValue(20),
+
+    },
     imageComponent: {
-        height: RFValue(150),
-        backgroundColor: 'yellow',
+        height: RFValue(240),
+        flexDirection: 'row',
+        gap: 10,
+        width: 100,        // backgroundColor: '#fff',
         borderRadius: 11,
         borderStyle: 'dashed',
         borderColor: 'yellow',
+        marginBottom: RFValue(50),
+    },
+    imageUploadCon: {
+
+        borderRadius: 11,
+        // backgroundColor: 'white',
+        borderStyle: 'dashed',
+        borderColor: '#524D4E',
+        borderRadius: RFValue(20),
+        alignContent: 'center',
+        alignItems: 'center',
+        borderWidth: 1,
+        width: RFValue(260),
+        height: RFValue(270),
+        marginHorizontal: RFValue(6),
+        marginVertical: RFValue(10),
+        marginBottom: RFValue(10),
+    },
+    imageUpload: {
+        width: RFValue(225),
+        height: RFValue(225),
+        borderRadius: RFValue(20),
+        alignContent: 'center',
+        alignItems: 'center',
+        marginVertical: RFValue(21),
+        justifyContent: 'center',
+        alignSelf: 'center',
+        resizeMode: 'stretch',
     },
     heading: {
         // paddingHorizontal: RFValue(40),
         alignSelf: 'center',
-
+        marginTop: RFValue(-20),
         color: '#fff',
         fontSize: RFValue(20),
+        fontWeight: '900',
     },
     headingText: {
         alignContent: 'center',
         alignSelf: 'center',
         color: '#A27A51',
         fontSize: RFValue(18),
+        fontWeight: '500',
+        textAlign: 'center',
     },
     headingText2: {
         color: '#F2C440',
@@ -267,10 +460,16 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         alignSelf: 'center',
     },
-
+    buttonsCheckbox: {
+        marginVertical: RFValue(10),
+        flexDirection: 'row',
+        gap: RFValue(10),
+        justifyContent: 'center',
+        alignSelf: 'center',
+    },
 
     buttons: {
-        marginVertical: RFValue(10),
+
     },
     pfpText: {
         marginBottom: RFValue(6),
@@ -356,21 +555,45 @@ const styles = StyleSheet.create({
     inputLabel: {
         fontSize: RFValue(14),
         marginLeft: 4,
-        color: '#9E9E9E',
+        color: '#FA993B',
         marginBottom: 5,
         fontWeight: 600,
+    },
+    inputLabelTags: {
+        fontSize: RFValue(14),
+        marginLeft: 4,
+        color: '#FA993B',
+        marginBottom: 5,
+        fontWeight: 600,
+
     },
     inputStyle: {
         height: 40,
         borderRadius: 11,
-        borderStyle: 'dashed',
-        borderColor: '#71563A',
-        borderWidth: 1.5,
+        // borderStyle: 'dashed',
+        backgroundColor: '#D9D9D9',
+        // borderColor: '#D9D9D9',
+
         fontSize: RFValue(14),
         padding: 10,
         color: '#A27A51',
         textDecorationLine: 'none',
         marginBottom: 10,
+    },
+    inputStyleTags: {
+        height: 40,
+        width: RFValue(150),
+        borderRadius: 11,
+        // borderStyle: 'dashed',
+        backgroundColor: '#D9D9D9',
+        // borderColor: '#D9D9D9',
+
+        fontSize: RFValue(14),
+        padding: 10,
+        color: '#A27A51',
+        textDecorationLine: 'none',
+        marginBottom: 10,
+        fontWeight: '800',
     },
     submitButton: {
         alignItems: 'center',

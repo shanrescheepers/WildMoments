@@ -33,3 +33,4 @@ const auth = getAuth(app)
 export { auth, firebase }
 
 export const db = getFirestore(app)
+

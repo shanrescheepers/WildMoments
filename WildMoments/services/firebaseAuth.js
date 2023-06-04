@@ -23,6 +23,7 @@ export const registerNewUser = (username, email, password) => {
         // the then is when user was created successfully
         .then(async (userCredential) => {
             // Signed in 
+
             const user = userCredential.user;
             console.log("New user is :" + user)
             updateAuthProfile(username);

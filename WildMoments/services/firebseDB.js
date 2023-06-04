@@ -10,7 +10,8 @@ export const createUserInDB = async (username, email, uid) => {
             username,
             email,
             role: 'normal people not admin',
-            createdAt: Timestamp.now()
+            createdAt: Timestamp.now(),
+            // profilepicture: '',
         })
         // console.log("User added, Doc ID: " + docRef.id)
 

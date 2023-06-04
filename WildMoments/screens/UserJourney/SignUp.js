@@ -38,6 +38,7 @@ const SignUp = ({ navigation }) => {
 
     const [sound, setSound] = React.useState();
 
+
     async function playSound() {
         console.log('Loading Sound');
         const { sound } = await Audio.Sound.createAsync(require('../../soundEffects/btn.mp3')
@@ -70,11 +71,12 @@ const SignUp = ({ navigation }) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [username, setUsername] = useState('')
+    const [profilepicture, setProfilepicture] = React.useState("lion");
 
     const registerUser = () => {
         console.log("REgistering");
         console.log(email)
-        registerNewUser(username, email, password);
+        registerNewUser(username, email, password, profilepicture);
         playSound()
     }
     return (
@@ -124,11 +126,11 @@ const SignUp = ({ navigation }) => {
 
 
                     <View style={styles.inputView}>
-                        <Text style={styles.inputLabel}>Username</Text>
+                        <Text style={styles.inputLabel}>Name & Surname</Text>
                         <TextInput
                             style={styles.inputStyle}
                             keyboardType='default'
-                            placeholder='John Doe'
+                            placeholder='Name & Surname'
                             placeholderTextColor='#71563A'
                             defaultValue={username}
                             onChangeText={newValue => setUsername(newValue)}
@@ -139,7 +141,7 @@ const SignUp = ({ navigation }) => {
                         <TextInput
                             style={styles.inputStyle}
                             keyboardType='email-address'
-                            placeholder='john@mail.com'
+                            placeholder='mail@mail.com'
                             placeholderTextColor='#71563A'
                             defaultValue={email}
                             onChangeText={newValue => setEmail(newValue)}
