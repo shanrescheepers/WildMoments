@@ -42,15 +42,17 @@ const BrowseAndEnterScreen = ({ navigation }) => {
                 style={styles.background}
             >
                 <View style={styles.heading}>
-                    <Text style={styles.headingText}>#PhotoCompetition - Autumn 2023 DB</Text>
-                    <Text style={styles.headingText2}>Here you can judge by categories for your convenience</Text>
+                    <Text style={styles.headingText}>#PhotoCompetition</Text>
+                    <Text style={styles.headingText11}>- Autumn 2023 DB</Text>
+                    <Text style={styles.headingText2}>Judge top class wildlife images by swiping left or right</Text>
                 </View>
 
                 <View style={styles.comps}>
 
                     <View style={styles.comp1Heading}>
-                        <Text style={styles.comp1HeadingCatergory}>JUDGE PREDATORS</Text>
-
+                        <TouchableOpacity style={styles.judgeButton}>
+                            <Text style={styles.comp1HeadingCatergory}>JUDGE PREDATORS</Text>
+                        </TouchableOpacity>
                     </View>
                     <View style={styles.comp1}>
                         <ScrollView
@@ -82,9 +84,9 @@ const BrowseAndEnterScreen = ({ navigation }) => {
                     </View>
 
                     <View style={styles.comp1Heading}>
-                        <Text style={styles.comp2HeadingCatergory}>JUDGE BROWSERS</Text>
-
-
+                        <TouchableOpacity style={styles.judgeButton}>
+                            <Text style={styles.comp2HeadingCatergory}>JUDGE BROWSERS</Text>
+                        </TouchableOpacity>
                     </View>
                     <View style={styles.comp2}>
                         <ScrollView
@@ -117,8 +119,14 @@ const BrowseAndEnterScreen = ({ navigation }) => {
 
 
                     <View style={styles.comp3Heading}>
-                        <Text style={styles.comp3HeadingCatergory}>JUDGE GRAZERS</Text>
-
+                        <TouchableOpacity style={styles.judgeButton}>
+                            <Text style={styles.comp3HeadingCatergory}>JUDGE GRAZERS</Text>
+                        </TouchableOpacity>
+                        {/* <TouchableOpacity
+                        style={styles.competitionsBrowse}
+                        onPress={() => navigation.navigate('BrowseAndEnterScreen')} >
+                        <Text style={styles.competitionsBrowseText}>JUDGE</Text>
+                    </TouchableOpacity> */}
 
                     </View>
                     <View style={styles.comp3}>
@@ -155,58 +163,42 @@ const BrowseAndEnterScreen = ({ navigation }) => {
 export default BrowseAndEnterScreen
 
 const styles = StyleSheet.create({
+
+    judgeButton: {
+        borderRadius: 50,
+        shadowColor: 'gray',
+        shadowRadius: RFPercentage(8),
+        height: RFValue(35),
+        width: RFValue(170),
+        borderWidth: 1.5,
+        borderColor: '#F2C440',
+        borderStyle: 'dashed',
+        alignItems: 'center',
+        paddingHorizontal: RFValue(4),
+        justifyContent: 'center',
+        alignSelf: 'center',
+        textAlign: 'center',
+        marginLeft: Platform.OS === 'ios' ? 20 : 20,
+
+    },
     comp1HeadingCatergory: {
         borderRadius: 50,
-
-        shadowRadius: RFPercentage(8),
-        height: RFValue(30),
-        width: RFValue(150),
-        borderWidth: 1.5,
-        borderColor: 'transparent',
-        paddingLeft: RFValue(4),
+        fontSize: RFValue(13),
         alignItems: 'center',
-        alignSelf: 'center',
-        textAlign: 'left',
-        color: '#A27A51',
-        fontSize: RFValue(15),
-        alignSelf: 'center',
-        paddingVertical: RFValue(6),
+        color: '#F2C440',
+        letterSpacing: RFValue(1),
         fontWeight: 'bold',
     },
     comp2HeadingCatergory: {
-        borderRadius: 50,
-
-        shadowRadius: RFPercentage(8),
-        height: RFValue(30),
-        width: RFValue(150),
-        borderWidth: 1.5,
-        borderColor: 'transparent',
-        paddingLeft: RFValue(4),
         alignItems: 'center',
-        alignSelf: 'center',
-        textAlign: 'left',
-        color: '#A27A51',
-        fontSize: RFValue(15),
-        alignSelf: 'center',
-        paddingVertical: RFValue(6),
+        color: '#F2C440',
+        fontSize: RFValue(13),
         fontWeight: 'bold',
     },
     comp3HeadingCatergory: {
-        borderRadius: 50,
-
-        shadowRadius: RFPercentage(8),
-        height: RFValue(30),
-        width: RFValue(150),
-        borderWidth: 1.5,
-        borderColor: 'transparent',
-        paddingLeft: RFValue(4),
         alignItems: 'center',
-        alignSelf: 'center',
-        textAlign: 'left',
-        color: '#A27A51',
-        fontSize: RFValue(15),
-        alignSelf: 'center',
-        paddingVertical: RFValue(6),
+        color: '#F2C440',
+        fontSize: RFValue(13),
         fontWeight: 'bold',
     },
     Browse: {
@@ -215,16 +207,6 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.2,
         shadowRadius: 3,
     }, competitionsBrowse: {
-        // borderWidth: 2,
-        // borderColor: '#598059',
-        // // borderStyle: 'dashed',
-        // height: RFPercentage(5),
-        // width: RFPercentage(12),
-        // backgroundColor: '#598059',
-        // borderRadius: 50,
-        // marginBottom: 20,
-        // // shadowColor: 'gray',
-
         borderRadius: 50,
         shadowColor: 'gray',
         shadowRadius: RFPercentage(8),
@@ -247,7 +229,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     background: {
-
         resizeMode: 'contain',
         // or 'contain' to maintain aspect ratio
         width: windowWidth,
@@ -255,20 +236,32 @@ const styles = StyleSheet.create({
 
     },
     heading: {
-        // paddingHorizontal: RFValue(40),
         alignSelf: 'center',
         paddingVertical: RFValue(20),
         color: '#fff',
+        // fontWeight: '900',
+
+
         fontSize: RFValue(20),
     },
     headingText: {
         alignContent: 'center',
         alignSelf: 'center',
+        fontWeight: Platform.OS === 'ios' ? '900' : 'bold',
+        letterSpacing: Platform.OS === 'ios' ? 2 : 1.5,
         color: '#A27A51',
         fontSize: RFValue(18),
+        marginTop: Platform.OS === 'ios' ? -10 : -10,
+    },
+    headingText11: {
+        alignContent: 'center',
+        alignSelf: 'center',
+        color: '#A27A51',
+        fontSize: RFValue(18),
+        marginBottom: Platform.OS === 'ios' ? 4 : 3,
     },
     headingText2: {
-        color: '#F2C440',
+        color: '#fff',
         fontSize: RFValue(12),
         textAlign: 'center',
         alignSelf: 'center',
@@ -279,7 +272,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         width: RFValue(320),
 
-        marginLeft: RFValue(15),
     },
     comp1Heading: {
         display: 'flex',
@@ -298,28 +290,28 @@ const styles = StyleSheet.create({
     },
     // COMPETITION CATEGORY 1
     comp1: {
-        width: RFValue(380),
+        width: Platform.OS === 'ios' ? 435 : 415,
         height: RFValue(150),
-        flexDirection: 'row',
-        marginBottom: RFValue(8),
+        marginTop: Platform.OS === 'ios' ? 3 : 2,
     },
     comp1Scroll: {
         width: windowWidth,
+        marginLeft: Platform.OS === 'ios' ? -34 : -29,
     },
     comp1ImageView: {
         flexDirection: 'row',
-        gap: RFValue(10),
-        marginTop: RFValue(8),
+        gap: Platform.OS === 'ios' ? -34 : -29,
+        marginTop: Platform.OS === 'ios' ? 8 : 7,
     },
     comp1ImageViewImage: {
-        width: RFPercentage(19),
-        height: RFPercentage(19),
-
+        width: Platform.OS === 'ios' ? 135 : 115,
+        height: Platform.OS === 'ios' ? RFValue(100) : RFValue(100),
+        marginLeft: Platform.OS === 'ios' ? 3 : 2,
     },
 
     // COMPETITION CATEGORY 2
     comp2Heading: {
-        marginBottom: RFValue(-20),
+
         fontSize: RFValue(16),
         color: '#fff',
         flexWrap: 'wrap',
@@ -327,28 +319,29 @@ const styles = StyleSheet.create({
         marginLeft: RFValue(10),
     },
     comp2: {
-        width: RFValue(380),
+        width: Platform.OS === 'ios' ? 435 : 415,
         height: RFValue(150),
-        marginBottom: RFValue(8),
+        marginTop: Platform.OS === 'ios' ? 3 : 2,
     },
     comp2Scroll: {
         width: windowWidth,
     },
     comp2ImageView: {
         flexDirection: 'row',
-        gap: RFValue(10),
-        marginTop: RFValue(8),
+        gap: Platform.OS === 'ios' ? -34 : -29,
+        marginTop: Platform.OS === 'ios' ? 8 : 7,
     },
     comp2ImageViewImage: {
-        width: RFPercentage(19),
-        height: RFPercentage(19),
+        width: Platform.OS === 'ios' ? 135 : 115,
+        height: Platform.OS === 'ios' ? RFValue(100) : RFValue(100),
+        marginLeft: Platform.OS === 'ios' ? 3 : 2,
     },
 
     // COMPETITION CATEGORY 3
     comp3: {
-        width: RFValue(380),
+        width: Platform.OS === 'ios' ? 435 : 415,
         height: RFValue(150),
-        marginTop: RFValue(8),
+        marginTop: Platform.OS === 'ios' ? 3 : 2,
     },
     comp3Scroll: {
 
@@ -356,11 +349,13 @@ const styles = StyleSheet.create({
     },
     comp3ImageView: {
         flexDirection: 'row',
-        gap: RFValue(10),
+        gap: Platform.OS === 'ios' ? -34 : -29,
+        marginTop: Platform.OS === 'ios' ? 8 : 7,
 
     },
     comp3ImageViewImage: {
-        width: RFPercentage(19),
-        height: RFPercentage(19),
+        width: Platform.OS === 'ios' ? 135 : 115,
+        height: Platform.OS === 'ios' ? RFValue(100) : RFValue(100),
+        marginLeft: Platform.OS === 'ios' ? 3 : 2,
     },
 })

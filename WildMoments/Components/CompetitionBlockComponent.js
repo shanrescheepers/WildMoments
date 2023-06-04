@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
         borderRadius: 12,
         borderWidth: 0,
         borderColor: 'rgba(255, 255, 255, 0.125)',
-        elevation: 10, // Adjust the elevation value as per your preference
+        // elevation: 10, // Adjust the elevation value as per your preference
         shadowColor: '#111',
         shadowOffset: {
             width: 26,

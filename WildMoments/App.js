@@ -21,7 +21,7 @@ import { auth } from './firebase';
 import BrowseAndEnterScreen from './screens/UserJourney/CompetitionJudgeScreen';
 import HeaderComponent from './Components/HeaderComponent';
 import EnterCompScreen from './screens/UserJourney/EnterCompScreen';
-
+import WalkthroughScreen from './screens/UserJourney/WalkthroughScreen';
 
 // for each nav header that we have, we need to go create it
 const Stack = createNativeStackNavigator();
@@ -36,10 +36,11 @@ export default function App() {
         console.log("User Login");
 
         setLoggedIn(true)
+
       } else {
         console.log("User logout");
 
-        setLoggedIn(false)
+        setLoggedIn(true)
       }
     })
     return unsubscribe;
@@ -62,9 +63,14 @@ export default function App() {
 
               <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
               <Stack.Screen name="SignUp" component={SignUp} options={{ headerShown: false }} />
+
+
             </>
           ) : (
             <>
+              {/* OVER AND BEYOOOOOND */}
+
+              {/* <Stack.Screen name="WalkthroughScreen" component={WalkthroughScreen} options={{ headerShown: false }} /> */}
               {/* <Stack.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }} /> */}
               <Stack.Screen name="Home" component={HomeTab} options={{ headerShown: false }} style={styles.hometab} />
 
@@ -80,7 +86,7 @@ export default function App() {
               <Stack.Screen name="ImagesVotingScreen" component={ImagesVotingScreen} options={{ headerShown: false }} />
               <Stack.Screen name="BrowseAndEnterScreen" component={BrowseAndEnterScreen} options={{ headerShown: false }} />
               <Stack.Screen name="EnterCompScreen" component={EnterCompScreen} options={{ headerShown: false }} />
-              {/* <Stack.Navigator name="" component={HeaderComponent} options={{ headerShown: false }} /> */}
+
             </>
 
           )}

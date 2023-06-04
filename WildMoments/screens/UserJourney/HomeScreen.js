@@ -30,13 +30,11 @@ const HomeScreen = ({ navigation }) => {
             <ImageBackground
                 source={require('../../assets/bg2.png')}
                 style={styles.background}>
-
+                <View style={styles.headercomponent}>
+                    <HeaderComponent navigation={navigation} />
+                </View>
                 <ScrollView style={styles.homescreenscrollview} showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}>
 
-
-                    <View style={styles.headercomponent}>
-                        <HeaderComponent navigation={navigation} />
-                    </View>
                     <View style={styles.headingsView}>
                         {/* <Text style={styles.headingsView_h1}>Are you ready?</Text> */}
                         <Text style={styles.headingsView_h2}>The premier of amazing wildlife photos & conservation.</Text>
@@ -80,12 +78,13 @@ const styles = StyleSheet.create({
     },
     homescreenscrollview: {
         backgroundColor: 'transparent',
+        height: windowHeight,
     },
     scrollViewContent: {
         flexGrow: 1,
+        height: windowHeight,
     },
     competitionBlocks: {
-
         backgroundColor: 'transparent',
         flexGrow: 1,
         // height: windowHeight,

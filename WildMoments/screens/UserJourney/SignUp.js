@@ -78,6 +78,7 @@ const SignUp = ({ navigation }) => {
         console.log(email)
         registerNewUser(username, email, password, profilepicture);
         playSound()
+        navigation.navigate('WalkthroughScreen')
     }
     return (
         <SafeAreaView >
