@@ -51,7 +51,9 @@ const ExploreScreen = ({ navigation }) => {
                     {/* <Text style={styles.headingText11}>- Autumn 2023 DB</Text> */}
                     {/* <Text style={styles.headingText2}>Judge top class wildlife images by swiping left or right</Text> */}
                 </View>
-                <ScrollView contentContainerStyle={styles.scrollViewContent}>
+                <ScrollView
+                    contentContainerStyle={styles.scrollViewContent}
+                    showsVerticalScrollIndicator={false}>
                     <View style={styles.comps}>
                         <View style={styles.comp1Heading}>
                             <TouchableOpacity style={styles.judgeButton}>

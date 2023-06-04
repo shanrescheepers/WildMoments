@@ -33,25 +33,27 @@ const HomeScreen = ({ navigation }) => {
                 <View style={styles.headercomponent}>
                     <HeaderComponent navigation={navigation} />
                 </View>
-                <ScrollView style={styles.homescreenscrollview} showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}>
 
-                    <View style={styles.headingsView}>
-                        {/* <Text style={styles.headingsView_h1}>Are you ready?</Text> */}
-                        <Text style={styles.headingsView_h2}>The premier of amazing wildlife photos & conservation.</Text>
-                        <Text style={styles.headingsView_h3}>Put your images out into the world by entering our competitions & stand a chance to win exclusive prizes.</Text>
-                        {/* <Text style={styles.headingsView_h4}>Vote for your most favourite photo. </Text>
+
+                <View style={styles.headingsView}>
+                    {/* <Text style={styles.headingsView_h1}>Are you ready?</Text> */}
+                    <Text style={styles.headingsView_h2}>The premier of amazing wildlife photos & conservation.</Text>
+                    <Text style={styles.headingsView_h3}>Put your images out into the world by entering our competitions & stand a chance to win exclusive prizes.</Text>
+                    {/* <Text style={styles.headingsView_h4}>Vote for your most favourite photo. </Text>
                         <Text style={styles.headingsView_h5}>Winners stand a chance to win spectacular prizes.</Text> */}
+                </View>
+                <View style={styles.rulesView}>
+                    <Text style={styles.rulesText}>PLEASE READ THE RULES BEFORE ENTERING COMPETITIONS</Text>
+                    <View>
+                        <TouchableOpacity style={styles.rulesButton} onPress={() => navigation.navigate('RulesScreen')}>
+                            <Text style={styles.rulesButtonText}>RULES</Text>
+                        </TouchableOpacity>
                     </View>
-                    <View style={styles.rulesView}>
-                        <Text style={styles.rulesText}>PLEASE READ THE RULES BEFORE ENTERING COMPETITIONS</Text>
-                        <View>
-                            <TouchableOpacity style={styles.rulesButton} onPress={() => navigation.navigate('RulesScreen')}>
-                                <Text style={styles.rulesButtonText}>RULES</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
+                </View>
 
-
+                <ScrollView style={styles.homescreenscrollview}
+                    showsVerticalScrollIndicator={false}
+                    showsHorizontalScrollIndicator={false}>
                     <View style={styles.competitionView}>
                         <ScrollView style={styles.competitionBlocks} contentContainerStyle={styles.scrollViewContent}>
                             <CompetitionBlockComponent />
@@ -88,6 +90,11 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent',
         flexGrow: 1,
         // height: windowHeight,
+        shadowColor: '#111',
+        shadowOffset: { width: -2, height: 10 },
+        shadowOpacity: 0.6,
+        shadowRadius: 3,
+
         marginBottom: RFPercentage(20)
     },
     competitionView: {
@@ -162,8 +169,13 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
     },
     rulesText: {
-        fontSize: RFPercentage(1.6),
-        color: '#F2C440',
+        fontSize: Platform.OS === 'ios' ? 14 : 12,
+        color: '#FA993B',
+        fontWeight: Platform.OS === 'ios' ? '700' : '700',
+        shadowColor: '#111',
+        shadowOffset: { width: -2, height: 4 },
+        shadowOpacity: 1,
+        shadowRadius: 3,
         textTransform: 'lowercase',
         marginTop: -2,
         marginBottom: 6,

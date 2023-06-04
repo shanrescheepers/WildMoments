@@ -1,12 +1,9 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-// import { StyleSheet } from 'react-native'
 import { ImageBackground, SafeAreaView } from 'react-native'
-
 import { ScrollView } from 'react-native-gesture-handler'
-import HeaderComponent from '../../Components/HeaderComponent';
+import HeaderComponent from '../Components/HeaderComponent'
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
-
 import { useState, useEffect } from 'react';
 import { globalStylesheet, TextInput, TouchableOpacity, Button, Image, StatusBar } from 'react-native';
 
@@ -17,36 +14,30 @@ import { Roboto } from "@expo-google-fonts/dev";
 import { Dimensions } from 'react-native';
 import { useFonts } from 'expo-font';
 
-import CompetitionBlockComponent from '../../Components/CompetitionBlockComponent';
+import CompetitionBlockComponent from '../Components/CompetitionBlockComponent'
 
 // images
-import wildlifeImage1 from '../../assets/1.png';
-import wildlifeImage2 from '../../assets/2.png';
-import wildlifeImage3 from '../../assets/wildlifeImages/wildlife3.png';
-import photographerIcon from '../../assets/AppIcons/PHOTOGRAPHER.png';
-import iconBackdrop from '../../assets/AppIcons/iconBackdrop.png'
-import galleryWinnerLogo from '../../assets/AppIcons/galleryWinners.png'
-// import wildlifeImage2 from '../assets/wildlifeImages/widllife2.png';
-// import wildlifeImage3 from '../assets/wildlifeImages/widllife3.png';
 
+import galleryWinnerLogo from '../assets/AppIcons/galleryWinners.png';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
+import { useRoute, useNavigation } from '@react-navigation/native';
 
 
 
+const GalleryScreenWinnersOverview = ({ }) => {
 
-const GalleryScreen = ({ navigation }) => {
-
+    const navigation = useNavigation();
     return (
         <SafeAreaView
         >
 
             <ImageBackground
-                source={require('../../assets/backgroundImage.png')} // Replace with the actual path to your image
+                source={require('../assets/backgroundImage.png')} // Replace with the actual path to your image
                 style={styles.background}
             >
-                {/* <HeaderComponent /> */}
+                <HeaderComponent />
                 <View style={styles.logo}>
                     <Image source={galleryWinnerLogo} resizeMode="contain" style={styles.galleryWinnerlogo} />
                 </View>
@@ -55,9 +46,8 @@ const GalleryScreen = ({ navigation }) => {
                 <View style={styles.competitionView}>
                     <ScrollView style={styles.competitionBlocks}
                         contentContainerStyle={styles.scrollViewContent}
-                        showsVerticalScrollIndicator={false}
-                    >
-                        <TouchableOpacity onPress={() => navigation.navigate('GalleryScreenWinnersOverview')} >
+                        showsVerticalScrollIndicator={false}>
+                        <TouchableOpacity>
                             <CompetitionBlockComponent />
                         </TouchableOpacity>
                         <View style={styles.spacer} />
@@ -72,11 +62,11 @@ const GalleryScreen = ({ navigation }) => {
                 </View>
 
             </ImageBackground>
-        </SafeAreaView >
+        </SafeAreaView>
     )
 }
 
-export default GalleryScreen
+export default GalleryScreenWinnersOverview
 
 
 const styles = StyleSheet.create({

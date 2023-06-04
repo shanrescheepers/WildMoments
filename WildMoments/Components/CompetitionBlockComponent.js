@@ -75,17 +75,17 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: RFPercentage(40),
         height: RFPercentage(30),
-        backdropFilter: 'blur(25px) saturate(200%)',
+        backdropFilter: 'blur(10px) saturate(200%)',
         webkitBackdropFilter: 'blur(25px) saturate(200%)',
-        backgroundColor: 'rgba(200, 184, 168, 0.56)',
+        backgroundColor: 'rgba(200, 184, 168, 0.59)',
         borderRadius: 12,
         borderWidth: 0,
         borderColor: 'rgba(255, 255, 255, 0.125)',
         // elevation: 10, // Adjust the elevation value as per your preference
         shadowColor: '#111',
         shadowOffset: {
-            width: 26,
-            height: 26,
+
+            height: RFPercentage(3),
 
         },
         shadowOpacity: 1,
