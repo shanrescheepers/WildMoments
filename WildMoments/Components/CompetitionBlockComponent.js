@@ -86,9 +86,11 @@ const styles = StyleSheet.create({
         shadowOffset: {
             width: 26,
             height: 26,
+
         },
         shadowOpacity: 1,
         shadowRadius: 20,
+
     },
     competitionsEnter: {
         // backgroundColor: '#FEB62C',

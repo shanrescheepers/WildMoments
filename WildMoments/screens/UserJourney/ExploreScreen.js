@@ -235,7 +235,7 @@ const styles = StyleSheet.create({
     circleText: {
         color: '#A29085',
         fontWeight: 'bold',
-        fontSize: Platform.OS === 'ios' ? RFValue(14) : RFValue(14),
+        fontSize: Platform.OS === 'ios' ? RFValue(13) : RFValue(14),
     },
     scrollViewContent: {
         // height: Platform.OS === 'ios' ? RFPercentage(100) : RFPercentage(100),
