@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
 
         backgroundColor: 'transparent',
         flexGrow: 1,
-        height: windowHeight,
+        // height: windowHeight,
         marginBottom: RFPercentage(20)
     },
     competitionView: {
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     },
     headingsView_h2: {
         fontSize: RFPercentage(2),
-        windowWidth: windowWidth,
+
         paddingLeft: RFPercentage(5),
         paddingRight: RFPercentage(5),
         textAlign: 'center',
@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
         marginTop: RFValue(3),
         textAlign: 'center',
         fontSize: RFPercentage(2),
-        windowWidth: windowWidth,
+
         paddingLeft: RFPercentage(3),
         paddingRight: RFPercentage(3),
         color: '#111',
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
         marginTop: RFValue(3),
         textAlign: 'center',
         fontSize: RFPercentage(1.8),
-        windowWidth: windowWidth,
+
         paddingLeft: RFPercentage(3),
         paddingRight: RFPercentage(3)
     },
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: '#fff',
         fontSize: RFPercentage(2),
-        windowWidth: windowWidth,
+
         paddingLeft: RFPercentage(3),
         paddingRight: RFPercentage(3),
         fontWeight: 'bold',

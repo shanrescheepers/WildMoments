@@ -53,12 +53,10 @@ const HeaderComponent = (props) => {
                     {/*  */}
                     {!showBack &&
                         <TouchableComponent onPress={() => navigation.goBack()} style={styles.backbutton}>
-                            <TouchableOpacity >
-                                <ImageBackground source={require('../assets/AppIcons/back.png')} // Replace with the actual path to your image
-                                    style={styles.back}>
+                            <ImageBackground source={require('../assets/AppIcons/back.png')} // Replace with the actual path to your image
+                                style={styles.back}>
 
-                                </ImageBackground>
-                            </TouchableOpacity>
+                            </ImageBackground>
                         </TouchableComponent>
                     }
                     <View style={styles.spacer} />

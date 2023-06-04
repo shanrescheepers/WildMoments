@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     },
     photocompTheme: {
         alignSelf: 'flex-start',
-        fontWeight: 'lighter',
+        fontWeight: '300',
         fontSize: RFValue(14),
 
     },
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
         fontSize: RFValue(16),
         alignSelf: 'center',
         paddingVertical: RFValue(8),
-        fontWeight: '800',
+        fontWeight: '700',
     },
     competitionsButtons: {
         marginTop: RFValue(15),
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-start',
     },
     photocompTimeHeading: {
-        fontWeight: 'bold',
+        fontWeight: '800',
         marginVertical: RFValue(1),
     }
 })
