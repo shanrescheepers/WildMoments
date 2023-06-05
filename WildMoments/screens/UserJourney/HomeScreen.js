@@ -191,7 +191,7 @@ const styles = StyleSheet.create({
 
         borderStyle: 'dotted',
         borderColor: '#0E0E0E',
-        borderWidth: 2,
+        borderWidth: Platform.OS === 'ios' ? 1 : 1,
 
         color: '#0E0E0E',
 
@@ -200,12 +200,17 @@ const styles = StyleSheet.create({
         shadowColor: 'gray',
         alignSelf: 'center',
         justifyContent: 'center',
+        // shadowColor: '#000000', // Shadow color
+        // shadowOffset: { width: 0, height: -2 }, // Adjust the offset to change the direction of the shadow (inset)
+        // shadowOpacity: 0.8, // Shadow opacity (1 is fully opaque)
+        // shadowRadius: 4,
     },
     rulesButtonText: {
         color: '#0E0E0E',
-        fontSize: RFValue(10),
+        fontSize: Platform.OS === 'ios' ? 13 : 12,
+        letterSpacing: Platform.OS === 'ios' ? 1 : 1,
         textAlign: 'center',
-        fontWeight: '900',
+        fontWeight: Platform.OS === 'ios' ? '900' : 'bold',
         alignSelf: 'center',
         fontFamily: Alegreya,
     },

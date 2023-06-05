@@ -46,7 +46,7 @@ const GalleryScreen = ({ navigation }) => {
                 source={require('../../assets/backgroundImage.png')} // Replace with the actual path to your image
                 style={styles.background}
             >
-                {/* <HeaderComponent /> */}
+                <HeaderComponent />
                 <View style={styles.logo}>
                     <Image source={galleryWinnerLogo} resizeMode="contain" style={styles.galleryWinnerlogo} />
                 </View>
@@ -84,12 +84,15 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent',
         flexGrow: 1,
         height: windowHeight,
-        marginBottom: RFPercentage(10),
+        marginBottom: Platform.OS === 'ios' ? RFValue(60) : RFValue(100),
+
     },
     scrollViewContent: {
         flexGrow: 1,
         height: windowHeight,
-        marginVertical: Platform.OS === 'ios' ? 20 : 20,
+        marginVertical: Platform.OS === 'ios' ? 20 : 3,
+        marginBottom: Platform.OS === 'ios' ? 15 : 15,
+
     },
     spacer: {
         marginVertical: Platform.OS === 'ios' ? 20 : 20,
@@ -249,11 +252,11 @@ const styles = StyleSheet.create({
     },
     logo: {
         alignSelf: 'center',
-        paddingVertical: RFValue(6),
+        marginTop: Platform.OS === 'ios' ? -15 : -15,
         color: '#fff',
         height: Platform.OS === 'ios' ? 90 : 80,
         gap: Platform.OS === 'ios' ? 15 : 15,
-        marginBottom: Platform.OS === 'ios' ? 15 : 15,
+        marginBottom: Platform.OS === 'ios' ? 10 : -1,
         fontSize: RFValue(20),
         shadowColor: '#ffff',
         shadowOffset: {

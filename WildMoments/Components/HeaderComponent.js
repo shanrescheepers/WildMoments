@@ -22,7 +22,7 @@ const HeaderComponent = ({ props }) => {
 
     const route = useRoute();
     const routeName = route.name;
-    // console.log(routeName);
+    console.log(routeName);
 
     // const homeRoute = route.name
     useEffect(() => {
@@ -33,8 +33,8 @@ const HeaderComponent = ({ props }) => {
             routeName !== 'SignUpLogin' &&
             routeName !== 'Competitions' &&
 
-            routeName !== 'ExploreScreen' &&
-            routeName !== 'GalleryScreen'
+            routeName !== 'Explore' &&
+            routeName !== 'Gallery'
         ) {
             console.log("Show back button");
             setShowBack(false)
