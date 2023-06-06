@@ -23,6 +23,7 @@ import HeaderComponent from './Components/HeaderComponent';
 import EnterCompScreen from './screens/UserJourney/EnterCompScreen';
 import WalkthroughScreen from './screens/UserJourney/WalkthroughScreen';
 import GalleryScreenWinnersOverview from './screens/GalleryScreenWinnersOverview';
+import AddNewCompScreen from './screens/UserJourney/AddNewCompScreen';
 
 // for each nav header that we have, we need to go create it
 const Stack = createNativeStackNavigator();
@@ -41,7 +42,7 @@ export default function App() {
       } else {
         console.log("User logout");
 
-        setLoggedIn(false)
+        setLoggedIn(true)
       }
     })
     return unsubscribe;
@@ -85,7 +86,7 @@ export default function App() {
             <Stack.Screen name="EnterCompScreen" component={EnterCompScreen} options={{ headerShown: false }} />
             <Stack.Screen name="GalleryScreenWinnersOverview" component={GalleryScreenWinnersOverview} options={{ headerShown: false }} />
             {/* <Stack.Screen name="ExploreScreen" component={ExploreScreen} options={{ headerShown: false }} /> */}
-
+            <Stack.Screen name="AddNewCompScreen" component={AddNewCompScreen} options={{ headerShown: false }} />
           </>
 
         )}

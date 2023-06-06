@@ -9,11 +9,11 @@ export const createUserInDB = async (username, email, uid) => {
         const docRef = await setDoc(doc(db, "users", uid), {
             username,
             email,
-            role: 'normal people not admin',
+            role: 'Non-Admin',
             createdAt: Timestamp.now(),
             // profilepicture: '',
         })
-        // console.log("User added, Doc ID: " + docRef.id)
+        console.log("User added, Doc ID: " + docRef.id)
 
     } catch (error) {
 

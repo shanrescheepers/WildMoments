@@ -149,15 +149,6 @@ const styles = StyleSheet.create({
         shadowRadius: 3,
     },
     competitionsBrowse: {
-        // borderWidth: 2,
-        // borderColor: '#598059',
-        // // borderStyle: 'dashed',
-        // height: RFPercentage(5),
-        // width: RFPercentage(12),
-        // backgroundColor: '#598059',
-        // borderRadius: 50,
-        // marginBottom: 20,
-        // // shadowColor: 'gray',
 
         borderRadius: 50,
         shadowColor: 'gray',

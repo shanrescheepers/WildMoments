@@ -64,6 +64,12 @@ const HeaderComponent = ({ props }) => {
         console.log("user signed out succesfully");
     }
 
+    const fireAddNewComp = () => {
+        setDropdownVisible(!dropdownVisible);
+        navigation.navigate("AddNewCompScreen")
+        console.log("Went to comp screen succesfully");
+    }
+
     return (
         <SafeAreaView style={styles.hc}>
             < View style={{
@@ -119,14 +125,18 @@ const HeaderComponent = ({ props }) => {
                                         <Text style={styles.dropdownOptionText}>Logout</Text>
                                         {/* onPress={() => navigation.navigate('SignUp')}  */}
                                     </TouchableOpacity>
+                                    {/* THIS IS FOR ADMIN ONLY TO ADD NEW COMP */}
+                                    <TouchableOpacity onPress={() => fireAddNewComp()} style={styles.dropdownOption}>
+                                        <Text style={styles.dropdownOptionText}>Add New Competition</Text>
+                                    </TouchableOpacity>
                                 </View>
                             </TouchableOpacity>
                         </Modal>
                     </View>
-                </View>
-            </View>
+                </View >
+            </View >
 
-        </SafeAreaView>
+        </SafeAreaView >
     );
 }
 
