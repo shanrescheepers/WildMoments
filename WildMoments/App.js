@@ -41,63 +41,59 @@ export default function App() {
       } else {
         console.log("User logout");
 
-        setLoggedIn(true)
+        setLoggedIn(false)
       }
     })
     return unsubscribe;
   }, [])
   return (
-    <>
-      <View style={styles.container}>
 
-      </View>
+    <NavigationContainer >
 
-      <NavigationContainer >
+      <Stack.Navigator initialRouteName='SignUpLogin' style={styles.stacknav} screenOptions={{
+        headerStyle: { backgroundColor: '#202022' },
+        headerTintColor: '#9C7B57'
+      }}>
+        {!loggedIn ? (
+          <>
+            <Stack.Screen name="SignUpLogin" component={SignUpLogin} options={{ headerShown: false }} />
 
-        <Stack.Navigator initialRouteName='SignUpLogin' style={styles.stacknav} screenOptions={{
-          headerStyle: { backgroundColor: '#202022' },
-          headerTintColor: '#9C7B57'
-        }}>
-          {!loggedIn ? (
-            <>
-              <Stack.Screen name="SignUpLogin" component={SignUpLogin} options={{ headerShown: false }} />
-
-              <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
-              <Stack.Screen name="SignUp" component={SignUp} options={{ headerShown: false }} />
+            <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
+            <Stack.Screen name="SignUp" component={SignUp} options={{ headerShown: false }} />
 
 
-            </>
-          ) : (
-            <>
-              {/* OVER AND BEYOOOOOND */}
+          </>
+        ) : (
+          <>
+            {/* OVER AND BEYOOOOOND */}
 
-              {/* <Stack.Screen name="WalkthroughScreen" component={WalkthroughScreen} options={{ headerShown: false }} /> */}
-              {/* <Stack.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }} /> */}
-              <Stack.Screen name="Home" component={HomeTab} options={{ headerShown: false }} style={styles.hometab} />
+            {/* <Stack.Screen name="WalkthroughScreen" component={WalkthroughScreen} options={{ headerShown: false }} /> */}
+            {/* <Stack.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }} /> */}
+            <Stack.Screen name="Home" component={HomeTab} options={{ headerShown: false }} style={styles.hometab} />
 
-              <Stack.Screen name="Competitions" component={CompsScreen} options={{ headerShown: false }} />
-              <Stack.Screen name="ExploreScreen" component={ExploreScreen} options={{ headerShown: false }} />
-              <Stack.Screen name="GalleryScreen" component={GalleryScreen} options={{ headerShown: false }} />
-              <Stack.Screen name="RulesScreen" component={RulesScreen} options={{
-                headerShown: false, title: 'Rules & Regulations',
-                headerTitleStyle: { color: '#FFE4E4' },
-                headerTintColor: '#9C7B57',
+            <Stack.Screen name="Competitions" component={CompsScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="ExploreScreen" component={ExploreScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="GalleryScreen" component={GalleryScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="RulesScreen" component={RulesScreen} options={{
+              headerShown: false, title: 'Rules & Regulations',
+              headerTitleStyle: { color: '#FFE4E4' },
+              headerTintColor: '#9C7B57',
 
-              }} />
-              <Stack.Screen name="ImagesVotingScreen" component={ImagesVotingScreen} options={{ headerShown: false }} />
-              <Stack.Screen name="BrowseAndEnterScreen" component={BrowseAndEnterScreen} options={{ headerShown: false }} />
-              <Stack.Screen name="EnterCompScreen" component={EnterCompScreen} options={{ headerShown: false }} />
-              <Stack.Screen name="GalleryScreenWinnersOverview" component={GalleryScreenWinnersOverview} options={{ headerShown: false }} />
-              {/* <Stack.Screen name="ExploreScreen" component={ExploreScreen} options={{ headerShown: false }} /> */}
+            }} />
+            <Stack.Screen name="ImagesVotingScreen" component={ImagesVotingScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="BrowseAndEnterScreen" component={BrowseAndEnterScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="EnterCompScreen" component={EnterCompScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="GalleryScreenWinnersOverview" component={GalleryScreenWinnersOverview} options={{ headerShown: false }} />
+            {/* <Stack.Screen name="ExploreScreen" component={ExploreScreen} options={{ headerShown: false }} /> */}
 
-            </>
+          </>
 
-          )}
+        )}
 
-        </Stack.Navigator>
+      </Stack.Navigator>
 
-      </NavigationContainer>
-    </>
+    </NavigationContainer>
+
 
 
 

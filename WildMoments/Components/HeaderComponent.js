@@ -58,7 +58,11 @@ const HeaderComponent = ({ props }) => {
         setDropdownVisible(false);
     }
 
-
+    const fireSignOut = () => {
+        setDropdownVisible(!dropdownVisible);
+        signOutUser();
+        console.log("user signed out succesfully");
+    }
 
     return (
         <SafeAreaView style={styles.hc}>
@@ -111,7 +115,7 @@ const HeaderComponent = ({ props }) => {
                                     <TouchableOpacity onPress={() => handleOptionSelect('Settings')} style={styles.dropdownOption}>
                                         <Text style={styles.dropdownOptionText}>Settings</Text>
                                     </TouchableOpacity>
-                                    <TouchableOpacity onPress={(signOutUser)} style={styles.dropdownOption}>
+                                    <TouchableOpacity onPress={fireSignOut} style={styles.dropdownOption}>
                                         <Text style={styles.dropdownOptionText}>Logout</Text>
                                         {/* onPress={() => navigation.navigate('SignUp')}  */}
                                     </TouchableOpacity>
