@@ -42,7 +42,7 @@ export default function App() {
       } else {
         console.log("User logout");
 
-        setLoggedIn(true)
+        setLoggedIn(false)
       }
     })
     return unsubscribe;

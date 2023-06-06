@@ -4,12 +4,13 @@ import { useState, useEffect } from 'react';
 import { globalStylesheet, TextInput, TouchableOpacity, Button, Image, ActivityIndicator, Alert, } from 'react-native';
 import { SafeAreaView, StyleSheet, Text, View, ImageBackground, KeyboardAvoidingView } from 'react-native';
 import Checkbox from 'expo-checkbox';
-
+import { createCompetitionInDB } from '../../services/firebseDB';
 import { firebase } from '../../firebase';
 // import firebase from 'firebase/app';
 import 'firebase/compat/storage'
 // import { auth } from '../firebase';
 import 'firebase/storage';
+import { getCurrentUser } from '../../services/firebaseAuth';
 
 import * as ImagePicker from 'expo-image-picker';
 
@@ -58,104 +59,116 @@ const AddNewCompScreen = ({ navigation }) => {
     const [title, setTitle] = useState("")
     // Theme 
     const [theme, setTheme] = useState("");
-    // Set Start Date
-    const [startDate, setStartDate] = useState("")
-    // Set Start Date
-    const [startTime, setStartTime] = useState("")
-    // Set End Date
-    const [endDate, setEndDate] = useState("")
-    // Set End Date
-    const [endTime, setEndTime] = useState("")
 
-
-    const [photographerName, setPhotographerName] = useState("")
-    const [specieDetail, setSpecieDetail] = useState("")
-    const [location, setLocation] = useState("")
-    const [cameraDetail, setCameraDetail] = useState("")
-    const [category, setCategory] = useState("")
-    const [imageEntry, setImageEntry] = useState("")
-
-    const [image, setImage] = useState()
-    const [imagePlaceholder, setImagePlaceholder] = useState(false)
-
-    const [uploading, setUploading] = useState(false)
-    const filename = `${Date.now()}.jpg`;
-    const storageRef = firebase.storage().ref().child(filename);
-    const [isChecked, setChecked] = useState(false);
-
-
-    // registerNewCompetitionEntry(title, specieDetail, location, cameraDetail, category, imageEntry);
-
-    const pickImage = async () => {
-        let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            allowsEditing: true,
-            aspect: [4, 3],
-            quality: 1,
-
-        });
-
-        setImagePlaceholder(true)
-
-        if (!result.canceled) {
-            console.log("URI: ");
-            console.log(result.assets[0].uri);
-            setImage(result.assets[0].uri);
-        }
-    };
-    // const response = await fetch(imageUri);
-    //    const blob = await response.blob();
-    handleSubmit = () => {
-        Alert.alert("Error uploading, please make sure all fields are filled and checked.")
-    }
+    const [android, setAndroid] = useState(true);
 
     useEffect(() => {
         if (Platform.OS === 'ios') {
-            setShow(true);
+            setShowstartDate(true);
+            setShowEndDate(true);
+
             setAndroid(false)
         }
     }, [])
 
-    const [prize, setPrize] = useState('');
 
-    const [date, setDate] = useState(new Date());
+    const [loading, setLoading] = useState(false);
+
+    handleSubmit = async () => {
+        console.log(title);
+        console.log(theme);
+        console.log(prize);
+
+
+        setLoading(true);
+        if (!title || !theme || !prize) {
+            //warning alert
+            Alert.alert("Try again", "Please fill in all the fields", [
+                { text: 'Try again', onPress: () => { setLoading(false) } }
+            ])
+        } else {
+            // await signInUser(email, password)
+            //firebase CRUD ADD call:
+            var creatorInfo = getCurrentUser()
+
+            var competition = {
+                title,
+                theme,
+                prize,
+                startDate,
+                endDate,
+                userId: creatorInfo.uid
+            }
+
+
+            const success = await createCompetitionInDB(competition)
+            if (success) {
+                setLoading(false)
+                console.log("Competition added!");
+            } else {
+                setLoading(false)
+
+                console.log("something went wrong when adding comp")
+            }
+        }
+    }
+
+
+
+    const [prize, setPrize] = useState("");
+
     const [mode, setMode] = useState('datetime');
-    const [show, setShow] = useState(false);
-    const [android, setAndroid] = useState(true)
 
-    const onChange = (event, selectedDate) => {
-        const currentDate = selectedDate;
-        // setShow(false);
+    const [showstartDate, setShowstartDate] = useState(false);
+    const [showEndDate, setShowEndDate] = useState(false);
+
+
+    const [startDate, setstartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date());
+
+
+    const onStartChange = (event, selectedDate) => {
+        const startDate = selectedDate;
         if (Platform.OS === 'android') {
-            setShow(false);
-
-            // for iOS, add a button that closes the picker
+            setShowstartDate(false);
         }
-        setDate(currentDate);
+        setstartDate(startDate);
     };
 
-    const showMode = (currentMode) => {
+    const onEndChange = (event, selectedDate) => {
+        const startDate = selectedDate;
         if (Platform.OS === 'android') {
-            setShow(false);
-
-            // for iOS, add a button that closes the picker
+            setShowEndDate(false);
         }
-        // setMode(currentMode);
+        setEndDate(startDate);
     };
 
-    const showDatepicker = () => {
-        // showMode('date');
-        setShow(true);
-
+    const showstartDatepicker = () => {
+        setMode("date")
+        setShowstartDate(true);
         console.log("clicked")
     };
 
-    const showTimepicker = () => {
-        // showMode('time');
-        setShow(true);
+    const showstartTimepicker = () => {
+        setMode("time")
 
+        setShowstartDate(true);
         console.log("clicked")
     };
+
+
+    const showendDatepicker = () => {
+        setMode("date")
+        setShowEndDate(true);
+        console.log("clicked")
+    };
+
+    const showendTimepicker = () => {
+        setMode("time")
+        setShowEndDate(true);
+        console.log("clicked")
+    };
+
 
 
 
@@ -206,7 +219,7 @@ const AddNewCompScreen = ({ navigation }) => {
                                     keyboardType='default'
                                     placeholder='Theme of the Competition'
                                     placeholderTextColor='#8A8A8A'
-                                    onChangeText={newValue => setTheme(newValue)}
+                                    onChangeText={val => setTheme(val)}
                                     defaultValue={theme}
                                 >
                                 </TextInput>
@@ -216,8 +229,8 @@ const AddNewCompScreen = ({ navigation }) => {
                                     keyboardType='default'
                                     placeholder='1st Place Prize'
                                     placeholderTextColor='#8A8A8A'
-                                    onChangeText={newValue => setTheme(prize)}
-                                    defaultValue={setPrize}
+                                    onChangeText={val2 => setPrize(val2)}
+                                    defaultValue={prize}
                                 >
                                 </TextInput>
 
@@ -226,7 +239,7 @@ const AddNewCompScreen = ({ navigation }) => {
                                     <View style={styles.inputStyle}>
                                         <TouchableOpacity
 
-                                            onPress={showDatepicker} >
+                                            onPress={showstartTimepicker} >
                                             <Text style={styles.competitionsBrowseText}> Start Time</Text>
                                         </TouchableOpacity>
                                     </View>
@@ -234,7 +247,7 @@ const AddNewCompScreen = ({ navigation }) => {
                                     <View style={styles.inputStyle}>
                                         <TouchableOpacity
 
-                                            onPress={showTimepicker} >
+                                            onPress={showstartDatepicker} >
                                             <Text style={styles.competitionsBrowseText}>Select Start Date</Text>
                                         </TouchableOpacity>
                                     </View>
@@ -244,15 +257,15 @@ const AddNewCompScreen = ({ navigation }) => {
 
                                 <View>
                                     <Text style={styles.headingText2}> Start Date</Text>
-                                    <Text style={{ color: '#ffff', alignSelf: 'center' }}> {date.toLocaleString()}</Text>
-                                    {show && (
+                                    <Text style={{ color: '#ffff', alignSelf: 'center' }}> {startDate.toLocaleString()}</Text>
+                                    {showstartDate && (
                                         <DateTimePicker
                                             testID="dateTimePicker"
-                                            value={date}
+                                            value={startDate}
                                             mode={mode}
                                             display="spinner"
                                             is24Hour={true}
-                                            onChange={onChange}
+                                            onChange={onStartChange}
                                             textColor="#FFFFFF"
                                             style={styles.startdateTimePicker}
                                         // textColor={Platform.OS === 'ios' ? '#000000' : '#FFFFFF'}
@@ -266,7 +279,7 @@ const AddNewCompScreen = ({ navigation }) => {
                                     <View style={styles.inputStyle}>
                                         <TouchableOpacity
 
-                                            onPress={showDatepicker} >
+                                            onPress={showendTimepicker} >
                                             <Text style={styles.competitionsBrowseText}> Start Time</Text>
                                         </TouchableOpacity>
                                     </View>
@@ -274,7 +287,7 @@ const AddNewCompScreen = ({ navigation }) => {
                                     <View style={styles.inputStyle}>
                                         <TouchableOpacity
 
-                                            onPress={showTimepicker} >
+                                            onPress={showendDatepicker} >
                                             <Text style={styles.competitionsBrowseText}>Select Start Date</Text>
                                         </TouchableOpacity>
                                     </View>
@@ -284,15 +297,15 @@ const AddNewCompScreen = ({ navigation }) => {
 
                                 <View>
                                     <Text style={styles.headingText2}> End Date</Text>
-                                    <Text style={{ color: '#ffff', alignSelf: 'center' }}> {date.toLocaleString()}</Text>
-                                    {show && (
+                                    <Text style={{ color: '#ffff', alignSelf: 'center' }}> {endDate.toLocaleString()}</Text>
+                                    {showEndDate && (
                                         <DateTimePicker
                                             testID="dateTimePicker"
-                                            value={date}
+                                            value={endDate}
                                             mode={mode}
                                             display="spinner"
                                             is24Hour={true}
-                                            onChange={onChange}
+                                            onChange={onEndChange}
                                             textColor="#FFFFFF"
                                             style={styles.startdateTimePicker}
                                         // textColor={Platform.OS === 'ios' ? '#000000' : '#FFFFFF'}
@@ -302,15 +315,22 @@ const AddNewCompScreen = ({ navigation }) => {
 
                                     )}
                                 </View>
+
+
+
                             </View>
                         </View >
 
                     </ScrollView>
+
                     <View style={styles.submit}>
-                        <TouchableOpacity style={styles.submitButton} onPress={handleSubmit} >
-                            <Text style={styles.submitButtonText}>SUBMIT</Text>
-                        </TouchableOpacity>
+                        {!loading ? (
+                            <TouchableOpacity style={styles.submitButton} onPress={handleSubmit} >
+                                <Text style={styles.submitButtonText}>SUBMIT</Text>
+                            </TouchableOpacity>
+                        ) : <ActivityIndicator animating={loading} size={70} style={{ alignSelf: 'center', justifyContent: 'center', position: 'absolute', left: RFValue(50) }} />}
                     </View>
+
                 </KeyboardAvoidingView>
 
 
