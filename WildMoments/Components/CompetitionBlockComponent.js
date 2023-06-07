@@ -15,9 +15,6 @@ const CompetitionBlockComponent = ({ competition }) => {
     const navigation = useNavigation();
     const currentTimestamp = new Date();
 
-
-
-
     useEffect(() => {
         var myStartDate = new Date(competition.startDate.seconds * 1000);
         var myEndDate = new Date(competition.endDate.seconds * 1000);
@@ -45,7 +42,7 @@ const CompetitionBlockComponent = ({ competition }) => {
                 <View style={styles.Enter} >
                     <TouchableOpacity
                         style={styles.competitionsEnter}
-                        onPress={() => navigation.navigate('EnterCompScreen')}
+                        onPress={() => navigation.navigate('EnterCompScreen', { competition })}
                     >
                         <Text style={styles.competitionsEnterText}>ENTER</Text>
                     </TouchableOpacity>
@@ -54,7 +51,7 @@ const CompetitionBlockComponent = ({ competition }) => {
                 <View style={styles.Browse}>
                     <TouchableOpacity
                         style={styles.competitionsBrowse}
-                        onPress={() => navigation.navigate('BrowseAndEnterScreen')} >
+                        onPress={() => navigation.navigate('BrowseAndEnterScreen', { competition })} >
                         <Text style={styles.competitionsBrowseText}>JUDGE</Text>
                     </TouchableOpacity>
                 </View>

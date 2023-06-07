@@ -38,6 +38,26 @@ export const createCompetitionInDB = async (competition) => {
         console.log("Something went wrong when adding a new competition: " + error)
     }
 }
+
+//CREATE: Add A Competition to Firebase DB
+export const competitionEntry = async (entry) => {
+    try {
+        console.log("Creating your entry into comp..." + entry)
+        const docRef = await addDoc(collection(db, "entry"), entry)
+        console.log("New entry added, by: " + docRef.id)
+        if (docRef.id) {
+            return true;
+        } else {
+            return false;
+        }
+
+
+    } catch (error) {
+
+        console.log("Something went wrong when adding your entry " + error)
+    }
+}
+
 // READ
 export const getAllCompetitionsFromCollection = async () => {
     try {
@@ -47,13 +67,33 @@ export const getAllCompetitionsFromCollection = async () => {
         snapshot.forEach((doc) => {
             // console.log(doc.id, "=>", doc.data())
 
-            returnCompetitions.push(doc.data())
+            returnCompetitions.push({ ...doc.data(), id: doc.id })
         });
 
         return returnCompetitions;
     } catch (error) {
 
         console.log("Something went wrong when returning collection: " + error)
+        return []
+    }
+}
+
+// READ
+export const getAllEntriesFromDB = async () => {
+    try {
+        var returnEntries = []
+
+        const snapshot = await getDocs(collection(db, "entries"))
+        snapshot.forEach((doc) => {
+            // console.log(doc.id, "=>", doc.data())
+
+            returnCompetitions.push({ ...doc.data(), id: doc.id })
+        });
+
+        return returnEntries;
+    } catch (error) {
+
+        console.log("Something went wrong when returning Entries Collection: " + error)
         return []
     }
 }

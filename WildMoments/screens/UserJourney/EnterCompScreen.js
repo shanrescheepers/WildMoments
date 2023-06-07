@@ -44,35 +44,13 @@ import { async } from '@firebase/util';
 // import dings from '../../soundEffects/btn1.mp3';
 
 import HeaderComponent from '../../Components/HeaderComponent';
-
-
+import { getCurrentUser } from '../../services/firebaseAuth';
+import { competitionEntry } from '../../services/firebseDB';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-const EnterCompScreen = ({ navigation }) => {
-    // const [sound, setSound] = React.useState();
+const EnterCompScreen = ({ navigation, route }) => {
 
-    // async function playSound() {
-    //     console.log('Loading Sound');
-    //     const { sound } = await Audio.Sound.createAsync(require('../../soundEffects/btn.mp3')
-    //     );
-    //     setSound(sound);
-
-    //     console.log('Playing Sound');
-    //     await sound.playAsync();
-
-    // }
-
-    // React.useEffect(() => {
-    //     return sound
-    //         ? () => {
-    //             console.log('Unloading Sound');
-    //             sound.unloadAsync();
-    //         }
-    //         : undefined;
-    // }, [sound]);
-    // TODO: Setup our Navigation Here. This is Center Point of App
-    //TODO: Check if User is Logged In
     // Fonts
     const [fontsLoaded] = useFonts({
         'Alegreya': require('../../fonts/Alegreya.ttf'),
@@ -81,16 +59,6 @@ const EnterCompScreen = ({ navigation }) => {
         'RobotoBold': require('../../fonts/Roboto-Bold.ttf'),
     });
 
-    // const [email, setEmail] = useState('')
-    // const [password, setPassword] = useState('')
-    // const [username, setUsername] = useState('')
-
-    // const registerUser = () => {
-    //     console.log("REgistering");
-    //     console.log(email)
-    //     registerNewUser(email, password);
-    //     playSound()
-    // }
 
     // Adding an entry's States
     const [title, setTitle] = useState("")
@@ -173,12 +141,44 @@ const EnterCompScreen = ({ navigation }) => {
                 () => {
                     snapshot.snapshot.ref.getDownloadURL().then((url) => {
                         setUploading(false)
+
+                        var creatorInfo = getCurrentUser()
+
+                        var entry = {
+                            title,
+                            species: specieDetail,
+                            location,
+                            cameraDetail,
+                            category,
+                            username: creatorInfo.displayName,
+                            profilePhoto: creatorInfo.photoURL,
+                            userId: creatorInfo.uid,
+                            photoURL: url,
+                            createdAt: new Date(),
+                            competitionID: route.params.competition.id,
+                            likes: 0,
+                        }
+
+
+                        const success = competitionEntry(entry)
+                        if (success) {
+                            setLoading(false)
+                            console.log("Competition added!");
+                        } else {
+                            setLoading(false)
+
+                            console.log("something went wrong when adding comp")
+                        }
+
+
                         console.log("Download URL: ", url)
                         Alert.alert("CONGRATULATIONS!", "Your photo was submitted. Goodluck!")
                         setImage(url)
 
                         blob.close()
                         return url
+                        navigation.goBack()
+
                     })
                 }
             )
@@ -186,6 +186,8 @@ const EnterCompScreen = ({ navigation }) => {
 
 
     }
+
+    console.log(route.params.competition.id);
 
     return (
         <SafeAreaView style={styles.homescreensafearea}>

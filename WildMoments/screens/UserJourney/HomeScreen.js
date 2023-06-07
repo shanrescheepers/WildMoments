@@ -1,6 +1,6 @@
 import { ImageBackground, SafeAreaView, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import { ScrollView } from 'react-native-gesture-handler'
+import { RefreshControl, ScrollView } from 'react-native-gesture-handler'
 import HeaderComponent from '../../Components/HeaderComponent';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 
@@ -24,7 +24,7 @@ const windowHeight = Dimensions.get('window').height;
 import { getAllCompetitionsFromCollection } from '../../services/firebseDB';
 const HomeScreen = ({ navigation }) => {
     const [competitions, setCompetitions] = useState([])
-
+    const [refreshing, setRefreshing] = useState(false)
     // REFRESH EVERYTIME VIEWING SCREEN
     // useFocusEffect(
     //     React.useCallback(() => {
@@ -41,10 +41,12 @@ const HomeScreen = ({ navigation }) => {
 
     // Get All New Comps From DB (GET ALL COMPS)
     const getAllCompetitionsfromDB = async () => {
+        setRefreshing(true)
         console.log("Getting comps data")
         const allComps = await getAllCompetitionsFromCollection();
         setCompetitions(allComps);
         // console.log(competitions.length);
+        setRefreshing(false)
     }
 
     return (
@@ -79,9 +81,13 @@ const HomeScreen = ({ navigation }) => {
                     showsVerticalScrollIndicator={false}
                     showsHorizontalScrollIndicator={false}>
                     <View style={styles.competitionView}>
-                        <ScrollView style={styles.competitionBlocks} contentContainerStyle={styles.scrollViewContent}>
-                            {/* <CompetitionBlockComponent /> */}
-
+                        <ScrollView
+                            style={styles.competitionBlocks}
+                            contentContainerStyle={styles.scrollViewContent}
+                            refreshControl={
+                                <RefreshControl refreshing={refreshing}
+                                    onRefresh={getAllCompetitionsfromDB} />
+                            } >
                             {competitions.map((competition, i) => {
                                 return (
                                     <View>
@@ -101,7 +107,7 @@ const HomeScreen = ({ navigation }) => {
 
 
                 </ScrollView>
-            </ImageBackground>
+            </ImageBackground >
         </SafeAreaView >
 
     );

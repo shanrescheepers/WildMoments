@@ -31,7 +31,7 @@ const windowHeight = Dimensions.get('window').height;
 
 
 
-const BrowseAndEnterScreen = ({ navigation }) => {
+const BrowseAndEnterScreen = ({ navigation, route }) => {
 
     return (
         <SafeAreaView
@@ -63,10 +63,13 @@ const BrowseAndEnterScreen = ({ navigation }) => {
 
                         >
                             <View style={styles.comp1ImageView}>
+
+
                                 <TouchableOpacity>
                                     <Image source={wildlifeImage1} resizeMode="contain" style={styles.comp1ImageViewImage} />
                                 </TouchableOpacity>
 
+                                {/* 
                                 <TouchableOpacity>
                                     <Image source={wildlifeImage2} resizeMode="contain" style={styles.comp1ImageViewImage} />
                                 </TouchableOpacity>
@@ -77,7 +80,7 @@ const BrowseAndEnterScreen = ({ navigation }) => {
 
                                 <TouchableOpacity>
                                     <Image source={wildlifeImage1} resizeMode="contain" style={styles.comp1ImageViewImage} />
-                                </TouchableOpacity>
+                                </TouchableOpacity> */}
                             </View>
 
                         </ScrollView>

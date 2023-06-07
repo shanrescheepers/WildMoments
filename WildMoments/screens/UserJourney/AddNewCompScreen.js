@@ -91,12 +91,19 @@ const AddNewCompScreen = ({ navigation }) => {
             //firebase CRUD ADD call:
             var creatorInfo = getCurrentUser()
 
+            var categories = {
+                category1,
+                category2,
+                category3,
+            }
+
             var competition = {
                 title,
                 theme,
                 prize,
                 startDate,
                 endDate,
+                categories
                 // username: creatorInfo.displayName,
                 // profilePhoto: creatorInfo.photoURL,
                 // userId: creatorInfo.uid
@@ -119,6 +126,11 @@ const AddNewCompScreen = ({ navigation }) => {
 
 
     const [prize, setPrize] = useState("");
+
+    const [category1, setCategory1] = useState("");
+    const [category2, setCategory2] = useState("");
+    const [category3, setCategory3] = useState("");
+
 
     const [mode, setMode] = useState('datetime');
 
@@ -236,6 +248,41 @@ const AddNewCompScreen = ({ navigation }) => {
                                     defaultValue={prize}
                                 >
                                 </TextInput>
+                                <View style={styles.categoriesInput}>
+                                    <View style={{ width: RFValue(96), alignContent: 'center' }}>
+                                        <TextInput
+                                            style={styles.inputStyle}
+                                            keyboardType='default'
+                                            placeholder='Category 1'
+                                            placeholderTextColor='#8A8A8A'
+                                            onChangeText={val2 => setPrize(val2)}
+                                            defaultValue={prize}
+                                        >
+                                        </TextInput>
+                                    </View>
+
+                                    <View style={{ width: RFValue(96), alignContent: 'center' }}><TextInput
+                                        style={styles.inputStyle}
+                                        keyboardType='default'
+                                        placeholder='Category 2'
+                                        placeholderTextColor='#8A8A8A'
+                                        onChangeText={val2 => setPrize(val2)}
+                                        defaultValue={prize}
+                                    >
+                                    </TextInput>
+                                    </View>
+                                    <View style={{ width: RFValue(96), alignContent: 'center' }}>
+                                        <TextInput
+                                            style={styles.inputStyle}
+                                            keyboardType='default'
+                                            placeholder='Category 3'
+                                            placeholderTextColor='#8A8A8A'
+                                            onChangeText={val2 => setPrize(val2)}
+                                            defaultValue={prize}
+                                        >
+                                        </TextInput>
+                                    </View>
+                                </View>
 
                                 {android && (< View style={styles.buttonContainer}>
                                     {/* <Button } title="Show date picker!" style={styles.competitionsBrowse} /> */}
@@ -318,12 +365,8 @@ const AddNewCompScreen = ({ navigation }) => {
 
                                     )}
                                 </View>
-
-
-
-                            </View>
-                        </View >
-
+                            </View >
+                        </View>
                     </ScrollView>
 
                     <View style={styles.submit}>
@@ -389,7 +432,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
     },
     submit: {
-        top: Platform.OS === 'ios' ? RFValue(550) : RFValue(560),
+        top: Platform.OS === 'ios' ? RFValue(590) : RFValue(590),
         left: Platform.OS === 'ios' ? RFValue(100) : RFValue(130),
         position: 'absolute',
     },
@@ -403,7 +446,14 @@ const styles = StyleSheet.create({
         shadowColor: 'gray',
 
     },
+    categoriesInput: {
+        flex: 1,
+        flexDirection: 'row',
+        gap: RFValue(10),
+        height: RFValue(50),
+        alignSelf: 'center',
 
+    },
     submitButtonText: {
         color: '#2b2b2b',
         fontSize: RFValue(16),
@@ -546,7 +596,6 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
     },
 
-
     pfpText: {
         marginBottom: RFValue(6),
         color: '#9E9E9E',
@@ -602,7 +651,7 @@ const styles = StyleSheet.create({
     },
     inputView: {
         marginTop: RFValue(8),
-        width: RFPercentage(40),
+        width: RFPercentage(46),
     },
     inputLabel: {
         fontSize: RFValue(14),
