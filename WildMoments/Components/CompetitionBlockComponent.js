@@ -18,6 +18,7 @@ const CompetitionBlockComponent = ({ competition }) => {
     useEffect(() => {
         var myStartDate = new Date(competition.startDate.seconds * 1000);
         var myEndDate = new Date(competition.endDate.seconds * 1000);
+        // 
         var formatedStartTime = myStartDate.toJSON();
         var formatedEndTime = myEndDate.toJSON();
         const startTime = new Date(formatedStartTime);
@@ -59,7 +60,10 @@ const CompetitionBlockComponent = ({ competition }) => {
             <View style={styles.photocompTimeView}>
                 <Text style={styles.photocompTimeHeading}>Remaining Time for Entries</Text>
                 <Text style={styles.photocompTime}>{startDate}</Text>
+
+                {/* is hierdie component fucky? */}
                 <CountDown
+                    // vat datum direk in in seconds
                     until={new Date(competition.startDate.seconds) / 1000}
                     //duration of countdown in seconds
                     timetoShow={['D', 'H', 'M', 'S']}

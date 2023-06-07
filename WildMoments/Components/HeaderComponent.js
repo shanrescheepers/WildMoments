@@ -121,13 +121,15 @@ const HeaderComponent = ({ props }) => {
                                     <TouchableOpacity onPress={() => handleOptionSelect('Settings')} style={styles.dropdownOption}>
                                         <Text style={styles.dropdownOptionText}>Settings</Text>
                                     </TouchableOpacity>
-                                    <TouchableOpacity onPress={fireSignOut} style={styles.dropdownOption}>
-                                        <Text style={styles.dropdownOptionText}>Logout</Text>
-                                        {/* onPress={() => navigation.navigate('SignUp')}  */}
-                                    </TouchableOpacity>
+
                                     {/* THIS IS FOR ADMIN ONLY TO ADD NEW COMP */}
                                     <TouchableOpacity onPress={() => fireAddNewComp()} style={styles.dropdownOption}>
                                         <Text style={styles.dropdownOptionText}>Add New Competition</Text>
+                                    </TouchableOpacity>
+
+                                    <TouchableOpacity onPress={fireSignOut} style={styles.dropdownOption}>
+                                        <Text style={styles.dropdownOptionText}>Logout</Text>
+                                        {/* onPress={() => navigation.navigate('SignUp')}  */}
                                     </TouchableOpacity>
                                 </View>
                             </TouchableOpacity>
