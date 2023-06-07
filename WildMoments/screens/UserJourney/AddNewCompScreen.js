@@ -97,7 +97,9 @@ const AddNewCompScreen = ({ navigation }) => {
                 prize,
                 startDate,
                 endDate,
-                userId: creatorInfo.uid
+                // username: creatorInfo.displayName,
+                // profilePhoto: creatorInfo.photoURL,
+                // userId: creatorInfo.uid
             }
 
 
@@ -105,6 +107,7 @@ const AddNewCompScreen = ({ navigation }) => {
             if (success) {
                 setLoading(false)
                 console.log("Competition added!");
+                navigation.goBack()
             } else {
                 setLoading(false)
 

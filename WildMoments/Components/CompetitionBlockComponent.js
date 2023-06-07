@@ -1,18 +1,44 @@
 import { StyleSheet, Text, View, ImageBackground, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize'
+import CountDown from 'react-native-countdown-component';
+import moment from 'moment';
 import { useRoute, useNavigation } from '@react-navigation/native';
+import { useState, useEffect } from 'react';
 
-const CompetitionBlockComponent = ({ }) => {
+const CompetitionBlockComponent = ({ competition }) => {
+    // console.log(competition);
+    // console.log("Test");
+    const [startDate, setStartDate] = useState()
+    const [startDateSec, setStartDateSec] = useState()
 
     const navigation = useNavigation();
+    const currentTimestamp = new Date();
+
+
+
+
+    useEffect(() => {
+        var myStartDate = new Date(competition.startDate.seconds * 1000);
+        var myEndDate = new Date(competition.endDate.seconds * 1000);
+        var formatedStartTime = myStartDate.toJSON();
+        var formatedEndTime = myEndDate.toJSON();
+        const startTime = new Date(formatedStartTime);
+        const endTime = new Date(formatedEndTime);
+        const differenceInMilliseconds = (myEndDate - myStartDate) / 1000;
+        setStartDateSec(differenceInMilliseconds)
+        console.log(differenceInMilliseconds);
+        console.log((new Date(competition.startDate.seconds * 1000) - new Date(competition.endDate.seconds * 1000) / 1000));
+
+    }, [])
+
 
     return (
         <View style={styles.competitions}>
             <Text style={styles.photocomp}>#PhotoCompetition:</Text>
-            <Text style={styles.photocompSeason}>- Autumn 2023</Text>
+            <Text style={styles.photocompSeason}>- {competition.title}</Text>
             <View style={styles.spacer} />
-            <Text style={styles.photocompThemeHeading}>#Theme: <Text style={styles.photocompTheme}>Big Cats</Text> </Text>
+            <Text style={styles.photocompThemeHeading}>#Theme: {competition.theme} </Text>
 
 
             <View style={styles.competitionsButtons}>
@@ -35,7 +61,17 @@ const CompetitionBlockComponent = ({ }) => {
             </View>
             <View style={styles.photocompTimeView}>
                 <Text style={styles.photocompTimeHeading}>Remaining Time for Entries</Text>
-                <Text style={styles.photocompTime}>Time Here From RT DB/ CLOSED</Text>
+                <Text style={styles.photocompTime}>{startDate}</Text>
+                <CountDown
+                    until={new Date(competition.startDate.seconds) / 1000}
+                    //duration of countdown in seconds
+                    timetoShow={['D', 'H', 'M', 'S']}
+                    //on Press call
+                    onFinish={() => alert("Times Up!")}
+                    size={15}
+                    timeLabels={{ d: 'Days', h: 'Hours', m: 'Minutes', s: 'Seconds' }}
+                    showSeparator
+                />
             </View>
         </View>
 
@@ -51,7 +87,7 @@ const styles = StyleSheet.create({
     photocomp: {
         alignSelf: 'flex-start',
         fontSize: RFValue(14),
-
+        fontWeight: '900',
     },
     photocompSeason: {
         alignSelf: 'flex-start',
@@ -74,7 +110,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         alignItems: 'center',
         width: RFPercentage(40),
-        height: RFPercentage(30),
+        height: RFPercentage(38),
         backdropFilter: 'blur(10px) saturate(200%)',
         webkitBackdropFilter: 'blur(25px) saturate(200%)',
         backgroundColor: 'rgba(200, 184, 168, 0.59)',

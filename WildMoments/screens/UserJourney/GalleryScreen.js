@@ -57,7 +57,7 @@ const GalleryScreen = ({ navigation }) => {
                         contentContainerStyle={styles.scrollViewContent}
                         showsVerticalScrollIndicator={false}
                     >
-                        <TouchableOpacity onPress={() => navigation.navigate('GalleryScreenWinnersOverview')} >
+                        {/* <TouchableOpacity onPress={() => navigation.navigate('GalleryScreenWinnersOverview')} >
                             <CompetitionBlockComponent />
                         </TouchableOpacity>
                         <View style={styles.spacer} />
@@ -67,7 +67,7 @@ const GalleryScreen = ({ navigation }) => {
                         <View style={styles.spacer} />
                         <TouchableOpacity>
                             <CompetitionBlockComponent />
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                     </ScrollView>
                 </View>
 

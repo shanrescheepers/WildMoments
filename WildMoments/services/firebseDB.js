@@ -1,4 +1,4 @@
-import { addDoc, collection, doc, setDoc, Timestamp } from "firebase/firestore"
+import { addDoc, collection, doc, setDoc, Timestamp, getDocs } from "firebase/firestore"
 import { db } from "../firebase"
 
 //User Collection (Back-End, praat met Frontend op AddNewCompsScreen)
@@ -38,4 +38,22 @@ export const createCompetitionInDB = async (competition) => {
         console.log("Something went wrong when adding a new competition: " + error)
     }
 }
+// READ
+export const getAllCompetitionsFromCollection = async () => {
+    try {
+        var returnCompetitions = []
 
+        const snapshot = await getDocs(collection(db, "competitions"))
+        snapshot.forEach((doc) => {
+            // console.log(doc.id, "=>", doc.data())
+
+            returnCompetitions.push(doc.data())
+        });
+
+        return returnCompetitions;
+    } catch (error) {
+
+        console.log("Something went wrong when returning collection: " + error)
+        return []
+    }
+}

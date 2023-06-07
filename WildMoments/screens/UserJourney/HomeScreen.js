@@ -7,9 +7,6 @@ import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import { useState, useEffect } from 'react';
 import { globalStylesheet, TextInput, TouchableOpacity, Button, Image, StatusBar } from 'react-native';
 
-// import { styles } from '../utils/styles';
-
-
 
 // fonts import for systems
 import { Alegreya } from "@expo-google-fonts/dev";
@@ -19,14 +16,41 @@ import { Dimensions } from 'react-native';
 import { useFonts } from 'expo-font';
 
 import CompetitionBlockComponent from '../../Components/CompetitionBlockComponent';
+import { useFocusEffect } from '@react-navigation/native';
+
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-
+import { getAllCompetitionsFromCollection } from '../../services/firebseDB';
 const HomeScreen = ({ navigation }) => {
+    const [competitions, setCompetitions] = useState([])
+
+    // REFRESH EVERYTIME VIEWING SCREEN
+    // useFocusEffect(
+    //     React.useCallback(() => {
+    //         getAllPCompetitionsfromDB()
+    //         return () => {
+    //             console.log("Not in view");
+    //         }
+    //     }, [])
+    // );
+
+    useEffect(() => {
+        getAllCompetitionsfromDB()
+    }, [])
+
+    // Get All New Comps From DB (GET ALL COMPS)
+    const getAllCompetitionsfromDB = async () => {
+        console.log("Getting comps data")
+        const allComps = await getAllCompetitionsFromCollection();
+        setCompetitions(allComps);
+        // console.log(competitions.length);
+    }
+
     return (
 
         <SafeAreaView style={styles.homescreensafearea}>
+
             <ImageBackground
                 source={require('../../assets/bg2.png')}
                 style={styles.background}>
@@ -56,11 +80,22 @@ const HomeScreen = ({ navigation }) => {
                     showsHorizontalScrollIndicator={false}>
                     <View style={styles.competitionView}>
                         <ScrollView style={styles.competitionBlocks} contentContainerStyle={styles.scrollViewContent}>
-                            <CompetitionBlockComponent />
-                            <View style={styles.spacer} />
-                            <CompetitionBlockComponent />
-                            <View style={styles.spacer} />
-                            <CompetitionBlockComponent />
+                            {/* <CompetitionBlockComponent /> */}
+
+                            {competitions.map((competition, i) => {
+                                return (
+                                    <View>
+                                        <CompetitionBlockComponent key={i} competition={competition} />
+                                        <View style={styles.spacer}></View>
+                                    </View>
+
+
+                                )
+                                // <Text>competitions.title</Text>
+
+
+                            })}
+
                         </ScrollView>
                     </View>
 
@@ -80,27 +115,29 @@ const styles = StyleSheet.create({
     },
     homescreenscrollview: {
         backgroundColor: 'transparent',
-        height: windowHeight,
+        height: 1000,
     },
     scrollViewContent: {
         flexGrow: 1,
-        height: windowHeight,
+
     },
     competitionBlocks: {
         backgroundColor: 'transparent',
         flexGrow: 1,
-        // height: windowHeight,
+        height: 1000,
         shadowColor: '#111',
         shadowOffset: { width: -2, height: 10 },
         shadowOpacity: 0.6,
         shadowRadius: 3,
-
-        marginBottom: RFPercentage(20)
+        // height of content block for competitions
+        height: RFValue(2000),
+        // marginBottom: RFPercentage(20)
     },
     competitionView: {
-        flex: 1,
+
         padding: 10,
         backgroundColor: 'transparent',
+
     },
     spacer: {
         marginVertical: RFPercentage(1),
