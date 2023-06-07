@@ -91,10 +91,9 @@ const AddNewCompScreen = ({ navigation }) => {
             //firebase CRUD ADD call:
             var creatorInfo = getCurrentUser()
 
-            var categories = {
+            let categories = {
                 category1,
-                category2,
-                category3,
+                category2
             }
 
             var competition = {
@@ -127,9 +126,9 @@ const AddNewCompScreen = ({ navigation }) => {
 
     const [prize, setPrize] = useState("");
 
-    const [category1, setCategory1] = useState("");
-    const [category2, setCategory2] = useState("");
-    const [category3, setCategory3] = useState("");
+    const [category1, setCategory1] = useState();
+    const [category2, setCategory2] = useState();
+    const [category3, setCategory3] = useState();
 
 
     const [mode, setMode] = useState('datetime');
@@ -255,8 +254,8 @@ const AddNewCompScreen = ({ navigation }) => {
                                             keyboardType='default'
                                             placeholder='Category 1'
                                             placeholderTextColor='#8A8A8A'
-                                            onChangeText={val2 => setPrize(val2)}
-                                            defaultValue={prize}
+                                            onChangeText={val2 => setCategory1(val2)}
+                                            defaultValue={category1}
                                         >
                                         </TextInput>
                                     </View>
@@ -266,22 +265,12 @@ const AddNewCompScreen = ({ navigation }) => {
                                         keyboardType='default'
                                         placeholder='Category 2'
                                         placeholderTextColor='#8A8A8A'
-                                        onChangeText={val2 => setPrize(val2)}
-                                        defaultValue={prize}
+                                        onChangeText={val2 => setCategory2(val2)}
+                                        defaultValue={category2}
                                     >
                                     </TextInput>
                                     </View>
-                                    <View style={{ width: RFValue(96), alignContent: 'center' }}>
-                                        <TextInput
-                                            style={styles.inputStyle}
-                                            keyboardType='default'
-                                            placeholder='Category 3'
-                                            placeholderTextColor='#8A8A8A'
-                                            onChangeText={val2 => setPrize(val2)}
-                                            defaultValue={prize}
-                                        >
-                                        </TextInput>
-                                    </View>
+
                                 </View>
 
                                 {android && (< View style={styles.buttonContainer}>
@@ -568,7 +557,7 @@ const styles = StyleSheet.create({
     headingText: {
         alignContent: 'center',
         alignSelf: 'center',
-        color: '#A27A51',
+        color: '#F2C440',
         fontSize: RFValue(18),
         fontWeight: '900',
         textAlign: 'center',

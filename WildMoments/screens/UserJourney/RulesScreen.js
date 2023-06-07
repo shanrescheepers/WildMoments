@@ -25,7 +25,7 @@ const RulesScreen = ({ }) => {
                     <View style={styles.spacer} />
                     <Text style={styles.rules2}>Photos for competitions must have been taken in the GREATER KRUGER, inclusive of KRUGER NATIONAL PARK and not older than 5 years.</Text>
                     {/* <View style={styles.spacer} /> */}
-                    <Text style={styles.rules3}>Caption and describe images, as shown in the example below:must be supplied by the photographer:</Text>
+                    <Text style={styles.rules3}>Caption and describe images, as shown in the example below:  </Text>
                     <View style={styles.spacer} />
                     <Text style={styles.rules4}>#Photo Competition: SPRING 2020</Text>
                     <View style={styles.spacer} />
@@ -33,7 +33,9 @@ const RulesScreen = ({ }) => {
                     <View style={styles.spacer} />
                     <Text style={styles.rules6}>Location: Greater Kruger </Text>
                     <View style={styles.spacer} />
-                    <Text style={styles.rules7}>Camera: Canon EOS Lens: Sigma 60-600mm </Text>
+                    <Text style={styles.rules7}>Camera: Canon</Text>
+                    <View style={styles.spacer} />
+                    <Text style={styles.rules7}>Select Category Tags (example, Leopards or Lions)</Text>
                     <View style={styles.spacer} />
                     <Text style={styles.rules8}>Photographers must have taken the image that they submit themselves and be able to supply quality resolution images</Text>
                     <View style={styles.spacer} />

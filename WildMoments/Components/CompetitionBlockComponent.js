@@ -94,6 +94,7 @@ const styles = StyleSheet.create({
     photocompThemeHeading: {
         alignSelf: 'flex-start',
         fontSize: RFValue(14),
+        fontWeight: '800',
     },
     photocompTheme: {
         alignSelf: 'flex-start',
@@ -153,7 +154,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     competitionsEnterText: {
-        color: '#2b2b2b',
+        color: '#111',
         fontSize: RFValue(16),
         alignSelf: 'center',
         paddingVertical: RFValue(8),
@@ -211,7 +212,7 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-start',
     },
     photocompTimeHeading: {
-        fontWeight: '800',
+        fontWeight: '500',
         marginVertical: RFValue(1),
     }
 })

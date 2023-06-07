@@ -7,6 +7,8 @@ import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import { useState, useEffect } from 'react';
 import { globalStylesheet, TextInput, TouchableOpacity, Button, Image, StatusBar } from 'react-native';
 
+import leftArrow from '../../assets/AppIcons/ArrowL.png';
+import rightArrow from '../../assets/AppIcons/ArrowR.png';
 
 // fonts import for systems
 import { Alegreya } from "@expo-google-fonts/dev";
@@ -24,7 +26,7 @@ const windowHeight = Dimensions.get('window').height;
 import { getAllCompetitionsFromCollection } from '../../services/firebseDB';
 const HomeScreen = ({ navigation }) => {
     const [competitions, setCompetitions] = useState([])
-    const [refreshing, setRefreshing] = useState(false)
+    const [refreshing, setRefreshing] = useState(false);
     // REFRESH EVERYTIME VIEWING SCREEN
     // useFocusEffect(
     //     React.useCallback(() => {
@@ -47,6 +49,7 @@ const HomeScreen = ({ navigation }) => {
         setCompetitions(allComps);
         // console.log(competitions.length);
         setRefreshing(false)
+
     }
 
     return (
@@ -70,24 +73,33 @@ const HomeScreen = ({ navigation }) => {
                 </View>
                 <View style={styles.rulesView}>
                     <Text style={styles.rulesText}>PLEASE READ THE RULES BEFORE ENTERING COMPETITIONS</Text>
-                    <View>
-                        <TouchableOpacity style={styles.rulesButton} onPress={() => navigation.navigate('RulesScreen')}>
-                            <Text style={styles.rulesButtonText}>RULES</Text>
-                        </TouchableOpacity>
+                    <View style={styles.rulesViewwithArrows}>
+                        <View >
+                            <Image source={leftArrow} resizeMode="contain" style={{ width: RFValue(40), height: RFValue(30), marginTop: RFValue(-5) }} />
+                        </View>
+                        <View>
+                            <TouchableOpacity style={styles.rulesButton} onPress={() => navigation.navigate('RulesScreen')}>
+                                <Text style={styles.rulesButtonText}>RULES</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View>
+                            <Image source={rightArrow} resizeMode="contain" style={{ width: RFValue(40), height: RFValue(30), marginTop: RFValue(-3) }} />
+                        </View>
                     </View>
                 </View>
 
                 <ScrollView style={styles.homescreenscrollview}
                     showsVerticalScrollIndicator={false}
-                    showsHorizontalScrollIndicator={false}>
+                    showsHorizontalScrollIndicator={false}
+                    refreshControl={
+                        <RefreshControl refreshing={refreshing}
+                            onRefresh={getAllCompetitionsfromDB} />
+                    }>
                     <View style={styles.competitionView}>
                         <ScrollView
                             style={styles.competitionBlocks}
                             contentContainerStyle={styles.scrollViewContent}
-                            refreshControl={
-                                <RefreshControl refreshing={refreshing}
-                                    onRefresh={getAllCompetitionsfromDB} />
-                            } >
+                        >
                             {competitions.map((competition, i) => {
                                 return (
                                     <View>
@@ -116,6 +128,11 @@ const HomeScreen = ({ navigation }) => {
 export default HomeScreen
 
 const styles = StyleSheet.create({
+    rulesViewwithArrows: {
+        alignSelf: 'center',
+        flexDirection: 'row',
+        height: RFValue(50),
+    },
     homescreensafearea: {
         backgroundColor: 'transparent',
     },
@@ -210,14 +227,17 @@ const styles = StyleSheet.create({
         marginTop: RFPercentage(3),
         justifyContent: 'center',
         alignSelf: 'center',
+
+        opacity: 0.8,
+        elevation: 1,
     },
     rulesText: {
         fontSize: Platform.OS === 'ios' ? 14 : 12,
-        color: '#FA993B',
+        color: '#111',
         fontWeight: Platform.OS === 'ios' ? '700' : '700',
         shadowColor: '#111',
         shadowOffset: { width: -2, height: 4 },
-        shadowOpacity: 1,
+        shadowOpacity: 0.5,
         shadowRadius: 3,
         textTransform: 'lowercase',
         marginTop: -2,
@@ -234,7 +254,7 @@ const styles = StyleSheet.create({
 
         borderStyle: 'dotted',
         borderColor: '#0E0E0E',
-        borderWidth: Platform.OS === 'ios' ? 1 : 1,
+        borderWidth: Platform.OS === 'ios' ? 1.5 : 1.5,
 
         color: '#0E0E0E',
 

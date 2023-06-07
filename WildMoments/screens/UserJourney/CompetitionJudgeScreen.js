@@ -4,7 +4,7 @@ import React from 'react'
 import { ScrollView } from 'react-native-gesture-handler'
 import HeaderComponent from '../../Components/HeaderComponent';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
-
+import { getJudgeFromDB } from '../../services/firebseDB';
 import { useState, useEffect } from 'react';
 import { globalStylesheet, TextInput, TouchableOpacity, Button, Image, StatusBar } from 'react-native';
 
@@ -33,6 +33,29 @@ const windowHeight = Dimensions.get('window').height;
 
 const BrowseAndEnterScreen = ({ navigation, route }) => {
 
+    const [entryCategory1, setentryCategory1] = useState([]);
+    const [entryCategory2, setentryCategory2] = useState([]);
+
+
+    useEffect(() => {
+        // console.log("test");
+        // getJudgeFromDB(route.params.competition.id, route.params.competition.categories.category1)
+        getEntrysfromDB()
+
+
+    }, [])
+
+    const getEntrysfromDB = async () => {
+        const cat1 = await getJudgeFromDB(route.params.competition.id, route.params.competition.categories.category1)
+        const cat2 = await getJudgeFromDB(route.params.competition.id, route.params.competition.categories.category2)
+
+        setentryCategory1(cat1)
+        setentryCategory2(cat2)
+        console.log(cat1);
+
+        console.log("Cat2", + cat2);
+    }
+
     return (
         <SafeAreaView
         >
@@ -51,7 +74,7 @@ const BrowseAndEnterScreen = ({ navigation, route }) => {
 
                     <View style={styles.comp1Heading}>
                         <TouchableOpacity style={styles.judgeButton}>
-                            <Text style={styles.comp1HeadingCatergory}>JUDGE PREDATORS</Text>
+                            <Text style={styles.comp1HeadingCatergory}>JUDGE {route.params.competition.categories.category1.toUpperCase()}</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.comp1}>
@@ -64,23 +87,19 @@ const BrowseAndEnterScreen = ({ navigation, route }) => {
                         >
                             <View style={styles.comp1ImageView}>
 
+                                {entryCategory1.map((entry, i) => {
+                                    return (
+                                        <View style={styles.comp1ImageView}>
+                                            <TouchableOpacity key={i}  >
+                                                <Text style={{ color: '#A27A51', width: RFValue(100), fontSize: RFValue(10), alignSelf: 'center', textAlign: 'center' }}> {entry.title}</Text>
+                                                <Image src={entry.photoURL} resizeMode="contain" style={styles.comp1ImageViewImage} />
+                                            </TouchableOpacity>
+                                        </View>
+                                    )
+                                })}
 
-                                <TouchableOpacity>
-                                    <Image source={wildlifeImage1} resizeMode="contain" style={styles.comp1ImageViewImage} />
-                                </TouchableOpacity>
 
-                                {/* 
-                                <TouchableOpacity>
-                                    <Image source={wildlifeImage2} resizeMode="contain" style={styles.comp1ImageViewImage} />
-                                </TouchableOpacity>
 
-                                <TouchableOpacity>
-                                    <Image source={wildlifeImage3} resizeMode="contain" style={styles.comp1ImageViewImage} />
-                                </TouchableOpacity>
-
-                                <TouchableOpacity>
-                                    <Image source={wildlifeImage1} resizeMode="contain" style={styles.comp1ImageViewImage} />
-                                </TouchableOpacity> */}
                             </View>
 
                         </ScrollView>
@@ -88,7 +107,7 @@ const BrowseAndEnterScreen = ({ navigation, route }) => {
 
                     <View style={styles.comp1Heading}>
                         <TouchableOpacity style={styles.judgeButton}>
-                            <Text style={styles.comp2HeadingCatergory}>JUDGE BROWSERS</Text>
+                            <Text style={styles.comp2HeadingCatergory}>JUDGE {route.params.competition.categories.category2.toUpperCase()}</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.comp2}>
@@ -99,40 +118,33 @@ const BrowseAndEnterScreen = ({ navigation, route }) => {
                             showsHorizontalScrollIndicator={false}
 
                         >
-                            <View style={styles.comp2ImageView}>
-                                <TouchableOpacity>
-                                    <Image source={wildlifeImage1} resizeMode="contain" style={styles.comp2ImageViewImage} />
-                                </TouchableOpacity>
-
-                                <TouchableOpacity>
-                                    <Image source={wildlifeImage2} resizeMode="contain" style={styles.comp2ImageViewImage} />
-                                </TouchableOpacity>
-
-                                <TouchableOpacity>
-                                    <Image source={wildlifeImage3} resizeMode="contain" style={styles.comp2ImageViewImage} />
-                                </TouchableOpacity>
-
-                                <TouchableOpacity>
-                                    <Image source={wildlifeImage1} resizeMode="contain" style={styles.comp2ImageViewImage} />
-                                </TouchableOpacity>
-                            </View>
+                            {entryCategory2.map((entry, i) => {
+                                return (
+                                    <View style={styles.comp1ImageView}>
+                                        <TouchableOpacity key={i}  >
+                                            <Text style={{ color: '#A27A51', width: RFValue(100), fontSize: RFValue(10), alignSelf: 'center', textAlign: 'center' }}> {entry.title}</Text>
+                                            <Image src={entry.photoURL} resizeMode="contain" style={styles.comp1ImageViewImage} />
+                                        </TouchableOpacity>
+                                    </View>
+                                )
+                            })}
 
                         </ScrollView>
                     </View>
 
 
-                    <View style={styles.comp3Heading}>
+                    {/* <View style={styles.comp3Heading}>
                         <TouchableOpacity style={styles.judgeButton}>
                             <Text style={styles.comp3HeadingCatergory}>JUDGE GRAZERS</Text>
-                        </TouchableOpacity>
-                        {/* <TouchableOpacity
+                        </TouchableOpacity> */}
+                    {/* <TouchableOpacity
                         style={styles.competitionsBrowse}
                         onPress={() => navigation.navigate('BrowseAndEnterScreen')} >
                         <Text style={styles.competitionsBrowseText}>JUDGE</Text>
                     </TouchableOpacity> */}
 
-                    </View>
-                    <View style={styles.comp3}>
+                    {/* </View> */}
+                    {/* <View style={styles.comp3}>
                         <ScrollView
                             alwaysBounceHorizontal={true}
                             contentContainerStyle={{ justifyContent: 'space-evenly', alignItems: 'flex-start', flexWrap: 'wrap', gap: 10 }}
@@ -156,7 +168,7 @@ const BrowseAndEnterScreen = ({ navigation, route }) => {
                                 </TouchableOpacity>
                             </View>
                         </ScrollView>
-                    </View>
+                    </View> */}
                 </View>
             </ImageBackground>
         </SafeAreaView>

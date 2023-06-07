@@ -1,4 +1,4 @@
-import { addDoc, collection, doc, setDoc, Timestamp, getDocs } from "firebase/firestore"
+import { addDoc, collection, doc, setDoc, Timestamp, getDocs, query, where } from "firebase/firestore"
 import { db } from "../firebase"
 
 //User Collection (Back-End, praat met Frontend op AddNewCompsScreen)
@@ -87,7 +87,7 @@ export const getAllEntriesFromDB = async () => {
         snapshot.forEach((doc) => {
             // console.log(doc.id, "=>", doc.data())
 
-            returnCompetitions.push({ ...doc.data(), id: doc.id })
+            returnEntries.push({ ...doc.data(), id: doc.id })
         });
 
         return returnEntries;
@@ -97,3 +97,44 @@ export const getAllEntriesFromDB = async () => {
         return []
     }
 }
+
+// READ
+export const getJudgeFromDB = async (competitionID, category) => {
+    // console.log("Test");
+    // console.log("Comp Id:", competitionID);
+    // console.log("Cat:", category);
+    try {
+        let entry = []
+        const q = query(collection(db, 'entry'), where("competitionID", "==", competitionID), where("category", "==", category));
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+            // Access the filtered documents here
+            // console.log(doc.id, ' => ', doc.data());
+            entry.push(doc.data())
+
+        });
+        return entry;
+    } catch (error) {
+        console.log('Error getting filtered documents: ', error);
+    }
+
+}
+
+
+// import { collection, query, where, getDocs } from 'firebase/firestore';
+
+// const filterData = async () => {
+//     const q = query(collection(db, 'your_collection'), where('field', '==', 'value'));
+
+//     try {
+//         const querySnapshot = await getDocs(q);
+//         querySnapshot.forEach((doc) => {
+//             // Access the filtered documents here
+//             console.log(doc.id, ' => ', doc.data());
+//         });
+//     } catch (error) {
+//         console.log('Error getting filtered documents: ', error);
+//     }
+// };
+
+// filterData();

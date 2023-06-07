@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
 
 
     back: {
-
+        marginTop: RFValue(13),
         marginRight: RFPercentage(2),
         height: RFPercentage(3),
         width: RFPercentage(7),

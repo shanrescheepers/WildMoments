@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { globalStylesheet, TextInput, TouchableOpacity, Button, Image, ActivityIndicator, Alert, } from 'react-native';
 import { SafeAreaView, StyleSheet, Text, View, ImageBackground, KeyboardAvoidingView } from 'react-native';
 import Checkbox from 'expo-checkbox';
-
+import DropDownPicker from 'react-native-dropdown-picker';
 import { firebase } from '../../firebase';
 // import firebase from 'firebase/app';
 import 'firebase/compat/storage'
@@ -37,6 +37,7 @@ import photographer from '../../assets/ProfileImages/photographer_pfp.png';
 import imageHolder from '../../assets/AppIcons/imageHolder1.png';
 // Sound
 import { Audio } from 'expo-av';
+
 
 // import { signInUser } from '../../services/firebaseAuth';
 import { async } from '@firebase/util';
@@ -76,6 +77,16 @@ const EnterCompScreen = ({ navigation, route }) => {
     const filename = `${Date.now()}.jpg`;
     const storageRef = firebase.storage().ref().child(filename);
     const [isChecked, setChecked] = useState(false);
+    let cat1 = route.params.competition.categories.category1;
+    let cat2 = route.params.competition.categories.category2
+    const [open, setOpen] = useState(false);
+    const [value, setValue] = useState(null);
+    const [items, setItems] = useState([
+        { label: cat1, value: cat1 },
+        { label: cat2, value: cat2 }
+    ]);
+
+    console.log(route.params.competition.categories.category1);
 
 
     // registerNewCompetitionEntry(title, specieDetail, location, cameraDetail, category, imageEntry);
@@ -106,7 +117,7 @@ const EnterCompScreen = ({ navigation, route }) => {
     const uploadImage = async () => {
 
 
-        if (title == "" || specieDetail == "" || location == "" || cameraDetail == "" || category == "" || image == "" || isChecked === false) {
+        if (title == "" || specieDetail == "" || location == "" || cameraDetail == "" || value == "" || image == "" || isChecked === false) {
             console.log("Empty Fields!");
             Alert.alert("Error uploading, please make sure all fields are filled and checked.")
 
@@ -149,7 +160,7 @@ const EnterCompScreen = ({ navigation, route }) => {
                             species: specieDetail,
                             location,
                             cameraDetail,
-                            category,
+                            category: value,
                             username: creatorInfo.displayName,
                             profilePhoto: creatorInfo.photoURL,
                             userId: creatorInfo.uid,
@@ -187,7 +198,7 @@ const EnterCompScreen = ({ navigation, route }) => {
 
     }
 
-    console.log(route.params.competition.id);
+    // console.log(route.params.competition.id);
 
     return (
         <SafeAreaView style={styles.homescreensafearea}>
@@ -267,17 +278,19 @@ const EnterCompScreen = ({ navigation, route }) => {
                                 </View>
                                 <View style={styles.Gap}></View>
                                 <View style={styles.Tags2}>
-                                    <TextInput
-                                        style={styles.inputStyleTagsLocation}
-                                        keyboardType='default'
-                                        placeholder='LOCATION'
-                                        placeholderTextColor='#8A8A8A'
-                                        onChangeText={newValue => setLocation(newValue)}
-                                        defaultValue={location}
-                                        onpre
-                                    ></TextInput>
+                                    <View>
+                                        <TextInput
+                                            style={styles.inputStyleTagsLocation}
+                                            keyboardType='default'
+                                            placeholder='LOCATION'
+                                            placeholderTextColor='#8A8A8A'
+                                            onChangeText={newValue => setLocation(newValue)}
+                                            defaultValue={location}
+                                            onpre
+                                        ></TextInput>
+                                    </View>
 
-                                    <TextInput
+                                    {/* <TextInput
                                         style={styles.inputStyleTagsCategory}
                                         keyboardType='default'
                                         placeholder='CATEGORY'
@@ -285,7 +298,21 @@ const EnterCompScreen = ({ navigation, route }) => {
                                         onChangeText={newValue => setCategory(newValue)}
                                         defaultValue={category}
 
-                                    ></TextInput>
+                                    ></TextInput> */}
+                                    <View style={{ height: RFValue(10) }}>
+                                        <DropDownPicker
+                                            style={styles.inputStyleTagsCategory}
+                                            open={open}
+                                            value={value}
+                                            items={items}
+                                            setOpen={setOpen}
+                                            setValue={setValue}
+                                            setItems={setItems}
+                                            placeholder="Category"
+
+                                            placeholderStyle={{ fontSize: RFValue(14), flexDirection: 'row', textAlign: 'auto', color: '#8A8A8A', fontWeight: '800', }}
+                                        />
+                                    </View>
                                 </View>
                                 {/* <TextInput
                             style={styles.inputStyle}
@@ -356,38 +383,51 @@ const styles = StyleSheet.create({
         paddingVertical: RFValue(13),
         fontWeight: '800',
     },
-    Gap: { height: RFValue(10), },
+    Gap: {
+        height: RFValue(12),
+    },
     inputStyleTagsCategory: {
-        fontWeight: '800',
-        paddingLeft: RFValue(8),
-        height: 40,
-        width: RFValue(120),
+        marginLeft: Platform.OS === 'ios' ? RFValue(80) : RFValue(90),
+        marginTop: Platform.OS === 'ios' ? RFValue(-15) : RFValue(-15),
+        height: RFValue(3),
+        width: RFValue(115),
         borderRadius: 11,
         backgroundColor: '#D9D9D9',
+        // fontSize: RFValue(10),
+        borderWidth: 0,
+        fontSize: RFValue(14),
     },
     inputStyleTagsLocation: {
         fontWeight: '800',
-        paddingLeft: RFValue(8),
-        height: 40,
+        marginRight: Platform.OS === 'ios' ? RFValue(-68) : RFValue(-80),
+        height: 50,
+        marginTop: Platform.OS === 'ios' ? RFValue(6) : RFValue(13),
         width: RFValue(190),
+        paddingLeft: RFValue(8),
         borderRadius: 11,
         backgroundColor: '#D9D9D9',
+        fontSize: RFValue(14),
     },
     inputStyleTagsSpecies: {
         fontWeight: '800',
         paddingLeft: RFValue(8),
-        height: 40,
+        marginLeft: Platform.OS === 'ios' ? RFValue(8) : RFValue(6),
+
+        height: 50,
         width: RFValue(160),
         borderRadius: 11,
         backgroundColor: '#D9D9D9',
+        fontSize: RFValue(14),
     },
     inputStyleTagsCameraType: {
         fontWeight: '800',
         paddingLeft: RFValue(8),
-        height: 40,
-        width: RFValue(155),
+        marginLeft: Platform.OS === 'ios' ? RFValue(8) : RFValue(6),
+        height: 50,
+        width: RFValue(140),
         borderRadius: 11,
         backgroundColor: '#D9D9D9',
+        fontSize: RFValue(14),
         marginHorizontal: RFValue(2),
     },
     TagsHeading: {
@@ -410,8 +450,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         alignSelf: 'center',
-        gap: RFValue(20),
-
+        height: RFValue(30),
+        flex: 1,
+        marginBottom: Platform.OS === 'ios' ? RFValue(8) : RFValue(24),
     },
     imageComponent: {
         height: RFValue(240),
