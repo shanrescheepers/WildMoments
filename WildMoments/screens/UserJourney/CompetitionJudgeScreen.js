@@ -37,6 +37,7 @@ const BrowseAndEnterScreen = ({ navigation, route }) => {
     const [entryCategory2, setentryCategory2] = useState([]);
 
 
+
     useEffect(() => {
         // console.log("test");
         // getJudgeFromDB(route.params.competition.id, route.params.competition.categories.category1)
@@ -51,9 +52,10 @@ const BrowseAndEnterScreen = ({ navigation, route }) => {
 
         setentryCategory1(cat1)
         setentryCategory2(cat2)
-        console.log(cat1);
+        // console.log(route.params.competition);
 
-        console.log("Cat2", + cat2);
+        // console.log("Cat2", + cat2);
+
     }
 
     return (
@@ -73,57 +75,73 @@ const BrowseAndEnterScreen = ({ navigation, route }) => {
                 <View style={styles.comps}>
 
                     <View style={styles.comp1Heading}>
-                        <TouchableOpacity style={styles.judgeButton}>
+                        <TouchableOpacity style={styles.judgeButton} onPress={() => navigation.navigate('ImagesVotingScreen',
+                            {
+                                entries: entryCategory1,
+                                theme: route.params.competition.theme,
+                                comptitle: route.params.competition.title,
+                                prize: route.params.competition.prize
+                            }
+                        )
+                        }>
                             <Text style={styles.comp1HeadingCatergory}>JUDGE {route.params.competition.categories.category1.toUpperCase()}</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.comp1}>
                         <ScrollView
                             alwaysBounceHorizontal={true}
-                            contentContainerStyle={{ justifyContent: 'space-evenly', alignItems: 'flex-start', flexWrap: 'wrap', gap: 10 }}
+                            contentContainerStyle={{ justifyContent: 'space-evenly', alignItems: 'flex-start', flexWrap: 'wrap', gap: 1 }}
                             horizontal={true}
                             showsHorizontalScrollIndicator={false}
-
+                            style={styles.comp1Scroll}
                         >
-                            <View style={styles.comp1ImageView}>
+                            {/* <View style={styles.comp1ImageView}> */}
 
-                                {entryCategory1.map((entry, i) => {
-                                    return (
-                                        <View style={styles.comp1ImageView}>
-                                            <TouchableOpacity key={i}  >
-                                                <Text style={{ color: '#A27A51', width: RFValue(100), fontSize: RFValue(10), alignSelf: 'center', textAlign: 'center' }}> {entry.title}</Text>
-                                                <Image src={entry.photoURL} resizeMode="contain" style={styles.comp1ImageViewImage} />
-                                            </TouchableOpacity>
-                                        </View>
-                                    )
-                                })}
+                            {entryCategory1.map((entry, i) => {
+                                return (
+                                    <View key={entry.id} style={styles.comp1ImageView}>
+                                        <TouchableOpacity  >
+                                            <Text style={{ color: '#A27A51', width: RFValue(100), fontSize: RFValue(10), alignSelf: 'center', textAlign: 'center' }}> {entry.title}</Text>
+                                            <Image src={entry.photoURL} resizeMode="contain" style={styles.comp1ImageViewImage} />
+                                        </TouchableOpacity>
+                                    </View>
+                                )
+                            })}
 
 
 
-                            </View>
+                            {/* </View> */}
 
                         </ScrollView>
                     </View>
 
                     <View style={styles.comp1Heading}>
-                        <TouchableOpacity style={styles.judgeButton}>
+                        <TouchableOpacity style={styles.judgeButton} onPress={() => navigation.navigate('ImagesVotingScreen',
+                            {
+                                entries: entryCategory2,
+                                theme: route.params.competition.theme,
+                                comptitle: route.params.competition.title,
+                                prize: route.params.competition.prize
+                            }
+                        )
+                        }>
                             <Text style={styles.comp2HeadingCatergory}>JUDGE {route.params.competition.categories.category2.toUpperCase()}</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.comp2}>
                         <ScrollView
                             alwaysBounceHorizontal={true}
-                            contentContainerStyle={{ justifyContent: 'space-evenly', alignItems: 'flex-start', flexWrap: 'wrap', gap: 10 }}
+                            contentContainerStyle={{ justifyContent: 'space-evenly', alignItems: 'flex-start', flexWrap: 'wrap', gap: 1 }}
                             horizontal={true}
                             showsHorizontalScrollIndicator={false}
 
                         >
                             {entryCategory2.map((entry, i) => {
                                 return (
-                                    <View style={styles.comp1ImageView}>
+                                    <View key={i} style={styles.comp2ImageView}>
                                         <TouchableOpacity key={i}  >
                                             <Text style={{ color: '#A27A51', width: RFValue(100), fontSize: RFValue(10), alignSelf: 'center', textAlign: 'center' }}> {entry.title}</Text>
-                                            <Image src={entry.photoURL} resizeMode="contain" style={styles.comp1ImageViewImage} />
+                                            <Image src={entry.photoURL} resizeMode="contain" style={styles.comp2ImageViewImage} />
                                         </TouchableOpacity>
                                     </View>
                                 )
@@ -305,28 +323,29 @@ const styles = StyleSheet.create({
     },
     // COMPETITION CATEGORY 1
     comp1: {
-        width: Platform.OS === 'ios' ? 435 : 415,
+
         height: RFValue(150),
         marginTop: Platform.OS === 'ios' ? 3 : 2,
     },
     comp1Scroll: {
-        width: windowWidth,
-        marginLeft: Platform.OS === 'ios' ? -34 : -29,
+
+
     },
     comp1ImageView: {
         flexDirection: 'row',
-        gap: Platform.OS === 'ios' ? -34 : -29,
+
         marginTop: Platform.OS === 'ios' ? 8 : 7,
+        // marginRight: Platform.OS === 'ios' ? 5 : 40,
     },
     comp1ImageViewImage: {
-        width: Platform.OS === 'ios' ? 135 : 115,
+        // width: Platform.OS === 'ios' ? RFPercentage(30) : RFPercentage(30),
         height: Platform.OS === 'ios' ? RFValue(100) : RFValue(100),
-        marginLeft: Platform.OS === 'ios' ? 3 : 2,
+        marginLeft: Platform.OS === 'ios' ? 10 : 10,
+
     },
 
     // COMPETITION CATEGORY 2
     comp2Heading: {
-
         fontSize: RFValue(16),
         color: '#fff',
         flexWrap: 'wrap',

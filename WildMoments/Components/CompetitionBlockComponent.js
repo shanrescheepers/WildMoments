@@ -62,7 +62,7 @@ const CompetitionBlockComponent = ({ competition }) => {
                 <Text style={styles.photocompTime}>{startDate}</Text>
 
                 {/* is hierdie component fucky? */}
-                <CountDown
+                {/* <CountDown
                     // vat datum direk in in seconds
                     until={new Date(competition.startDate.seconds) / 1000}
                     //duration of countdown in seconds
@@ -72,7 +72,7 @@ const CompetitionBlockComponent = ({ competition }) => {
                     size={15}
                     timeLabels={{ d: 'Days', h: 'Hours', m: 'Minutes', s: 'Seconds' }}
                     showSeparator
-                />
+                /> */}
             </View>
         </View>
 

@@ -102,11 +102,10 @@ const HomeScreen = ({ navigation }) => {
                         >
                             {competitions.map((competition, i) => {
                                 return (
-                                    <View>
+                                    <View key={i}>
                                         <CompetitionBlockComponent key={i} competition={competition} />
                                         <View style={styles.spacer}></View>
                                     </View>
-
 
                                 )
                                 // <Text>competitions.title</Text>

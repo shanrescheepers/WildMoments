@@ -110,7 +110,7 @@ export const getJudgeFromDB = async (competitionID, category) => {
         querySnapshot.forEach((doc) => {
             // Access the filtered documents here
             // console.log(doc.id, ' => ', doc.data());
-            entry.push(doc.data())
+            entry.push({ ...doc.data(), id: doc.id })
 
         });
         return entry;

@@ -74,6 +74,7 @@ const EnterCompScreen = ({ navigation, route }) => {
     const [imagePlaceholder, setImagePlaceholder] = useState(false)
 
     const [uploading, setUploading] = useState(false)
+
     const filename = `${Date.now()}.jpg`;
     const storageRef = firebase.storage().ref().child(filename);
     const [isChecked, setChecked] = useState(false);
@@ -97,6 +98,7 @@ const EnterCompScreen = ({ navigation, route }) => {
             allowsEditing: true,
             aspect: [4, 3],
             quality: 1,
+
 
         });
 
@@ -173,10 +175,14 @@ const EnterCompScreen = ({ navigation, route }) => {
 
                         const success = competitionEntry(entry)
                         if (success) {
-                            setLoading(false)
+                            setUploading(false)
                             console.log("Competition added!");
+
+                            navigation.goBack()
+
+
                         } else {
-                            setLoading(false)
+                            setUploading(false)
 
                             console.log("something went wrong when adding comp")
                         }
@@ -184,11 +190,13 @@ const EnterCompScreen = ({ navigation, route }) => {
 
                         console.log("Download URL: ", url)
                         Alert.alert("CONGRATULATIONS!", "Your photo was submitted. Goodluck!")
-                        setImage(url)
 
+                        setImage(url)
                         blob.close()
-                        return url
                         navigation.goBack()
+
+
+                        return url
 
                     })
                 }
@@ -327,7 +335,14 @@ const EnterCompScreen = ({ navigation, route }) => {
 
                             <View style={styles.buttons}>
                                 <View style={styles.buttonsCheckbox}>
-                                    <Checkbox style={{ borderRadius: 20, borderStyle: 'dashed', borderColor: '#FA993B', width: RFValue(30), height: RFValue(30), borderWidth: RFValue(1), }} value={isChecked} onValueChange={setChecked} color={isChecked ? '#FA993B' : undefined} />
+                                    <Checkbox style={{
+                                        borderRadius: 20, borderStyle: 'dashed',
+                                        borderColor: '#FA993B', width: RFValue(30),
+                                        height: RFValue(30), borderWidth: RFValue(1),
+                                    }}
+                                        value={isChecked} onValueChange={setChecked}
+                                        color={isChecked ? '#FA993B' : undefined} />
+
                                     <Text style={{ fontSize: RFValue(14), justifyContent: 'center', alignContent: 'center', alignItems: 'center', alignSelf: 'center', fontWeight: '500', color: '#FA993B' }}>I have read & agree to the competition rules</Text>
                                 </View>
                                 <View style={styles.buttonsSubmit}>
@@ -482,7 +497,7 @@ const styles = StyleSheet.create({
     },
     imageUpload: {
         width: RFValue(225),
-        height: RFValue(225),
+        height: Platform.OS === 'ios' ? RFValue(225) : RFValue(225),
         borderRadius: RFValue(20),
         alignContent: 'center',
         alignItems: 'center',
