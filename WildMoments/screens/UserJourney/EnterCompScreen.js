@@ -1,6 +1,6 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { globalStylesheet, TextInput, TouchableOpacity, Button, Image, ActivityIndicator, Alert, } from 'react-native';
 import { SafeAreaView, StyleSheet, Text, View, ImageBackground, KeyboardAvoidingView } from 'react-native';
 import Checkbox from 'expo-checkbox';
@@ -70,6 +70,8 @@ const EnterCompScreen = ({ navigation, route }) => {
     const [category, setCategory] = useState("")
     const [imageEntry, setImageEntry] = useState("")
 
+    const [compTitle, setCompTitle] = useState("")
+
     const [image, setImage] = useState()
     const [imagePlaceholder, setImagePlaceholder] = useState(false)
 
@@ -89,6 +91,9 @@ const EnterCompScreen = ({ navigation, route }) => {
 
     console.log(route.params.competition.categories.category1);
 
+    useEffect(() => {
+        setCompTitle(route.params.competition.title)
+    }, [])
 
     // registerNewCompetitionEntry(title, specieDetail, location, cameraDetail, category, imageEntry);
 
@@ -210,11 +215,12 @@ const EnterCompScreen = ({ navigation, route }) => {
 
     return (
         <SafeAreaView style={styles.homescreensafearea}>
-            <HeaderComponent />
+
             <ImageBackground
                 source={require('../../assets/backgroundImage.png')} // Replace with the actual path to your image
                 style={styles.background}
             >
+                <HeaderComponent />
                 <KeyboardAvoidingView
                     keyboardVerticalOffset={120}
                     style={{ flex: 1 }}
@@ -224,8 +230,10 @@ const EnterCompScreen = ({ navigation, route }) => {
                     <ScrollView>
                         <View style={styles.container}>
                             <View style={styles.heading}>
-                                <Text style={styles.headingText}>#PhotoCompetition - Autumn 2023 DB</Text>
-                                <Text style={styles.headingText2}>Please enter all the fields before uploading your image</Text>
+
+                                <Text style={styles.headingText}>#PhotoCompetition - {compTitle}</Text>
+
+                                <Text style={styles.headingText2}>Please enter all the fields before submitting your image</Text>
                             </View>
 
 

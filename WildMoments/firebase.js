@@ -12,21 +12,14 @@ import { getFirestore } from 'firebase/firestore';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyBqMjijjWs_NzUk39w-DJuEPMHvrbCRZHI",
-    authDomain: "wild-moments-app.firebaseapp.com",
-    projectId: "wild-moments-app",
-    storageBucket: "wild-moments-app.appspot.com",
-    messagingSenderId: "488854771309",
-    appId: "1:488854771309:web:e218bb7bf61ebd71181164"
+    apiKey: "AIzaSyBfTGjwj9Mbdg-SROV6qS2tLzAuKY3yFek",
+    authDomain: "wildmomentsphotographycompapp.firebaseapp.com",
+    projectId: "wildmomentsphotographycompapp",
+    storageBucket: "wildmomentsphotographycompapp.appspot.com",
+    messagingSenderId: "91334045242",
+    appId: "1:91334045242:web:1acd4b213d912066964f03"
 };
-// const firebaseConfig = {
-//     apiKey: "AIzaSyBN1FP7DnDSGQswypt55Pt0HTedNp4R21U",
-//     authDomain: "wildmomentscompapp.firebaseapp.com",
-//     projectId: "wildmomentscompapp",
-//     storageBucket: "wildmomentscompapp.appspot.com",
-//     messagingSenderId: "1035584368316",
-//     appId: "1:1035584368316:web:f746d374a3da34c42caab9"
-// };
+
 
 if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig)

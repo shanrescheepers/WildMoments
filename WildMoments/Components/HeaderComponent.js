@@ -10,6 +10,7 @@ import { NavigationProp } from '@react-navigation/native';
 import { signOutUser } from '../services/firebaseAuth';
 import App from '../App';
 import { getCurrentUser } from '../services/firebaseAuth';
+import { getUserFromDB } from '../services/firebseDB';
 import addIcon from '../assets/AppIcons/addIcon.png';
 import logout from '../assets/AppIcons/logout.png';
 const TouchableComponent = Platform.OS === 'android' ? TouchableOpacity : TouchableOpacity;
@@ -21,16 +22,30 @@ const HeaderComponent = ({ props }) => {
     const navigation = useNavigation();
     const [showBack, setShowBack] = useState(true);
     const [userName, setUserName] = useState("")
+    const [admin, setAdmin] = useState(false)
+    const [user, setUser] = useState()
 
     const route = useRoute();
     const routeName = route.name;
     // console.log(routeName);
 
     // const homeRoute = route.name
-    useEffect(() => {
-        const currentUser = getCurrentUser();
+
+    const update = async () => {
+        const currentUser = await getCurrentUser();
         // console.log(currentUser);
         setUserName(currentUser.displayName)
+        const userData = await getUserFromDB(currentUser.uid);
+        // console.log(userData);
+        setUser(userData)
+        if (userData.role == "admin") {
+            setAdmin(true)
+        }
+    }
+
+    useEffect(() => {
+        update()
+
         if (
 
             routeName !== 'Login' &&
@@ -135,10 +150,10 @@ const HeaderComponent = ({ props }) => {
 
                                     {/* THIS IS FOR ADMIN ONLY TO ADD NEW COMP */}
                                     {/* Hide Functionality */}
-                                    <TouchableOpacity onPress={() => fireAddNewComp()} style={styles.addNew}>
+                                    {admin && (<TouchableOpacity onPress={() => fireAddNewComp()} style={styles.addNew}>
                                         <Image source={addIcon} resizeMode="contain" style={styles.addNewIcon} />
                                         <Text style={styles.dropdownOptionText}>Add New Competition</Text>
-                                    </TouchableOpacity>
+                                    </TouchableOpacity>)}
 
                                     <TouchableOpacity onPress={fireSignOut} style={styles.addNew}>
                                         <Image source={logout} resizeMode="contain" style={styles.addNewIcon} />

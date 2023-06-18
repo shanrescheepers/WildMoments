@@ -18,7 +18,7 @@ import { Dimensions } from 'react-native';
 import { useFonts } from 'expo-font';
 
 import CompetitionBlockComponent from '../../Components/CompetitionBlockComponent';
-
+import { getTop10EntriesByVotes } from '../../services/firebseDB';
 // images
 import wildlifeImage1 from '../../assets/1.png';
 import wildlifeImage2 from '../../assets/2.png';
@@ -37,6 +37,19 @@ const windowHeight = Dimensions.get('window').height;
 
 const ExploreScreen = ({ navigation }) => {
 
+    useEffect(() => {
+
+        getImages()
+
+    }, [])
+    const [images, setimages] = useState([])
+
+    const getImages = async () => {
+        const images = await getTop10EntriesByVotes()
+        setimages(images)
+        // console.log("Images", images);
+    }
+
     return (
         <SafeAreaView
         >
@@ -51,164 +64,49 @@ const ExploreScreen = ({ navigation }) => {
                     {/* <Text style={styles.headingText11}>- Autumn 2023 DB</Text> */}
                     {/* <Text style={styles.headingText2}>Judge top class wildlife images by swiping left or right</Text> */}
                 </View>
-                <ScrollView
-                    contentContainerStyle={styles.scrollViewContent}
-                    showsVerticalScrollIndicator={false}>
-                    <View style={styles.comps}>
-                        <View style={styles.comp1Heading}>
-                            <TouchableOpacity style={styles.judgeButton}>
-                                <Text style={styles.comp1HeadingCatergory}>ACTIVE COMPS</Text>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={styles.comp1}>
-                            <ScrollView
-                                alwaysBounceHorizontal={true}
-                                contentContainerStyle={{ justifyContent: 'space-evenly', alignItems: 'flex-start', flexWrap: 'wrap', gap: 10 }}
-                                horizontal={true}
-                                showsHorizontalScrollIndicator={false}
+                <View style={styles.comp1Heading}>
+                    <TouchableOpacity style={styles.judgeButton}>
+                        <Text style={styles.comp1HeadingCatergory}>POPULAR 5 IMAGES</Text>
+                    </TouchableOpacity>
+                </View>
 
-                            >
-                                <View style={styles.comp1ImageView}>
-                                    <TouchableOpacity>
-                                        <Image source={wildlifeImage1} resizeMode="contain" style={styles.comp1ImageViewImage} />
-                                    </TouchableOpacity>
+                <View style={styles.comps}>
 
-                                    <TouchableOpacity>
-                                        <Image source={wildlifeImage2} resizeMode="contain" style={styles.comp1ImageViewImage} />
-                                    </TouchableOpacity>
+                    <View style={styles.comp1}>
 
-                                    <TouchableOpacity>
-                                        <Image source={wildlifeImage3} resizeMode="contain" style={styles.comp1ImageViewImage} />
-                                    </TouchableOpacity>
+                        <ScrollView
+                            contentContainerStyle={styles.scroll}
+                            // alwaysBounceHorizontal={true}
+                            // contentContainerStyle={{
+                            //     justifyContent: 'center', alignContent: 'center', alignItems: 'center', paddingHorizontal: 20, marginLeft: 90
+                            // }}
+                            alwaysBounceVertical={true}
+                            vertical={true}
+                            showsHorizontalScrollIndicator={false}
 
-                                    <TouchableOpacity>
-                                        <Image source={wildlifeImage1} resizeMode="contain" style={styles.comp1ImageViewImage} />
-                                    </TouchableOpacity>
-                                </View>
+                        >
 
-                            </ScrollView>
-                        </View>
-
-                        <View style={styles.comp1Heading}>
-                            <TouchableOpacity style={styles.closedcompsButton}>
-                                <Text style={styles.comp2HeadingCatergory}>POPULAR IMAGES</Text>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={styles.comp2}>
-                            <ScrollView
-                                alwaysBounceHorizontal={true}
-                                contentContainerStyle={{ justifyContent: 'space-evenly', alignItems: 'flex-start', flexWrap: 'wrap', gap: 10 }}
-                                horizontal={true}
-                                showsHorizontalScrollIndicator={false}
-                            >
-                                <View style={styles.comp2ImageView}>
-                                    <View style={styles.imageContainer}>
-                                        <TouchableOpacity style={styles.touchableOpacity}>
-                                            <Image source={wildlifeImage1} resizeMode="contain" style={styles.comp2ImageViewImage} />
-
+                            <View style={styles.comp1ImageView}>
+                                {images.map((image, i) => {
+                                    return (
+                                        <TouchableOpacity style={styles.row} >
+                                            <Image src={image.photoURL} resizeMode="contain"
+                                                style={styles.comp1ImageViewImage} />
+                                            <Text style={styles.row1} >Votes: {image.vote}</Text>
                                         </TouchableOpacity>
-                                        <View style={styles.circle}>
-                                            <Text style={styles.circleText}>11</Text>
-                                        </View>
-                                    </View>
-
-                                    <View style={styles.imageContainer}>
-                                        <TouchableOpacity style={styles.touchableOpacity}>
-                                            <Image source={wildlifeImage1} resizeMode="contain" style={styles.comp2ImageViewImage} />
-
-                                        </TouchableOpacity>
-                                        <View style={styles.circle}>
-                                            <Text style={styles.circleText}>11</Text>
-                                        </View>
-                                    </View>
-
-                                    <TouchableOpacity>
-                                        <Image source={wildlifeImage3} resizeMode="contain" style={styles.comp2ImageViewImage} />
-                                    </TouchableOpacity>
-
-                                    <TouchableOpacity>
-                                        <Image source={wildlifeImage1} resizeMode="contain" style={styles.comp2ImageViewImage} />
-                                    </TouchableOpacity>
-                                </View>
-
-                            </ScrollView>
-                        </View>
+                                    )
+                                })}
 
 
-                        <View style={styles.comp3Heading}>
-                            <TouchableOpacity style={styles.photographersButton}>
-                                <Text style={styles.comp3HeadingCatergory}>POPULAR PHOTOGRAPHERS</Text>
-                            </TouchableOpacity>
-                            {/* <TouchableOpacity
-                        style={styles.competitionsBrowse}
-                        onPress={() => navigation.navigate('BrowseAndEnterScreen')} >
-                        <Text style={styles.competitionsBrowseText}>JUDGE</Text>
-                    </TouchableOpacity> */}
 
-                        </View>
+                            </View>
 
-                        <View style={styles.comp3}>
-                            <ScrollView
-                                alwaysBounceHorizontal={true}
-                                contentContainerStyle={{ justifyContent: 'space-evenly', alignItems: 'flex-start', flexWrap: 'wrap', gap: 10 }}
-                                horizontal={true}
-                                showsHorizontalScrollIndicator={false}>
-
-                                <View style={styles.comp3ImageView}>
-                                    {/* Block 1 */}
-                                    <View style={styles.imageContainer}>
-                                        <TouchableOpacity style={styles.touchableOpacity}>
-                                            <Image source={iconBackdrop} resizeMode="contain" style={styles.comp3ImageViewImage} />
-                                            <View style={styles.overlayContainer}>
-                                                <Image source={photographerIcon} resizeMode="contain" style={styles.comp3ImageViewImage2} />
-                                            </View>
-                                        </TouchableOpacity>
-                                        <View style={styles.circle}>
-                                            <Text style={styles.circleText}>11</Text>
-                                        </View>
-                                    </View>
-
-                                    {/* Block 2 */}
-                                    <View style={styles.imageContainer}>
-                                        <TouchableOpacity style={styles.touchableOpacity}>
-                                            <Image source={iconBackdrop} resizeMode="contain" style={styles.comp3ImageViewImage} />
-                                            <View style={styles.overlayContainer}>
-                                                <Image source={photographerIcon} resizeMode="contain" style={styles.comp3ImageViewImage2} />
-                                            </View>
-                                        </TouchableOpacity>
-                                        <View style={styles.circle}>
-                                            <Text style={styles.circleText}>11</Text>
-                                        </View>
-                                    </View>
-                                    {/* BLOCK 3 */}
-                                    <View style={styles.imageContainer}>
-                                        <TouchableOpacity style={styles.touchableOpacity}>
-                                            <Image source={iconBackdrop} resizeMode="contain" style={styles.comp3ImageViewImage} />
-                                            <View style={styles.overlayContainer}>
-                                                <Image source={photographerIcon} resizeMode="contain" style={styles.comp3ImageViewImage2} />
-                                            </View>
-                                        </TouchableOpacity>
-                                        <View style={styles.circle}>
-                                            <Text style={styles.circleText}>11</Text>
-                                        </View>
-                                    </View>
-                                    {/* BLOCK 4 */}
-                                    <View style={styles.imageContainer}>
-                                        <TouchableOpacity style={styles.touchableOpacity}>
-                                            <Image source={iconBackdrop} resizeMode="contain" style={styles.comp3ImageViewImage} />
-                                            <View style={styles.overlayContainer}>
-                                                <Image source={photographerIcon} resizeMode="contain" style={styles.comp3ImageViewImage2} />
-                                            </View>
-                                        </TouchableOpacity>
-                                        <View style={styles.circle}>
-                                            <Text style={styles.circleText}>11</Text>
-                                        </View>
-                                    </View>
-                                </View>
-                            </ScrollView>
-                        </View>
+                        </ScrollView>
                     </View>
-                </ScrollView>
+
+
+                </View>
+
             </ImageBackground>
         </SafeAreaView>
     )
@@ -218,6 +116,19 @@ export default ExploreScreen
 
 
 const styles = StyleSheet.create({
+    row1: {
+        marginTop: Platform.OS === 'ios' ? RFValue(-25) : RFValue(-29),
+        marginBottom: Platform.OS === 'ios' ? RFValue(20) : RFValue(20),
+    },
+    row: {
+        flexDirection: 'column',
+        gap: 20,
+    },
+    scroll: {
+        flexGrow: 1,
+        padding: 16,
+        height: Platform.OS === 'ios' ? RFValue(900) : RFValue(1000),
+    },
     touchableOpacity: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -241,7 +152,7 @@ const styles = StyleSheet.create({
     },
     scrollViewContent: {
         // height: Platform.OS === 'ios' ? RFPercentage(100) : RFPercentage(100),
-        height: Platform.OS === 'ios' ? RFValue(740) : RFValue(710),
+        height: Platform.OS === 'ios' ? RFPercentage(100) : RFPercentage(100),
 
     }, closedcompsButton: {
         borderRadius: 7,
@@ -390,6 +301,11 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         flexWrap: 'wrap',
+
+        alignContent: 'center',
+        alignSelf: 'center',
+        justifyContent: 'center',
+        marginBottom: 10,
     },
     comp2Heading: {
         display: 'flex',
@@ -403,8 +319,12 @@ const styles = StyleSheet.create({
     },
     // COMPETITION CATEGORY 1
     comp1: {
-        width: Platform.OS === 'ios' ? 435 : 415,
-        height: RFValue(150),
+        marginLeft: Platform.OS === 'ios' ? 32 : 70,
+        alignContent: 'center',
+        alignSelf: 'center',
+        justifyContent: 'center',
+        width: Platform.OS === 'ios' ? 150 : 135,
+        height: RFValue(400),
         marginTop: Platform.OS === 'ios' ? 3 : 2,
         marginBottom: Platform.OS === 'ios' ? 12 : 18,
     },
@@ -413,14 +333,20 @@ const styles = StyleSheet.create({
         marginLeft: Platform.OS === 'ios' ? -34 : -29,
     },
     comp1ImageView: {
-        flexDirection: 'row',
-        gap: Platform.OS === 'ios' ? -34 : -29,
-        marginTop: Platform.OS === 'ios' ? 8 : 7,
+        // flexDirection: 'column',
+        // gap: Platform.OS === 'ios' ? -34 : -29,
+        // marginTop: Platform.OS === 'ios' ? 8 : 7,
+        height: Platform.OS === 'ios' ? RFValue(400) : RFValue(400),
+        flex: 1,
+        aspectRatio: 1, // Make each item square
+        // backgroundColor: 'grey',
     },
     comp1ImageViewImage: {
         width: Platform.OS === 'ios' ? 135 : 115,
-        height: Platform.OS === 'ios' ? RFValue(100) : RFValue(100),
-        marginLeft: Platform.OS === 'ios' ? 3 : 2,
+        height: Platform.OS === 'ios' ? RFValue(120) : RFValue(120),
+        gap: 10,
+        marginBottom: 10
+        // marginLeft: Platform.OS === 'ios' ? 3 : 2,
     },
 
     // COMPETITION CATEGORY 2

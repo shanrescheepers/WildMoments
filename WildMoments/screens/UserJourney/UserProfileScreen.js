@@ -117,16 +117,16 @@ const UserProfileScreen = ({ navigation }) => {
                             <Image source={love} resizeMode="contain" style={styles.containerloveimage} />
                             <Text style={styles.containerlovetitle}>Total submitted photos</Text>
                             <Image source={lovecircle} resizeMode="contain" style={styles.containerloveimage} />
-                            <Text style={styles.containerlovetitlelikes}>{entries.length}</Text>
+                            <Text style={styles.containerlovetitleentries}>{entries.length}</Text>
                         </View>
 
                         <View style={styles.submittedImages}>
                             <View style={styles.submittedImagestitleborder}>
                                 <Text style={styles.submittedImagestitle}>Submitted Images</Text>
                             </View>
-
+                            <Text style={{ color: '#46433E', justifyContent: 'center', alignContent: 'center', alignItems: 'center', alignSelf: 'center', marginLeft: Platform.OS === 'ios' ? 18 : 20, marginTop: Platform.OS === 'ios' ? 1 : -1 }}>Scroll left & right</Text>
                             <ScrollView
-                                alwaysBounceHorizontal={true}
+                                alwaysBounceHorizontal={true} style={styles.sv}
                                 contentContainerStyle={{ justifyContent: 'space-evenly', alignItems: 'flex-start', flexWrap: 'wrap', gap: 10 }}
                                 horizontal={true}
                                 showsHorizontalScrollIndicator={false}
@@ -137,7 +137,7 @@ const UserProfileScreen = ({ navigation }) => {
                                         return (
                                             <TouchableOpacity>
                                                 <Image src={entries.photoURL} resizeMode="contain" style={styles.comp1ImageViewImage} />
-                                                <Text>{entries.title}</Text>
+                                                <Text style={styles.entryTitles}>{entries.title}</Text>
                                             </TouchableOpacity>
 
                                         )
@@ -164,6 +164,17 @@ export default UserProfileScreen
 
 
 const styles = StyleSheet.create({
+    entryTitles: {
+        color: '#9C7B57', justifyContent: 'center',
+        fontSize: Platform.OS === 'ios' ? 10 : 10,
+        alignContent: 'center', alignItems: 'center', alignSelf: 'center',
+
+    },
+    sv: {
+        // width: Platform.OS === 'ios' ? RFPercentage(90) : RFPercentage(90),
+
+
+    },
     submittedImagestitle: {
         padding: Platform.OS === 'ios' ? 9 : 5,
         justifyContent: 'center',
@@ -207,7 +218,12 @@ const styles = StyleSheet.create({
     containerlovetitlelikes: {
         color: '#fff',
         fontSize: Platform.OS === 'ios' ? 12 : 12,
-        marginLeft: -32,
+        marginLeft: Platform.OS === 'ios' ? -32 : -32,
+    },
+    containerlovetitleentries: {
+        color: '#fff',
+        fontSize: Platform.OS === 'ios' ? 12 : 12,
+        marginLeft: Platform.OS === 'ios' ? -29 : -29,
     },
     containerloveimage: {
 
@@ -324,9 +340,13 @@ const styles = StyleSheet.create({
         // marginLeft: Platform.OS === 'ios' ? -34 : -29,
     },
     comp1ImageView: {
+        width: Platform.OS === 'ios' ? RFValue(300) : RFValue(300),
         flexDirection: 'row',
+        justifyContent: 'center',
+        alignContent: 'center',
+        alignSelf: 'center',
         // gap: Platform.OS === 'ios' ? -34 : -29,
-        marginTop: Platform.OS === 'ios' ? 8 : 7,
+        marginTop: Platform.OS === 'ios' ? 60 : 60,
     },
     comp1ImageViewImage: {
         width: Platform.OS === 'ios' ? 135 : 115,

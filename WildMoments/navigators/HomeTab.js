@@ -73,7 +73,7 @@ const HomeTab = ({ }) => {
                 headerShown: false
             })} />
 
-            <Tab.Screen name='Gallery' component={GalleryScreen} options={({ focused, size }) =>
+            {/* <Tab.Screen name='Gallery' component={GalleryScreen} options={({ focused, size }) =>
             ({
                 tabBarIcon: ({ size, tabInfo }) => (
                     <View style={{ marginBottom: -5, paddingBottom: 0 }}>
@@ -84,7 +84,7 @@ const HomeTab = ({ }) => {
                     </View>
                 ),
                 headerShown: false
-            })} />
+            })} /> */}
         </Tab.Navigator>
     )
 }

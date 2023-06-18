@@ -25,6 +25,7 @@ import WalkthroughScreen from './screens/UserJourney/WalkthroughScreen';
 import GalleryScreenWinnersOverview from './screens/GalleryScreenWinnersOverview';
 import AddNewCompScreen from './screens/UserJourney/AddNewCompScreen';
 import UserProfileScreen from './screens/UserJourney/UserProfileScreen';
+import ImagesScreen from './screens/UserJourney/ImagesScreen';
 
 // for each nav header that we have, we need to go create it
 const Stack = createNativeStackNavigator();
@@ -69,7 +70,7 @@ export default function App() {
           <>
             {/* OVER AND BEYOOOOOND */}
 
-            {/* <Stack.Screen name="WalkthroughScreen" component={WalkthroughScreen} options={{ headerShown: false }} /> */}
+            <Stack.Screen name="WalkthroughScreen" component={WalkthroughScreen} options={{ headerShown: false }} />
             {/* <Stack.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }} /> */}
             <Stack.Screen name="Home" component={HomeTab} options={{ headerShown: false }} style={styles.hometab} />
 
@@ -89,6 +90,8 @@ export default function App() {
             {/* <Stack.Screen name="ExploreScreen" component={ExploreScreen} options={{ headerShown: false }} /> */}
             <Stack.Screen name="AddNewCompScreen" component={AddNewCompScreen} options={{ headerShown: false }} />
             <Stack.Screen name="UserProfileScreen" component={UserProfileScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="ImagesScreent" component={ImagesScreen} options={{ headerShown: false }} />
+
           </>
 
         )}

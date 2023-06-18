@@ -263,29 +263,64 @@ export const getVotesByUserAndEntry = async (userId, entry) => {
 
 export const getTopEntriesByVotes = async (competitionId) => {
     try {
-        // Get all entries for the specified competition
         const querySnapshot = await getDocs(query(collection(db, 'entry')));
-        // console.log(querySnapshot);
         const entries = [];
         let totalVotes = 0;
+
         querySnapshot.forEach(async (doc) => {
             const entry = { id: doc.id, ...doc.data() };
             if (entry?.competitionID == competitionId) {
                 entries.push(entry);
-                const vote = await getVotesForEntry(entry.id)
-                console.log("Votes", vote);
-                totalVotes += entry.votes || 0; // Sum the votes
+                const vote = await getVotesForEntry(entry.id);
+                entry.vote = vote;
+                totalVotes += vote || 0;
             }
-            // console.log(entry.competitionID);
         });
 
-        // console.log(totalVotes);
-        return entries;
+        entries.sort((a, b) => b.vote - a.vote); // Sort entries by votes in descending order
+        const topEntries = entries.slice(0, 3); // Get only the top 3 entries
+
+        console.log(topEntries);
+        return topEntries;
     } catch (error) {
         console.log('Error getting top entries:', error);
         return [];
     }
 };
+
+
+
+export const getTop10EntriesByVotes = async () => {
+    try {
+        const querySnapshot = await getDocs(
+            query(collection(db, 'entry'))
+        );
+
+        const entries = [];
+
+        const promises = querySnapshot.docs.map(async (doc) => {
+            const vote = await getVotesForEntry(doc.id);
+            const entry = { id: doc.id, ...doc.data(), vote: vote };
+            return entry;
+        });
+
+        const resolvedEntries = await Promise.all(promises);
+        entries.push(...resolvedEntries);
+
+        // Sort the entries by votes in descending order
+        entries.sort((a, b) => b.vote - a.vote);
+
+        // Get the top 10 entries
+        const top10Entries = entries.slice(0, 5);
+
+        console.log(top10Entries);
+        return top10Entries;
+    } catch (error) {
+        console.log('Error getting top entries:', error);
+        return [];
+    }
+};
+
 
 
 

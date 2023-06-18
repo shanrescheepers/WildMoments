@@ -29,7 +29,7 @@ import wildlifeImage1 from '../assets/1.png';
 const GalleryScreenWinnersOverview = ({ navigation, route }) => {
 
     const [competition, setCompetition] = useState()
-    const [topComp, setTopComp] = useState()
+    const [topComp, setTopComp] = useState([])
     useEffect(() => {
         // console.log(competition);
         setCompetition(route.params.competition)
@@ -76,14 +76,16 @@ const GalleryScreenWinnersOverview = ({ navigation, route }) => {
                             </View>
                             <View style={styles.firstphotographer}>
                                 <Text style={styles.firstphotographertitle}>Photographer:</Text>
-                                <Text style={styles.firstphotographertitle2}>Shanre</Text>
+                                <Text style={styles.firstphotographertitle2}> {topComp[0]?.username}</Text>
                             </View>
                             <View style={styles.firstimageblock}>
-                                <Image source={wildlifeImage1} resizeMode="contain" style={styles.firstimageblockimage} />
+                                {/* <TouchableOpacity onPress={() => navigation.navigate('ImagesScreen',)}> */}
+                                <Image src={topComp[0]?.photoURL} resizeMode="contain" style={styles.firstimageblockimage} />
                                 <View style={styles.firstimageblockimagewinning}>
                                     <Text style={styles.firstimageblockimagetitle} >Winning Prize : </Text>
                                     <Text style={styles.firstimageblockimagetitle2} >{competition?.prize}</Text>
                                 </View>
+                                {/* </TouchableOpacity> */}
                             </View>
                         </View>
 
@@ -93,10 +95,10 @@ const GalleryScreenWinnersOverview = ({ navigation, route }) => {
                             </View>
                             <View style={styles.firstphotographer}>
                                 <Text style={styles.firstphotographertitle}>Photographer:</Text>
-                                <Text style={styles.firstphotographertitle2}>Shanre</Text>
+                                <Text style={styles.firstphotographertitle2}>{topComp[1]?.username}</Text>
                             </View>
                             <View style={styles.firstimageblock}>
-                                <Image source={wildlifeImage1} resizeMode="contain" style={styles.firstimageblockimage} />
+                                <Image src={topComp[1]?.photoURL} resizeMode="contain" style={styles.firstimageblockimage} />
 
                             </View>
                         </View>
@@ -107,10 +109,10 @@ const GalleryScreenWinnersOverview = ({ navigation, route }) => {
                             </View>
                             <View style={styles.firstphotographer}>
                                 <Text style={styles.firstphotographertitle}>Photographer:</Text>
-                                <Text style={styles.firstphotographertitle2}>Shanre</Text>
+                                <Text style={styles.firstphotographertitle2}>{topComp[2]?.username}</Text>
                             </View>
                             <View style={styles.firstimageblock}>
-                                <Image source={wildlifeImage1} resizeMode="contain" style={styles.firstimageblockimage} />
+                                <Image src={topComp[2]?.photoURL} resizeMode="contain" style={styles.firstimageblockimage} />
 
                             </View>
                         </View>

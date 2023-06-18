@@ -27,7 +27,7 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 
-const ImagesVotingScreen = ({ navigation, route }) => {
+const ImagesScreen = ({ navigation, route }) => {
     const [entries, setEntries] = useState([])
 
     const [currentEntry, seCurrentEntry] = useState()
@@ -108,10 +108,7 @@ const ImagesVotingScreen = ({ navigation, route }) => {
 
             setPosition(nposition);
 
-
         });
-
-
 
     }
 
@@ -249,7 +246,7 @@ const ImagesVotingScreen = ({ navigation, route }) => {
     );
 };
 
-export default ImagesVotingScreen;
+export default ImagesScreen;
 
 const styles = StyleSheet.create({
     tenpoints: { alignContent: 'center', alignSelf: 'center', justifyContent: 'center', alignItems: 'center' },

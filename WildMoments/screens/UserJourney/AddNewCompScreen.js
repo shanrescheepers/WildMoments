@@ -113,7 +113,12 @@ const AddNewCompScreen = ({ navigation }) => {
             if (success) {
                 setLoading(false)
                 console.log("Competition added!");
-                navigation.goBack()
+                {
+                    Alert.alert("Successfully", "added a new Competition!", [
+                        { text: 'Home', onPress: () => { navigation.goBack() } }
+                    ])
+                }
+
             } else {
                 setLoading(false)
 
@@ -360,6 +365,7 @@ const AddNewCompScreen = ({ navigation }) => {
                     </ScrollView>
 
                     <View style={styles.submit}>
+
                         {!loading ? (
                             <TouchableOpacity style={styles.submitButton} onPress={handleSubmit} >
                                 <Text style={styles.submitButtonText}>SUBMIT</Text>
