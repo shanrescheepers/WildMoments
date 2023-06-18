@@ -5,12 +5,15 @@ import CountDown from 'react-native-countdown-component';
 import moment from 'moment';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { useState, useEffect } from 'react';
+import { getEntryCountOfCompetitionFromDB } from '../services/firebseDB';
 
 const CompetitionBlockComponent = ({ competition }) => {
-    // console.log(competition);
+    console.log(competition);
     // console.log("Test");
     const [startDate, setStartDate] = useState()
     const [startDateSec, setStartDateSec] = useState()
+    const [castedEntries, setcastedEntries] = useState(0)
+
 
     const navigation = useNavigation();
     const currentTimestamp = new Date();
@@ -18,18 +21,16 @@ const CompetitionBlockComponent = ({ competition }) => {
     useEffect(() => {
         var myStartDate = new Date(competition.startDate.seconds * 1000);
         var myEndDate = new Date(competition.endDate.seconds * 1000);
-        // 
-        var formatedStartTime = myStartDate.toJSON();
-        var formatedEndTime = myEndDate.toJSON();
-        const startTime = new Date(formatedStartTime);
-        const endTime = new Date(formatedEndTime);
-        const differenceInMilliseconds = (myEndDate - myStartDate) / 1000;
-        setStartDateSec(differenceInMilliseconds)
-        console.log(differenceInMilliseconds);
-        console.log((new Date(competition.startDate.seconds * 1000) - new Date(competition.endDate.seconds * 1000) / 1000));
 
+
+        getEntries(competition.id)
     }, [])
 
+    const getEntries = async (id) => {
+        const entries = await getEntryCountOfCompetitionFromDB(id)
+        setcastedEntries(entries)
+        // console.log("Entries: ", entries);
+    }
 
     return (
         <View style={styles.competitions}>
@@ -59,8 +60,11 @@ const CompetitionBlockComponent = ({ competition }) => {
             </View>
             <View style={styles.photocompTimeView}>
                 <Text style={styles.photocompTimeHeading}>Remaining Time for Entries</Text>
+
                 <Text style={styles.photocompTime}>{startDate}</Text>
 
+
+                <Text> Total Entries in Comp : {castedEntries}</Text>
                 {/* is hierdie component fucky? */}
                 {/* <CountDown
                     // vat datum direk in in seconds
@@ -73,6 +77,9 @@ const CompetitionBlockComponent = ({ competition }) => {
                     timeLabels={{ d: 'Days', h: 'Hours', m: 'Minutes', s: 'Seconds' }}
                     showSeparator
                 /> */}
+            </View>
+            <View>
+
             </View>
         </View>
 

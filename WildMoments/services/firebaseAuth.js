@@ -15,7 +15,7 @@ import { createUserInDB } from "./firebseDB";
 // // // // // // //
 
 // Register a User functionality :: SIGN UP
-export const registerNewUser = (username, email, password) => {
+export const registerNewUser = (username, email, password, profilepicture, instagramHandle) => {
     // this comes from register screen
     // Add registerNewUser to your Register.js!!! : registerNewUser(name,email,password)
 
@@ -29,7 +29,7 @@ export const registerNewUser = (username, email, password) => {
             updateAuthProfile(username);
 
             // TODO: Create user in our DB
-            await createUserInDB(username, email, user.uid)
+            await createUserInDB(username, email, user.uid, profilepicture, instagramHandle)
 
         })
         .catch((error) => {
@@ -74,9 +74,9 @@ export const signOutUser = () => {
         })
 }
 
-const updateAuthProfile = (username) => {
+const updateAuthProfile = (username, profilepicture) => {
     updateProfile(auth.currentUser, {
-        displayName: username, photoURL: ""
+        displayName: username, photoURL: profilepicture,
     }).then(() => {
 
 

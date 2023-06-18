@@ -9,6 +9,7 @@ import { NavigationProp } from '@react-navigation/native';
 // Sign Out FIREBASE FUNC
 import { signOutUser } from '../services/firebaseAuth';
 import App from '../App';
+import { getCurrentUser } from '../services/firebaseAuth';
 
 const TouchableComponent = Platform.OS === 'android' ? TouchableOpacity : TouchableOpacity;
 const windowWidth = Dimensions.get('window').width;
@@ -17,15 +18,18 @@ const windowHeight = Dimensions.get('window').height;
 const HeaderComponent = ({ props }) => {
     // const { navigation } = props.navigation;
     const navigation = useNavigation();
-
     const [showBack, setShowBack] = useState(true);
+    const [userName, setUserName] = useState("")
 
     const route = useRoute();
     const routeName = route.name;
-    console.log(routeName);
+    // console.log(routeName);
 
     // const homeRoute = route.name
     useEffect(() => {
+        const currentUser = getCurrentUser();
+        // console.log(currentUser);
+        setUserName(currentUser.displayName)
         if (
 
             routeName !== 'Login' &&
@@ -40,7 +44,7 @@ const HeaderComponent = ({ props }) => {
             setShowBack(false)
 
         } else {
-            console.log("Hide back button");
+            // console.log("Hide back button");
             setShowBack(true)
         }
     }, [routeName])
@@ -53,7 +57,7 @@ const HeaderComponent = ({ props }) => {
     }
 
     const handleOptionSelect = (option) => {
-        console.log('Selected option : ', option)
+        // console.log('Selected option : ', option)
         //Closing the dropdown after option selection (have to navigate to screen too)?
         setDropdownVisible(false);
     }
@@ -61,13 +65,13 @@ const HeaderComponent = ({ props }) => {
     const fireSignOut = () => {
         setDropdownVisible(!dropdownVisible);
         signOutUser();
-        console.log("user signed out succesfully");
+        // console.log("user signed out succesfully");
     }
 
     const fireAddNewComp = () => {
         setDropdownVisible(!dropdownVisible);
         navigation.navigate("AddNewCompScreen")
-        console.log("Went to comp screen succesfully");
+        // console.log("Went to comp screen succesfully");
     }
 
     return (
@@ -116,7 +120,8 @@ const HeaderComponent = ({ props }) => {
                             >
                                 <View style={styles.dropdownMenu}>
                                     <TouchableOpacity onPress={() => handleOptionSelect('User Profile')} style={styles.dropdownOption}>
-                                        <Text style={styles.dropdownOptionText}>User Profile</Text>
+                                        {/* make onclick to naviagte */}
+                                        <Text style={styles.dropdownOptionText}> {userName}'s Profile</Text>
                                     </TouchableOpacity>
                                     <TouchableOpacity onPress={() => handleOptionSelect('Settings')} style={styles.dropdownOption}>
                                         <Text style={styles.dropdownOptionText}>Settings</Text>

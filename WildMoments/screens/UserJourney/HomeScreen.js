@@ -44,7 +44,7 @@ const HomeScreen = ({ navigation }) => {
     // Get All New Comps From DB (GET ALL COMPS)
     const getAllCompetitionsfromDB = async () => {
         setRefreshing(true)
-        console.log("Getting comps data")
+        // console.log("Getting comps data")
         const allComps = await getAllCompetitionsFromCollection();
         setCompetitions(allComps);
         // console.log(competitions.length);

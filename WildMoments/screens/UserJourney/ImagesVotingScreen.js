@@ -20,7 +20,8 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import HeaderComponent from '../../Components/HeaderComponent';
 import { voteEntry } from '../../services/firebseDB';
 import { getCurrentUser } from '../../services/firebaseAuth';
-
+import { getVotesByUserAndEntry } from '../../services/firebseDB';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -37,12 +38,27 @@ const ImagesVotingScreen = ({ navigation, route }) => {
 
     const [value, setValue] = useState(null);
 
-    useEffect(() => {
+    // Get IG Handle
+
+    useEffect(async () => {
         setEntries(route.params.entries)
         console.log(entries);
         seCurrentEntry(route.params.entries[0])
+        updateVoteState()
+
     }, [])
 
+    const updateVoteState = async () => {
+        const voteState = await getVotesByUserAndEntry(getCurrentUser().uid, route.params.entries[0].id);
+        console.log(voteState[0]?.val);
+        val = voteState[0]?.val
+        if (val == 5) {
+            setChecked5(true)
+        }
+        if (val == 10) {
+            setChecked10(true)
+        }
+    }
 
     function next(val, id) {
         // console.log(val);
@@ -50,14 +66,16 @@ const ImagesVotingScreen = ({ navigation, route }) => {
         nposition = position;
         nposition++;
         console.log(nposition);
+        setChecked5(false)
+        setChecked10(false)
+
         if (val == 5) {
             setChecked5(true)
-
         }
         if (val == 10) {
             setChecked10(true)
-
         }
+
         const success = voteEntry(getCurrentUser().uid, id, val)
 
         if (success) {
@@ -95,10 +113,10 @@ const ImagesVotingScreen = ({ navigation, route }) => {
                 style={styles.background}
             >
                 <Text style={{ color: '#FAAE3B', fontSize: Platform.OS === 'ios' ? RFValue(18) : RFValue(17), fontWeight: 'bold', textAlign: 'center', marginTop: RFValue(10), }}>
-                    Get ready to vote amazing wildlife photographs!
+                    Get ready to vote for your favorites!
                 </Text>
-                <Text style={{ color: '#A27A51', fontSize: Platform.OS === 'ios' ? RFValue(16) : RFValue(16), textAlign: 'center', marginTop: RFValue(10), marginHorizontal: RFValue(10) }}>
-                    We love all wildlife images, thus you can either allocate 5 or 10 points to your favorite high resolution image.
+                <Text style={{ color: '#A27A51', fontSize: Platform.OS === 'ios' ? 10 : 10, textAlign: 'center', marginTop: RFValue(10), marginHorizontal: RFValue(10) }}>
+                    Vote either a 5 or 10 per image. Please wait for the next high res image to load.
                 </Text>
                 {/* <View style={styles.titles}>
                     <Text style={styles.titleText1}>
@@ -140,53 +158,66 @@ const ImagesVotingScreen = ({ navigation, route }) => {
                     <Image onPress={() => next(10)} source={require('../../assets/pointsIcons/10pointFilledx4.png')} ></Image> */}
                 </View>
 
-                <View style={styles.photographerCont}>
-                    <View style={styles.photographerCont2}>
-                        <Image source={require('../../assets/pointsIcons/humanIcon.png')} style={styles.photographerCont2image}></Image>
-                        <Text style={{ color: '#A27A51', }}>    Photographer:  </Text>
-                        <Text style={{ color: '#fff', }}>    {currentEntry?.username} </Text>
+                <ScrollView style={styles.homescreenscrollview}
+                    showsVerticalScrollIndicator={false}
+                    showsHorizontalScrollIndicator={false}
+                    contentContainerStyle={styles.scrollViewContent}
+                >
+                    <View style={styles.photographerCont}>
+                        <View style={styles.photographerCont2}>
+                            <Image source={require('../../assets/pointsIcons/humanIcon.png')} style={styles.photographerCont2image}></Image>
+                            <Text style={{ color: '#A27A51', }}>    Photographer:  </Text>
+                            <Text style={{ color: '#fff', }}>    {currentEntry?.username} </Text>
+
+                        </View>
+                        {/* 
+                        <Text style={{ fontSize: 12 }}>
+                            Instagram
+                        </Text> */}
+
+                    </View>
+                    {/* Instagram Handle */}
+                    <View style={styles.photographerCont3}>
+                        <Image source={require('../../assets/pointsIcons/ig.png')} style={styles.photographerCont3image}></Image>
+
+                        <Text style={{ color: '#fff', }}>  @{currentEntry?.username} </Text>
+                    </View>
+                    <View style={styles.detailsCont}>
+                        <Text style={styles.detailsCont1}>
+                            #PhotoCompetition - {route.params?.comptitle}
+                        </Text>
+                        <Text style={styles.detailsCont2}>
+                            Theme: {route.params?.theme}
+                        </Text>
                     </View>
 
-                    <Text style={{ fontSize: 12 }}>
-                        {/* {item.title} */}
-                    </Text>
+                    <View style={styles.tags}>
+                        <Text style={styles.tagtitle}>
+                            Wildlife
+                        </Text>
+                        <Text style={styles.tagtitle}>
+                            {currentEntry?.species}
+                        </Text>
+                        <Text style={styles.tagtitle}>
+                            {currentEntry?.cameraDetail}
 
-                </View>
-                <View style={styles.detailsCont}>
-                    <Text style={styles.detailsCont1}>
-                        #PhotoCompetition - {route.params?.comptitle}
-                    </Text>
-                    <Text style={styles.detailsCont2}>
-                        Theme: {route.params?.theme}
-                    </Text>
-                </View>
+                        </Text>
 
-                <View style={styles.tags}>
-                    <Text style={styles.tagtitle}>
-                        Wildlife
-                    </Text>
-                    <Text style={styles.tagtitle}>
-                        {currentEntry?.species}
-                    </Text>
-                    <Text style={styles.tagtitle}>
-                        {currentEntry?.cameraDetail}
+                    </View>
+                    <View style={styles.tags}>
+                        <Text style={styles.tagtitle}>
+                            {currentEntry?.location}
 
-                    </Text>
+                        </Text>
+                        <Text style={styles.tagtitle}>
+                            {currentEntry?.category}
 
-                </View>
-                <View style={styles.tags}>
-                    <Text style={styles.tagtitle}>
-                        {currentEntry?.location}
-
-                    </Text>
-                    <Text style={styles.tagtitle}>
-                        {currentEntry?.category}
-
-                    </Text>
-                    <Text style={styles.tagtitle}>
-                        VoteYourFavorite
-                    </Text>
-                </View>
+                        </Text>
+                        <Text style={styles.tagtitle}>
+                            VoteYourFavorite
+                        </Text>
+                    </View>
+                </ScrollView>
 
             </ImageBackground>
         </SafeAreaView >
@@ -201,6 +232,16 @@ const styles = StyleSheet.create({
         padding: Platform.OS === 'ios' ? RFValue(12) : RFValue(12),
         borderRadius: 20, borderStyle: 'solid', borderColor: '#FA993B', borderWidth: 1,
         backgroundColor: '#D23C50'
+    },
+    contentContainer: {
+        position: 'relative',
+
+        zIndex: 1,
+
+    },
+    homescreenscrollview: {
+        backgroundColor: 'transparent',
+        height: 1000,
     },
     tags: {
         flexDirection: 'row', gap: Platform.OS === 'ios' ? RFValue(30) : RFValue(30),
@@ -284,13 +325,29 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginTop: Platform.OS === 'ios' ? RFValue(10) : RFValue(10),
         alignSelf: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        height: 40,
+    },
+    photographerCont3: {
+        flexDirection: 'row',
+        gap: 1,
+        justifyContent: 'center',
+        alignSelf: 'center',
+        alignItems: 'center',
+        marginLeft: -68,
+        marginTop: Platform.OS === 'ios' ? RFValue(4) : RFValue(4)
+
     },
     photographerCont2: {
         flexDirection: 'row',
         gap: 1, justifyContent: 'center', alignItems: 'center',
         marginLeft: Platform.OS === 'ios' ? RFValue(43) : RFValue(-14),
         marginTop: Platform.OS === 'ios' ? RFValue(-10) : RFValue(-14)
+    },
+    photographerCont3image: {
+        width: Platform.OS === 'ios' ? RFValue(30) : RFValue(30),
+        height: Platform.OS === 'ios' ? RFValue(30) : RFValue(30),
+
     },
     photographerCont2image: {
         width: Platform.OS === 'ios' ? RFValue(30) : RFValue(30),
@@ -314,6 +371,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: Platform.OS === 'ios' ? RFValue(400) : RFValue(400),
         height: Platform.OS === 'ios' ? RFValue(400) : RFValue(400),
+        borderRadius: RFValue(20),
     },
 
     titles: {
@@ -354,6 +412,7 @@ const styles = StyleSheet.create({
         width: RFValue(200),
         height: RFValue(200),
         marginBottom: 10,
+        borderRadius: RFValue(20),
     },
 
 });

@@ -73,18 +73,49 @@ const SignUp = ({ navigation }) => {
     const [username, setUsername] = useState('')
     const [instagramHandle, setInstagramHandle] = useState('')
     // Profile Picture Sets
-    // const [profilepicture, setProfilepicture] = React.useState("lion");
+    const [profilepicture, setProfilepicture] = useState("");
     const [lionPfp, setLionPfp] = useState(false);
     const [elephantPfp, setElephantPfp] = useState(false);
     const [buffaloPfp, setBuffaloPfp] = useState(false);
     const [leopardPfp, setLeopardpfp] = useState(false);
+    const [rhinoPfp, setRhinoPfp] = useState(false);
     const [photographerPfp, setPhotographerPfp] = useState(false);
 
+    const profileImage = (value) => {
+        console.log(value)
+        // this makes it false and allows user to switch between pfps without making all of the selcteds true
+        setLionPfp(false)
+        setElephantPfp(false)
+        setBuffaloPfp(false)
+        setLeopardpfp(false)
+        setPhotographerPfp(false)
+        setRhinoPfp(false)
 
+        if (value == "lion") {
+            setLionPfp(true)
+        }
+        if (value == "elephant") {
+            setElephantPfp(true)
+        }
+        if (value == "buffalo") {
+            setBuffaloPfp(true)
+        }
+        if (value == "leopard") {
+            setLeopardpfp(true)
+        }
+        if (value == "photographer") {
+            setPhotographerPfp(true)
+        }
+        if (value == "rhino") {
+            setRhinoPfp(true)
+        }
+        setProfilepicture(value)
+
+    }
     const registerUser = () => {
         console.log("Registering");
         console.log(email)
-        registerNewUser(username, email, password, profilepicture);
+        registerNewUser(username, email, password, profilepicture, instagramHandle);
         playSound()
         navigation.navigate('WalkthroughScreen')
     }
@@ -122,32 +153,26 @@ const SignUp = ({ navigation }) => {
                                 showsHorizontalScrollIndicator={false}
                             >
 
-                                {/*     <TouchableOpacity onPress={() => next(5, currentEntry?.id)} >
-                        <Image style={styles.fivepoints} source={isChecked5 ? require('../../assets/pointsIcons/5pointFilledx1.png') : require('../../assets/pointsIcons/5points.png')} ></Image>
-                    </TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => next(10)}>
-                        <Image style={styles.tenpoints}
-                            source={isChecked10 ? require('../../assets/pointsIcons/10pointFilledx1.png')
-                                : require('../../assets/pointsIcons/10points.png')} ></Image>
-                    </TouchableOpacity> */}
-                                <TouchableOpacity style={styles.profilePicture}>
-                                    <Image source={lion} resizeMode="contain" style={styles.lion} />
+                                <TouchableOpacity onPress={() => profileImage("lion")} style={styles.profilePicture}>
+                                    <Image source={lionPfp ? require('../../assets/ProfileImages/lion_pfp.png') : require('../../assets/ProfileImages/lion_pfp_untouched.png')} resizeMode="contain" style={styles.lion} />
                                 </TouchableOpacity>
-                                <TouchableOpacity style={styles.profilePicture}>
-                                    <Image source={elephant} resizeMode="contain" style={styles.elephant} />
+
+                                <TouchableOpacity style={styles.profilePicture} onPress={() => profileImage("elephant")} >
+                                    <Image source={elephantPfp ? require('../../assets/ProfileImages/elephant_pfp.png') : require('../../assets/ProfileImages/elephant_pfp_untouched.png')} resizeMode="contain" style={styles.elephant} />
                                 </TouchableOpacity>
-                                <TouchableOpacity style={styles.profilePicture}>
-                                    <Image source={rhino} resizeMode="contain" style={styles.rhino} />
+                                <TouchableOpacity style={styles.profilePicture} onPress={() => profileImage("rhino")} >
+                                    <Image source={rhinoPfp ? require('../../assets/ProfileImages/rhino_pfp.png') : require('../../assets/ProfileImages/rhino_pfp_untouched.png')} resizeMode="contain" style={styles.rhino} />
                                 </TouchableOpacity>
-                                <TouchableOpacity style={styles.profilePicture}>
-                                    <Image source={buffalo} resizeMode="contain" style={styles.buffalo} />
+                                <TouchableOpacity style={styles.profilePicture} onPress={() => profileImage("buffalo")} >
+                                    <Image source={buffaloPfp ? require('../../assets/ProfileImages/buffalo_pfp.png') : require('../../assets/ProfileImages/buffalo_pfp_untouched.png')} resizeMode="contain" style={styles.buffalo} />
                                 </TouchableOpacity>
-                                <TouchableOpacity style={styles.profilePicture}>
-                                    <Image source={leopard} resizeMode="contain" style={styles.leopard} />
+                                <TouchableOpacity style={styles.profilePicture} onPress={() => profileImage("leopard")}>
+                                    <Image source={leopardPfp ? require('../../assets/ProfileImages/leopard_pfp.png') : require('../../assets/ProfileImages/leopard_pfp_untouched.png')} resizeMode="contain" style={styles.leopard} />
                                 </TouchableOpacity >
-                                <TouchableOpacity style={styles.profilePicture}>
-                                    <Image source={photographer} resizeMode="contain" style={styles.photographer} />
+
+                                <TouchableOpacity style={styles.profilePicture} onPress={() => profileImage("photographer")}>
+                                    <Image source={photographerPfp ? require('../../assets/ProfileImages/photographer_pfp.png') : require('../../assets/ProfileImages/photographer_pfp_untouched.png')} resizeMode="contain" style={styles.photographer} />
                                 </TouchableOpacity>
                             </View>
 

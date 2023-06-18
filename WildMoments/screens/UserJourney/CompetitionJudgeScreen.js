@@ -69,7 +69,7 @@ const BrowseAndEnterScreen = ({ navigation, route }) => {
                 <View style={styles.heading}>
                     <Text style={styles.headingText}>#PhotoCompetition</Text>
                     <Text style={styles.headingText11}>- Autumn 2023 DB</Text>
-                    <Text style={styles.headingText2}>Judge top class wildlife images by swiping left or right</Text>
+                    {/* <Text style={styles.headingText2}>Judge top class wildlife images by swiping left or right</Text> */}
                 </View>
 
                 <View style={styles.comps}>

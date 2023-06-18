@@ -2,7 +2,7 @@ import { addDoc, collection, doc, setDoc, Timestamp, getDocs, updateDoc, query, 
 import { db } from "../firebase"
 
 //User Collection (Back-End, praat met Frontend op AddNewCompsScreen)
-export const createUserInDB = async (username, email, uid) => {
+export const createUserInDB = async (username, email, uid, profilepicture, instagramHandle) => {
     try {
         console.log("Creating user in db..." + uid)
         const docRef = await setDoc(doc(db, "users", uid), {
@@ -10,12 +10,12 @@ export const createUserInDB = async (username, email, uid) => {
             email,
             role: 'Non-Admin',
             createdAt: Timestamp.now(),
-            // profilepicture: '',
+            profilepicture,
+            instagramHandle,
         })
-        console.log("User added, Doc ID: " + docRef.id + docRef.username)
+        console.log("User added, Doc ID: " + docRef.id + docRef.username + docRef.instagramHandle)
 
     } catch (error) {
-
         console.log("Something went wrong: " + error)
     }
 }
@@ -23,9 +23,9 @@ export const createUserInDB = async (username, email, uid) => {
 //CREATE: Add A Competition to Firebase DB
 export const createCompetitionInDB = async (competition) => {
     try {
-        console.log("Creating New Competition in db..." + competition)
+        // console.log("Creating New Competition in db..." + competition)
         const docRef = await addDoc(collection(db, "competitions"), competition)
-        console.log("New Competition Added, Comp Name: " + docRef.id + "#PhotoCompetition - ")
+        // console.log("New Competition Added, Comp Name: " + docRef.id + "#PhotoCompetition - ")
         if (docRef.id) {
             return true;
         } else {
@@ -42,9 +42,9 @@ export const createCompetitionInDB = async (competition) => {
 //CREATE: Add A Competition to Firebase DB
 export const competitionEntry = async (entry) => {
     try {
-        console.log("Creating your entry into comp..." + entry)
+        // console.log("Creating your entry into comp..." + entry)
         const docRef = await addDoc(collection(db, "entry"), entry)
-        console.log("New entry added, by: " + docRef.id)
+        // console.log("New entry added, by: " + docRef.id)
         if (docRef.id) {
             return true;
         } else {
@@ -111,19 +111,18 @@ export const getJudgeFromDB = async (competitionID, category) => {
             // Access the filtered documents here
             // console.log(doc.id, ' => ', doc.data());
             entry.push({ ...doc.data(), id: doc.id })
-
         });
         return entry;
     } catch (error) {
         console.log('Error getting filtered documents: ', error);
     }
-
 }
+
 
 //CREATE: Add A Competition to Firebase DB
 export const voteEntry = async (userId, entry, val) => {
     try {
-        console.log(userId, entry, val);
+        // console.log(userId, entry, val);
         console.log("Creating your vote into Entry..." + entry);
 
         const parentDocRef = doc(db, 'entry', entry);
@@ -138,7 +137,7 @@ export const voteEntry = async (userId, entry, val) => {
             // User has already voted, update the vote
             const voteDocRef = querySnapshot.docs[0].ref;
             await updateDoc(voteDocRef, { val });
-            console.log("Vote updated for user: " + userId);
+            // console.log("Vote updated for user: " + userId);
             return true;
         }
 
@@ -160,6 +159,20 @@ export const voteEntry = async (userId, entry, val) => {
     }
 };
 
+export const getEntryCountOfCompetitionFromDB = async (competitionID) => {
+    try {
+        const q = query(collection(db, 'entry'), where("competitionID", "==", competitionID));
+        const querySnapshot = await getDocs(q);
+        const entryCount = querySnapshot.size;
+        console.log("id:", competitionID);
+        console.log(`Total entries for competition ${entryCount}`);
+        return entryCount;
+    } catch (error) {
+        console.log('Error getting filtered documents: ', error);
+        return 0;
+    }
+};
+
 export const getVotesByUserAndEntry = async (userId, entry) => {
     try {
         const parentDocRef = doc(db, 'entry', entry);
@@ -172,12 +185,12 @@ export const getVotesByUserAndEntry = async (userId, entry) => {
         if (!querySnapshot.empty) {
             // User has voted, retrieve the vote data
             const votes = querySnapshot.docs.map((doc) => doc.data());
-            console.log("Votes for user: " + userId);
-            console.log(votes);
+            // console.log("Votes for user: " + userId);
+            // console.log(votes);
             return votes;
         } else {
             // User has not voted
-            console.log("User has not voted for entry: " + entry);
+            // console.log("User has not voted for entry: " + entry);
             return [];
         }
     } catch (error) {
