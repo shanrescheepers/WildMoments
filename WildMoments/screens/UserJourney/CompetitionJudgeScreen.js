@@ -61,11 +61,12 @@ const BrowseAndEnterScreen = ({ navigation, route }) => {
     return (
         <SafeAreaView
         >
-            <HeaderComponent />
+
             <ImageBackground
                 source={require('../../assets/backgroundImage.png')} // Replace with the actual path to your image
                 style={styles.background}
             >
+                <HeaderComponent />
                 <View style={styles.heading}>
                     <Text style={styles.headingText}>#PhotoCompetition</Text>
                     <Text style={styles.headingText11}>- Autumn 2023 DB</Text>
@@ -86,6 +87,7 @@ const BrowseAndEnterScreen = ({ navigation, route }) => {
                         }>
                             <Text style={styles.comp1HeadingCatergory}>JUDGE {route.params.competition.categories.category1.toUpperCase()}</Text>
                         </TouchableOpacity>
+                        <Text style={{ color: '#46433E', justifyContent: 'center', alignContent: 'center', alignItems: 'center', alignSelf: 'center', marginLeft: Platform.OS === 'ios' ? 18 : 45 }}>Scroll left & right</Text>
                     </View>
                     <View style={styles.comp1}>
                         <ScrollView
@@ -127,13 +129,19 @@ const BrowseAndEnterScreen = ({ navigation, route }) => {
                         }>
                             <Text style={styles.comp2HeadingCatergory}>JUDGE {route.params.competition.categories.category2.toUpperCase()}</Text>
                         </TouchableOpacity>
+
+                        <Text style={{ color: '#46433E', justifyContent: 'center', alignContent: 'center', alignItems: 'center', alignSelf: 'center', marginLeft: Platform.OS === 'ios' ? 18 : 45 }}>Scroll left & right</Text>
+
                     </View>
+
                     <View style={styles.comp2}>
+
                         <ScrollView
                             alwaysBounceHorizontal={true}
                             contentContainerStyle={{ justifyContent: 'space-evenly', alignItems: 'flex-start', flexWrap: 'wrap', gap: 1 }}
                             horizontal={true}
                             showsHorizontalScrollIndicator={false}
+                            style={styles.comp1Scroll}
 
                         >
                             {entryCategory2.map((entry, i) => {
@@ -211,7 +219,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignSelf: 'center',
         textAlign: 'center',
-        marginLeft: Platform.OS === 'ios' ? 20 : 20,
+        marginLeft: Platform.OS === 'ios' ? 30 : 50,
 
     },
     comp1HeadingCatergory: {
@@ -307,9 +315,10 @@ const styles = StyleSheet.create({
 
     },
     comp1Heading: {
-        display: 'flex',
-        flexDirection: 'row',
-        flexWrap: 'wrap',
+
+        flexDirection: 'column',
+        gap: 10,
+
     },
     comp2Heading: {
         display: 'flex',
@@ -355,20 +364,20 @@ const styles = StyleSheet.create({
     comp2: {
         width: Platform.OS === 'ios' ? 435 : 415,
         height: RFValue(150),
-        marginTop: Platform.OS === 'ios' ? 3 : 2,
+        marginTop: Platform.OS === 'ios' ? -30 : 2,
     },
     comp2Scroll: {
         width: windowWidth,
     },
     comp2ImageView: {
         flexDirection: 'row',
-        gap: Platform.OS === 'ios' ? -34 : -29,
+
         marginTop: Platform.OS === 'ios' ? 8 : 7,
+        // marginRight: Platform.OS === 'ios' ? 5 : 40,
     },
     comp2ImageViewImage: {
-        width: Platform.OS === 'ios' ? 135 : 115,
         height: Platform.OS === 'ios' ? RFValue(100) : RFValue(100),
-        marginLeft: Platform.OS === 'ios' ? 3 : 2,
+        marginLeft: Platform.OS === 'ios' ? 10 : 10,
     },
 
     // COMPETITION CATEGORY 3

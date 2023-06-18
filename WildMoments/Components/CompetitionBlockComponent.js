@@ -136,7 +136,7 @@ const CompetitionBlockComponent = ({ competition }) => {
             </View>
             <View style={styles.photocompTimeView}>
                 <Text style={styles.photocompTimeHeading}>Remaining Time for Entries</Text>
-
+                <Text style={styles.hours}>Days | Hours | Min | Sec</Text>
                 {compClosed ? (<Text style={{ marginTop: Platform.OS === 'ios' ? -2 : -2, }}>Competition Closed!</Text>) :
                     (<Text style={styles.photocompTime}>{timeLeft}</Text>)}
 
@@ -144,7 +144,7 @@ const CompetitionBlockComponent = ({ competition }) => {
                     <Text style={styles.totaltitle}>
                         Current total submitted entries:
                     </Text>
-                    <View style={styles.entriestotal}>
+                    <View style={styles.castedentried}>
 
                         <Text style={styles.totaltitle2}>  {castedEntries}</Text>
                     </View>
@@ -164,6 +164,12 @@ const CompetitionBlockComponent = ({ competition }) => {
 export default CompetitionBlockComponent
 
 const styles = StyleSheet.create({
+    castedentried: {
+        marginTop: Platform.OS === 'ios' ? RFValue(-8) : RFValue(-10),
+    },
+    hours: {
+        fontSize: Platform.OS === 'ios' ? RFValue(9) : RFValue(9),
+    },
     containerloveimage: {
         width: Platform.OS === 'ios' ? RFValue(22) : RFValue(22),
         height: Platform.OS === 'ios' ? RFValue(22) : RFValue(22),
@@ -173,7 +179,7 @@ const styles = StyleSheet.create({
         borderRadius: 12,
         borderWidth: 3,
         borderColor: 'rgba(255, 255, 255, 0.125)',
-        width: Platform.OS === 'ios' ? RFValue(26) : RFValue(30),
+        width: Platform.OS === 'ios' ? RFValue(40) : RFValue(40),
         height: Platform.OS === 'ios' ? RFValue(26) : RFValue(30),
         borderColor: Platform.OS === 'ios' ? '#252524' : '#252524',
         marginTop: Platform.OS === 'ios' ? RFValue(0) : RFValue(-4),
@@ -181,14 +187,15 @@ const styles = StyleSheet.create({
     totaltitle: {
         fontWeight: 'bold',
         marginBottom: 10,
-        fontSize: Platform.OS === 'ios' ? RFValue(12) : RFValue(12),
+        fontSize: Platform.OS === 'ios' ? RFValue(14) : RFValue(14),
         color: '#252524',
     },
     totaltitle2: {
         justifyContent: 'center',
-        alignContent: 'center',
-        alignItems: 'center',
+
+        padding: Platform.OS === 'ios' ? 4 : 3,
         alignSelf: 'center',
+        textAlign: 'center',
         fontWeight: 'bold',
         color: '#252524',
         // padding: Platform.OS === 'ios' ? RFValue(0) : RFValue(2),
@@ -261,8 +268,9 @@ const styles = StyleSheet.create({
         paddingVertical: RFValue(16),
         alignSelf: 'center',
         alignItems: 'center',
-        width: RFPercentage(40),
-        height: RFPercentage(38),
+        // Platform.OS === 'ios' ? RFValue(22) : RFValue(22),
+        width: Platform.OS === 'ios' ? RFPercentage(40) : RFPercentage(40),
+        height: Platform.OS === 'ios' ? RFPercentage(38) : RFPercentage(40),
         backdropFilter: 'blur(10px) saturate(200%)',
         webkitBackdropFilter: 'blur(25px) saturate(200%)',
         backgroundColor: 'rgba(200, 184, 168, 0.59)',

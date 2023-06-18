@@ -31,11 +31,17 @@ const GalleryScreenWinnersOverview = ({ navigation, route }) => {
     const [competition, setCompetition] = useState()
     const [topComp, setTopComp] = useState()
     useEffect(() => {
-        console.log(competition);
+        // console.log(competition);
         setCompetition(route.params.competition)
-        // setTopComp(getTopEntriesByVotes(route.params.competition.id))
+        getComp()
     }, [])
 
+    const getComp = async () => {
+        topCompVal = await getTopEntriesByVotes(route.params.competition.id)
+        setTopComp(topCompVal)
+        // console.log("Top", topCompVal);
+
+    }
 
     // const navigation = useNavigation();
     return (

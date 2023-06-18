@@ -12,13 +12,14 @@ const windowHeight = Dimensions.get('window').height;
 const RulesScreen = ({ }) => {
     return (
         <View>
-            <View style={styles.headercomponent}>
-                <HeaderComponent />
-            </View>
+
             <ImageBackground
                 source={require('../../assets/backgroundImage.png')} // Replace with the actual path to your image
                 style={styles.background}
             >
+                <View style={styles.headercomponent}>
+                    <HeaderComponent />
+                </View>
                 <View style={styles.rules}>
 
                     <Text style={styles.rules1}>Strictly NO RHINO or ELEPHANT TUSKERS's Locations</Text>
@@ -53,6 +54,11 @@ const RulesScreen = ({ }) => {
 export default RulesScreen
 
 const styles = StyleSheet.create({
+    headercomponent: {
+        marginTop: Platform.OS === 'ios' ? -20 : -4,
+        marginRight: Platform.OS === 'ios' ? -29 : -26,
+    },
+
     background: {
         // alignSelf: 'center',
         resizeMode: 'contain',

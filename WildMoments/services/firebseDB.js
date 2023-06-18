@@ -158,7 +158,7 @@ export const getJudgeFromDB = async (competitionID, category) => {
 }
 
 
-//CREATE: Add A Competition to Firebase DB
+//CREATE: Add A entry to Firebase DB
 export const voteEntry = async (userId, entry, val) => {
     try {
         // console.log(userId, entry, val);
@@ -201,7 +201,7 @@ export const voteEntry = async (userId, entry, val) => {
 // getVotesForEntry
 export const getVotesForEntry = async (entryId) => {
     try {
-        // console.log("EntryId", entryId);
+        console.log("EntryId", entryId);
         const parentDocRef = doc(db, 'entry', entryId);
         const subCollectionRef = collection(parentDocRef, 'vote');
 
@@ -261,27 +261,33 @@ export const getVotesByUserAndEntry = async (userId, entry) => {
 };
 
 
-// getTopEntriesByVotes
 export const getTopEntriesByVotes = async (competitionId) => {
     try {
+        // Get all entries for the specified competition
+        const querySnapshot = await getDocs(query(collection(db, 'entry')));
+        // console.log(querySnapshot);
         const entries = [];
-        const snapshot = await getDocs(query(collection(db, 'entry'), where("competitionId", "==", competitionId)));
-
-        // Get all entries for the specified competitionId
-        snapshot.forEach((doc) => {
-            entries.push({ id: doc.id, ...doc.data() });
+        let totalVotes = 0;
+        querySnapshot.forEach(async (doc) => {
+            const entry = { id: doc.id, ...doc.data() };
+            if (entry?.competitionID == competitionId) {
+                entries.push(entry);
+                const vote = await getVotesForEntry(entry.id)
+                console.log("Votes", vote);
+                totalVotes += entry.votes || 0; // Sum the votes
+            }
+            // console.log(entry.competitionID);
         });
 
-        // Sort entries by votes in descending order
-        entries.sort((a, b) => b.votes - a.votes);
-
-        // Return the top 3 entries
-        return entries.slice(0, 3);
+        // console.log(totalVotes);
+        return entries;
     } catch (error) {
         console.log('Error getting top entries:', error);
         return [];
     }
 };
+
+
 
 
 // import { collection, query, where, getDocs } from 'firebase/firestore';
