@@ -24,6 +24,7 @@ import EnterCompScreen from './screens/UserJourney/EnterCompScreen';
 import WalkthroughScreen from './screens/UserJourney/WalkthroughScreen';
 import GalleryScreenWinnersOverview from './screens/GalleryScreenWinnersOverview';
 import AddNewCompScreen from './screens/UserJourney/AddNewCompScreen';
+import UserProfileScreen from './screens/UserJourney/UserProfileScreen';
 
 // for each nav header that we have, we need to go create it
 const Stack = createNativeStackNavigator();
@@ -87,6 +88,7 @@ export default function App() {
             <Stack.Screen name="GalleryScreenWinnersOverview" component={GalleryScreenWinnersOverview} options={{ headerShown: false }} />
             {/* <Stack.Screen name="ExploreScreen" component={ExploreScreen} options={{ headerShown: false }} /> */}
             <Stack.Screen name="AddNewCompScreen" component={AddNewCompScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="UserProfileScreen" component={UserProfileScreen} options={{ headerShown: false }} />
           </>
 
         )}

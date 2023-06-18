@@ -1,4 +1,4 @@
-import { addDoc, collection, doc, setDoc, Timestamp, getDocs, updateDoc, query, where } from "firebase/firestore"
+import { addDoc, collection, doc, setDoc, Timestamp, getDocs, getDoc, updateDoc, query, where } from "firebase/firestore"
 import { db } from "../firebase"
 
 //User Collection (Back-End, praat met Frontend op AddNewCompsScreen)
@@ -6,6 +6,7 @@ export const createUserInDB = async (username, email, uid, profilepicture, insta
     try {
         console.log("Creating user in db..." + uid)
         const docRef = await setDoc(doc(db, "users", uid), {
+            uid,
             username,
             email,
             role: 'Non-Admin',
@@ -19,6 +20,27 @@ export const createUserInDB = async (username, email, uid, profilepicture, insta
         console.log("Something went wrong: " + error)
     }
 }
+
+
+// READ User
+export const getUserFromDB = async (id) => {
+    try {
+        const docRef = doc(db, 'users', id);
+        const docSnapshot = await getDoc(docRef);
+
+        if (docSnapshot.exists()) {
+            const userData = { ...docSnapshot.data(), id: docSnapshot.id };
+            return userData;
+        } else {
+            console.log('User does not exist');
+            return null;
+        }
+    } catch (error) {
+        console.log('Error getting user document: ', error);
+        return null;
+    }
+};
+
 
 //CREATE: Add A Competition to Firebase DB
 export const createCompetitionInDB = async (competition) => {
@@ -98,6 +120,23 @@ export const getAllEntriesFromDB = async () => {
     }
 }
 
+export const getUserEntriesFromDB = async (userId) => {
+    try {
+        console.log(userId);
+        const returnEntries = [];
+        const q = query(collection(db, "entry"), where("userId", "==", userId));
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+            returnEntries.push({ ...doc.data(), id: doc.id });
+        });
+        return returnEntries;
+    } catch (error) {
+        console.log("Something went wrong when returning user entries: " + error);
+        return [];
+    }
+};
+
+
 // READ
 export const getJudgeFromDB = async (competitionID, category) => {
     // console.log("Test");
@@ -159,13 +198,35 @@ export const voteEntry = async (userId, entry, val) => {
     }
 };
 
+// getVotesForEntry
+export const getVotesForEntry = async (entryId) => {
+    try {
+        // console.log("EntryId", entryId);
+        const parentDocRef = doc(db, 'entry', entryId);
+        const subCollectionRef = collection(parentDocRef, 'vote');
+
+        const querySnapshot = await getDocs(subCollectionRef);
+
+        let votesSum = 0;
+        querySnapshot.forEach((doc) => {
+            const voteData = doc.data();
+            votesSum += voteData.val;
+        });
+
+        return votesSum;
+    } catch (error) {
+        console.log('Error getting votes for entry:', error);
+        return 0;
+    }
+};
+
 export const getEntryCountOfCompetitionFromDB = async (competitionID) => {
     try {
         const q = query(collection(db, 'entry'), where("competitionID", "==", competitionID));
         const querySnapshot = await getDocs(q);
         const entryCount = querySnapshot.size;
-        console.log("id:", competitionID);
-        console.log(`Total entries for competition ${entryCount}`);
+        // console.log("id:", competitionID);
+        // console.log(`Total entries for competition ${entryCount}`);
         return entryCount;
     } catch (error) {
         console.log('Error getting filtered documents: ', error);
@@ -195,6 +256,29 @@ export const getVotesByUserAndEntry = async (userId, entry) => {
         }
     } catch (error) {
         console.log("Something went wrong when retrieving the votes: " + error);
+        return [];
+    }
+};
+
+
+// getTopEntriesByVotes
+export const getTopEntriesByVotes = async (competitionId) => {
+    try {
+        const entries = [];
+        const snapshot = await getDocs(query(collection(db, 'entry'), where("competitionId", "==", competitionId)));
+
+        // Get all entries for the specified competitionId
+        snapshot.forEach((doc) => {
+            entries.push({ id: doc.id, ...doc.data() });
+        });
+
+        // Sort entries by votes in descending order
+        entries.sort((a, b) => b.votes - a.votes);
+
+        // Return the top 3 entries
+        return entries.slice(0, 3);
+    } catch (error) {
+        console.log('Error getting top entries:', error);
         return [];
     }
 };

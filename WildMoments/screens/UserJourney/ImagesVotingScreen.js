@@ -40,13 +40,14 @@ const ImagesVotingScreen = ({ navigation, route }) => {
 
     // Get IG Handle
 
-    useEffect(async () => {
+    useEffect(() => {
         setEntries(route.params.entries)
         console.log(entries);
         seCurrentEntry(route.params.entries[0])
         updateVoteState()
 
     }, [])
+
 
     const updateVoteState = async () => {
         const voteState = await getVotesByUserAndEntry(getCurrentUser().uid, route.params.entries[0].id);

@@ -15,7 +15,7 @@ import { Dimensions } from 'react-native';
 import { useFonts } from 'expo-font';
 
 import CompetitionBlockComponent from '../Components/CompetitionBlockComponent'
-
+import { getTopEntriesByVotes } from '../services/firebseDB'
 // images
 
 import galleryWinnerLogo from '../assets/AppIcons/galleryWinners.png';
@@ -23,12 +23,21 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 import { useRoute, useNavigation } from '@react-navigation/native';
+import wildlifeImage1 from '../assets/1.png';
 
 
+const GalleryScreenWinnersOverview = ({ navigation, route }) => {
 
-const GalleryScreenWinnersOverview = ({ }) => {
+    const [competition, setCompetition] = useState()
+    const [topComp, setTopComp] = useState()
+    useEffect(() => {
+        console.log(competition);
+        setCompetition(route.params.competition)
+        // setTopComp(getTopEntriesByVotes(route.params.competition.id))
+    }, [])
 
-    const navigation = useNavigation();
+
+    // const navigation = useNavigation();
     return (
         <SafeAreaView
         >
@@ -44,20 +53,61 @@ const GalleryScreenWinnersOverview = ({ }) => {
                 {/*  */}
 
                 <View style={styles.competitionView}>
+
+
+                    <View style={styles.closedcomp}>
+                        <Text style={styles.closedcomptitle}>Closed Competition Winners</Text>
+                        <Text style={styles.closedcomphototitle}>#PhotoCompetition</Text>
+                        <Text style={styles.closedcompseason}> - Season & Year {competition?.title}</Text>
+                        <Text style={styles.closedcomptheme}> Theme : {competition?.theme}</Text>
+                    </View>
                     <ScrollView style={styles.competitionBlocks}
                         contentContainerStyle={styles.scrollViewContent}
                         showsVerticalScrollIndicator={false}>
-                        <TouchableOpacity>
-                            <CompetitionBlockComponent />
-                        </TouchableOpacity>
-                        <View style={styles.spacer} />
-                        <TouchableOpacity>
-                            <CompetitionBlockComponent />
-                        </TouchableOpacity>
-                        <View style={styles.spacer} />
-                        <TouchableOpacity>
-                            <CompetitionBlockComponent />
-                        </TouchableOpacity>
+                        <View style={styles.first}>
+                            <View style={styles.firsttitleborder}>
+                                <Text style={styles.firsttitle}>1st PLACE</Text>
+                            </View>
+                            <View style={styles.firstphotographer}>
+                                <Text style={styles.firstphotographertitle}>Photographer:</Text>
+                                <Text style={styles.firstphotographertitle2}>Shanre</Text>
+                            </View>
+                            <View style={styles.firstimageblock}>
+                                <Image source={wildlifeImage1} resizeMode="contain" style={styles.firstimageblockimage} />
+                                <View style={styles.firstimageblockimagewinning}>
+                                    <Text style={styles.firstimageblockimagetitle} >Winning Prize : </Text>
+                                    <Text style={styles.firstimageblockimagetitle2} >{competition?.prize}</Text>
+                                </View>
+                            </View>
+                        </View>
+
+                        <View style={styles.second}>
+                            <View style={styles.secondtitleborder}>
+                                <Text style={styles.secondtitle}>1st RUNNER UP</Text>
+                            </View>
+                            <View style={styles.firstphotographer}>
+                                <Text style={styles.firstphotographertitle}>Photographer:</Text>
+                                <Text style={styles.firstphotographertitle2}>Shanre</Text>
+                            </View>
+                            <View style={styles.firstimageblock}>
+                                <Image source={wildlifeImage1} resizeMode="contain" style={styles.firstimageblockimage} />
+
+                            </View>
+                        </View>
+
+                        <View style={styles.third}>
+                            <View style={styles.thirdtitleborder}>
+                                <Text style={styles.thirdtitle}>2nd RUNNER UP</Text>
+                            </View>
+                            <View style={styles.firstphotographer}>
+                                <Text style={styles.firstphotographertitle}>Photographer:</Text>
+                                <Text style={styles.firstphotographertitle2}>Shanre</Text>
+                            </View>
+                            <View style={styles.firstimageblock}>
+                                <Image source={wildlifeImage1} resizeMode="contain" style={styles.firstimageblockimage} />
+
+                            </View>
+                        </View>
                     </ScrollView>
                 </View>
 
@@ -70,6 +120,138 @@ export default GalleryScreenWinnersOverview
 
 
 const styles = StyleSheet.create({
+    firstphotographertitle: {
+        color: '#A27A51',
+        marginLeft: Platform.OS === 'ios' ? 11 : 10,
+        marginRight: Platform.OS === 'ios' ? 12 : 10,
+        fontSize: Platform.OS === 'ios' ? 14 : 14,
+    },
+    firstphotographertitle2: {
+        color: '#F0F0F0',
+        marginLeft: Platform.OS === 'ios' ? 26 : 26,
+        fontSize: Platform.OS === 'ios' ? 14 : 14,
+    },
+    firstimageblockimagewinning: {
+        marginLeft: Platform.OS === 'ios' ? 24 : 16,
+    },
+    firstimageblockimagetitle: {
+        color: '#DAB895',
+        fontWeight: 'bold',
+        flexDirection: 'column',
+        width: Platform.OS === 'ios' ? 200 : 200,
+        marginBottom: Platform.OS === 'ios' ? 2 : 2,
+    },
+    firstimageblockimagetitle2: {
+        color: '#DAB895',
+        flexDirection: 'column',
+        width: Platform.OS === 'ios' ? 200 : 200,
+    },
+    firstimageblockimage: {
+        width: Platform.OS === 'ios' ? 100 : 100,
+        height: Platform.OS === 'ios' ? 100 : 100,
+    },
+    firstphotographer: {
+        flexDirection: 'row',
+        marginTop: Platform.OS === 'ios' ? 10 : 10,
+        marginBottom: Platform.OS === 'ios' ? 10 : 10,
+        marginLeft: Platform.OS === 'ios' ? 10 : 10,
+    },
+    // firstimageblockimage: {},
+
+    firstimageblock: {
+        flexDirection: 'row',
+        gap: Platform.OS === 'ios' ? 10 : 10,
+        marginLeft: Platform.OS === 'ios' ? 19 : 10,
+    },
+    firsttitle: {
+        padding: Platform.OS === 'ios' ? 9 : 5,
+        justifyContent: 'center',
+        alignSelf: 'flex-start',
+        alignContent: 'center',
+        alignItems: 'center',
+        color: '#ffff',
+    },
+
+    firsttitleborder: {
+        borderRadius: 7,
+        height: RFValue(35),
+        width: RFValue(120),
+        borderWidth: 1,
+        borderColor: '#A1663A',
+        borderStyle: 'solid',
+        marginLeft: 21,
+        marginTop: Platform.OS === 'ios' ? RFValue(16) : RFValue(12),
+    },
+
+    secondtitle: {
+        padding: Platform.OS === 'ios' ? 9 : 5,
+        justifyContent: 'center',
+        alignSelf: 'flex-start',
+        alignContent: 'center',
+        alignItems: 'center',
+        color: '#ffff',
+    },
+
+    secondtitleborder: {
+        borderRadius: 7,
+        height: RFValue(35),
+        width: RFValue(120),
+        borderWidth: 1,
+        borderColor: '#A29085',
+        borderStyle: 'solid',
+        marginLeft: 21,
+        marginTop: Platform.OS === 'ios' ? RFValue(16) : RFValue(12),
+    },
+
+    thirdtitle: {
+        padding: Platform.OS === 'ios' ? 9 : 5,
+        justifyContent: 'center',
+        alignSelf: 'flex-start',
+        alignContent: 'center',
+        alignItems: 'center',
+        color: '#ffff',
+    },
+
+    thirdtitleborder: {
+        borderRadius: 7,
+        height: RFValue(35),
+        width: RFValue(120),
+        borderWidth: 1,
+        borderColor: '#A29085',
+        borderStyle: 'solid',
+        marginLeft: 21,
+        marginTop: Platform.OS === 'ios' ? RFValue(16) : RFValue(12),
+    },
+
+
+    closedcomptitle: {
+        color: '#F2C440',
+        fontSize: Platform.OS === 'ios' ? RFValue(16) : RFValue(12),
+        marginBottom: Platform.OS === 'ios' ? RFValue(12) : RFValue(12),
+        fontWeight: 'bold',
+    },
+    closedcomphototitle: {
+        color: '#F0F0F0',
+        textAlign: 'left',
+    },
+    closedcompseason: {
+        color: '#F0F0F0',
+        textAlign: 'left',
+    },
+    closedcomptheme: {
+        color: '#F0F0F0',
+        textAlign: 'left',
+        justifyContent: 'flex-start',
+        alignContent: 'flex-start',
+
+    },
+    closedcomp: {
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignContent: 'center',
+        alignItems: 'center'
+
+    },
     competitionBlocks: {
         backgroundColor: 'transparent',
         flexGrow: 1,
@@ -245,13 +427,7 @@ const styles = StyleSheet.create({
         gap: Platform.OS === 'ios' ? 15 : 15,
         marginBottom: Platform.OS === 'ios' ? 15 : 15,
         fontSize: RFValue(20),
-        shadowColor: '#ffff',
-        shadowOffset: {
-            width: 5,
-            height: 7,
-        },
-        shadowOpacity: 0.9,
-        shadowRadius: 20,
+
     },
     headingText: {
         alignContent: 'center',

@@ -51,13 +51,13 @@ const GalleryScreen = ({ navigation }) => {
                     <Image source={galleryWinnerLogo} resizeMode="contain" style={styles.galleryWinnerlogo} />
                 </View>
                 {/*  */}
-
+                {/* 
                 <View style={styles.competitionView}>
                     <ScrollView style={styles.competitionBlocks}
                         contentContainerStyle={styles.scrollViewContent}
                         showsVerticalScrollIndicator={false}
-                    >
-                        {/* <TouchableOpacity onPress={() => navigation.navigate('GalleryScreenWinnersOverview')} >
+                    > */}
+                {/* <TouchableOpacity onPress={() => navigation.navigate('GalleryScreenWinnersOverview')} >
                             <CompetitionBlockComponent />
                         </TouchableOpacity>
                         <View style={styles.spacer} />
@@ -68,8 +68,8 @@ const GalleryScreen = ({ navigation }) => {
                         <TouchableOpacity>
                             <CompetitionBlockComponent />
                         </TouchableOpacity> */}
-                    </ScrollView>
-                </View>
+                {/* </ScrollView>
+                </View> */}
 
             </ImageBackground>
         </SafeAreaView >

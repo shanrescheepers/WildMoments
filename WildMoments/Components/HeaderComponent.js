@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ImageBackground, Button, TouchableHighlight, Platform, StatusBar, SafeAreaView, Modal, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, ImageBackground, Button, TouchableHighlight, Platform, StatusBar, SafeAreaView, Modal, TouchableOpacity, Image } from 'react-native'
 import React from 'react';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 // import { TouchableOpacity, } from 'react-native-gesture-handler';
@@ -10,7 +10,8 @@ import { NavigationProp } from '@react-navigation/native';
 import { signOutUser } from '../services/firebaseAuth';
 import App from '../App';
 import { getCurrentUser } from '../services/firebaseAuth';
-
+import addIcon from '../assets/AppIcons/addIcon.png';
+import logout from '../assets/AppIcons/logout.png';
 const TouchableComponent = Platform.OS === 'android' ? TouchableOpacity : TouchableOpacity;
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -73,14 +74,19 @@ const HeaderComponent = ({ props }) => {
         navigation.navigate("AddNewCompScreen")
         // console.log("Went to comp screen succesfully");
     }
-
+    const fireUserProfileScreen = () => {
+        setDropdownVisible(!dropdownVisible);
+        navigation.navigate("UserProfileScreen")
+        console.log("Went to user profile screen succesfully");
+    }
     return (
         <SafeAreaView style={styles.hc}>
             < View style={{
                 alignSelf: 'flex-end',
                 padding: RFValue(10),
+                marginTop: Platform.OS === 'ios' ? 0 : 2,
                 width: windowWidth,
-                backgroundColor: showBack ? 'transparent' : '#202022',
+                backgroundColor: showBack ? 'transparent' : require('../assets/AppIcons/bgbg.png'),
             }} >
 
                 <View style={styles.header} >
@@ -119,20 +125,23 @@ const HeaderComponent = ({ props }) => {
                                 onPressOut={() => setDropdownVisible(false)}
                             >
                                 <View style={styles.dropdownMenu}>
-                                    <TouchableOpacity onPress={() => handleOptionSelect('User Profile')} style={styles.dropdownOption}>
+                                    <TouchableOpacity onPress={() => fireUserProfileScreen()} style={styles.dropdownOption}>
                                         {/* make onclick to naviagte */}
-                                        <Text style={styles.dropdownOptionText}> {userName}'s Profile</Text>
+                                        <Text style={styles.dropdownOptionTextprofile}> {userName} Profile</Text>
                                     </TouchableOpacity>
-                                    <TouchableOpacity onPress={() => handleOptionSelect('Settings')} style={styles.dropdownOption}>
+                                    {/* <TouchableOpacity onPress={() => handleOptionSelect('Settings')} style={styles.dropdownOption}>
                                         <Text style={styles.dropdownOptionText}>Settings</Text>
-                                    </TouchableOpacity>
+                                    </TouchableOpacity> */}
 
                                     {/* THIS IS FOR ADMIN ONLY TO ADD NEW COMP */}
-                                    <TouchableOpacity onPress={() => fireAddNewComp()} style={styles.dropdownOption}>
+                                    {/* Hide Functionality */}
+                                    <TouchableOpacity onPress={() => fireAddNewComp()} style={styles.addNew}>
+                                        <Image source={addIcon} resizeMode="contain" style={styles.addNewIcon} />
                                         <Text style={styles.dropdownOptionText}>Add New Competition</Text>
                                     </TouchableOpacity>
 
-                                    <TouchableOpacity onPress={fireSignOut} style={styles.dropdownOption}>
+                                    <TouchableOpacity onPress={fireSignOut} style={styles.addNew}>
+                                        <Image source={logout} resizeMode="contain" style={styles.addNewIcon} />
                                         <Text style={styles.dropdownOptionText}>Logout</Text>
                                         {/* onPress={() => navigation.navigate('SignUp')}  */}
                                     </TouchableOpacity>
@@ -182,10 +191,27 @@ const styles = StyleSheet.create({
         color: '#DFDDDB',
         padding: RFValue(8),
     },
+    addNew: {
+        color: '#DFDDDB',
+        padding: RFValue(8),
+        flexDirection: 'row',
+        alignItems: 'center', // Align children vertically
+        // justifyContent: 'space-between',
+    },
+    addNewIcon: {
+        width: 20,
+        height: 20,
+        marginRight: 4,
+    },
     dropdownOptionText: {
         color: '#DFDDDB',
     },
-
+    dropdownOptionTextprofile: {
+        color: '#DFDDDB',
+        justifyContent: 'center',
+        alignContent: 'center',
+        alignSelf: 'center'
+    },
 
     back: {
         marginTop: RFValue(13),

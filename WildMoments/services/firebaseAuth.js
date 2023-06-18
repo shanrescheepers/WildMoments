@@ -48,7 +48,7 @@ export const signInUser = async (email, password) => {
             const user = userCredential.user;
             console.log("User signed in is :" + user.email)
             // playSound();
-            Alert.alert("You're in!", "You hace successfully logged in.", [
+            Alert.alert("You're in!", "You have successfully logged in.", [
                 { text: 'Thanks', onPress: () => { } }
             ])
         })
@@ -57,7 +57,7 @@ export const signInUser = async (email, password) => {
             const errorMessage = error.message;
             console.log(errorCode + ":  " + errorMessage)
 
-            Alert.alert("You're not in!", "You hace not logged in." + errorMessage, [
+            Alert.alert("You're not in!", "You have not logged in." + errorMessage, [
                 { text: 'try again', onPress: () => { } }
             ])
         });

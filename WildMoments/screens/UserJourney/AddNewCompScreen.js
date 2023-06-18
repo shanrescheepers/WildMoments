@@ -190,11 +190,12 @@ const AddNewCompScreen = ({ navigation }) => {
         <SafeAreaView style={styles.homescreensafearea}>
 
 
-            <HeaderComponent />
+
             <ImageBackground
                 source={require('../../assets/backgroundImage.png')} // Replace with the actual path to your image
                 style={styles.background}
             >
+                <HeaderComponent />
                 <KeyboardAvoidingView
                     keyboardVerticalOffset={120}
                     style={{ flex: 1 }}

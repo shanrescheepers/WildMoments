@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ImageBackground, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, ImageBackground, TouchableOpacity, Alert, Image } from 'react-native'
 import React from 'react'
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize'
 import CountDown from 'react-native-countdown-component';
@@ -6,77 +6,152 @@ import moment from 'moment';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { useState, useEffect } from 'react';
 import { getEntryCountOfCompetitionFromDB } from '../services/firebseDB';
+import lovecircle from '../assets/AppIcons/lovecircle.png';
 
 const CompetitionBlockComponent = ({ competition }) => {
-    console.log(competition);
-    // console.log("Test");
-    const [startDate, setStartDate] = useState()
-    const [startDateSec, setStartDateSec] = useState()
+    // console.log(competition);
+    // const [myStartDate, setMyStartDate] = useState()
+    // const [myEndDate, setMyEndDate] = useState()
     const [castedEntries, setcastedEntries] = useState(0)
+
+    const [timeLeft, setTimeLeft] = useState("")
+    const [compClosed, setCompClose] = useState(false)
 
 
     const navigation = useNavigation();
     const currentTimestamp = new Date();
 
+
+    const calculateRemainingTime = (startDate, endDate) => {
+        const startDateTime = new Date(startDate).getTime();
+        const endDateTime = new Date(endDate).getTime();
+        const currentTime = Date.now();
+
+        if (currentTime >= startDateTime && currentTime <= endDateTime) {
+            const remainingTime = endDateTime - currentTime;
+            const days = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+
+            return {
+                days,
+                hours,
+                minutes,
+                seconds
+            };
+        } else {
+            return {
+                days: 0,
+                hours: 0,
+                minutes: 0,
+                seconds: 0
+            };
+        }
+    };
+
+
     useEffect(() => {
-        var myStartDate = new Date(competition.startDate.seconds * 1000);
-        var myEndDate = new Date(competition.endDate.seconds * 1000);
+        // setMyStartDate(new Date(competition.startDate.seconds * 1000))
+        // setMyEndDate(new Date(competition.endDate.seconds * 1000))
+        getEntries(competition?.id)
+        startTimer()
 
 
-        getEntries(competition.id)
-    }, [])
+    }, [competition])
+
+
+
+    const startTimer = () => {
+        const updateTime = () => {
+            var myStartDate = new Date(competition?.startDate?.seconds * 1000);
+            var myEndDate = new Date(competition?.endDate?.seconds * 1000);
+            const endDateTime = new Date().getTime();
+            const currentTime = Date.now();
+            const remainingTime = endDateTime - currentTime;
+
+            if (remainingTime <= 0) {
+                time = calculateRemainingTime(myStartDate, myEndDate);
+                setTimeLeft(time.days + " : " + time.hours + " : " + time.minutes + " : " + time.seconds)
+
+                if (time.days == 0 && time.hours == 0 && time.minutes == 0 && time.seconds == 0) {
+                    setCompClose(true)
+                    setTimeLeft("Closed!")
+
+                }
+            }
+        };
+        if (!compClosed) {
+
+            setInterval(updateTime, 1000);
+        }
+    };
+
 
     const getEntries = async (id) => {
         const entries = await getEntryCountOfCompetitionFromDB(id)
         setcastedEntries(entries)
-        // console.log("Entries: ", entries);
     }
 
     return (
         <View style={styles.competitions}>
             <Text style={styles.photocomp}>#PhotoCompetition:</Text>
-            <Text style={styles.photocompSeason}>- {competition.title}</Text>
+            <Text style={styles.photocompSeason}>- {competition?.title}</Text>
             <View style={styles.spacer} />
-            <Text style={styles.photocompThemeHeading}>#Theme: {competition.theme} </Text>
+            <Text style={styles.photocompThemeHeading}>#Theme: {competition?.theme} </Text>
 
 
             <View style={styles.competitionsButtons}>
                 <View style={styles.Enter} >
-                    <TouchableOpacity
-                        style={styles.competitionsEnter}
-                        onPress={() => navigation.navigate('EnterCompScreen', { competition })}
-                    >
-                        <Text style={styles.competitionsEnterText}>ENTER</Text>
-                    </TouchableOpacity>
+                    {compClosed ? (
+                        <TouchableOpacity
+                            style={styles.competitionsClosed} onPress={() =>
+                                Alert.alert(
+                                    "Competition closed!",
+                                    "Go to the gallery to view the Winners!",
+                                    [
+                                        { text: 'Close', onPress: () => { /* Action for Close button */ } },
+                                        { text: 'Gallery', onPress: () => { navigation.navigate("GalleryScreenWinnersOverview", { competition }) } }
+                                    ]
+                                )}>
+                            <Text style={styles.competitionsClosedText}>CLOSED</Text>
+                        </TouchableOpacity>
+                    ) : (
+                        <TouchableOpacity
+                            style={styles.competitionsEnter}
+                            onPress={() => navigation.navigate('EnterCompScreen', { competition })}
+                        >
+                            <Text style={styles.competitionsEnterText}>ENTER</Text>
+                        </TouchableOpacity>
+                    )}
                 </View>
                 <View style={styles.buttonGap} />
                 <View style={styles.Browse}>
-                    <TouchableOpacity
+                    {!compClosed && (<TouchableOpacity
                         style={styles.competitionsBrowse}
                         onPress={() => navigation.navigate('BrowseAndEnterScreen', { competition })} >
                         <Text style={styles.competitionsBrowseText}>JUDGE</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity>)}
                 </View>
             </View>
             <View style={styles.photocompTimeView}>
                 <Text style={styles.photocompTimeHeading}>Remaining Time for Entries</Text>
 
-                <Text style={styles.photocompTime}>{startDate}</Text>
+                {compClosed ? (<Text style={{ marginTop: Platform.OS === 'ios' ? -2 : -2, }}>Competition Closed!</Text>) :
+                    (<Text style={styles.photocompTime}>{timeLeft}</Text>)}
+
+                <View style={styles.total}>
+                    <Text style={styles.totaltitle}>
+                        Current total submitted entries:
+                    </Text>
+                    <View style={styles.entriestotal}>
+
+                        <Text style={styles.totaltitle2}>  {castedEntries}</Text>
+                    </View>
+
+                </View>
 
 
-                <Text> Total Entries in Comp : {castedEntries}</Text>
-                {/* is hierdie component fucky? */}
-                {/* <CountDown
-                    // vat datum direk in in seconds
-                    until={new Date(competition.startDate.seconds) / 1000}
-                    //duration of countdown in seconds
-                    timetoShow={['D', 'H', 'M', 'S']}
-                    //on Press call
-                    onFinish={() => alert("Times Up!")}
-                    size={15}
-                    timeLabels={{ d: 'Days', h: 'Hours', m: 'Minutes', s: 'Seconds' }}
-                    showSeparator
-                /> */}
             </View>
             <View>
 
@@ -89,6 +164,70 @@ const CompetitionBlockComponent = ({ competition }) => {
 export default CompetitionBlockComponent
 
 const styles = StyleSheet.create({
+    containerloveimage: {
+        width: Platform.OS === 'ios' ? RFValue(22) : RFValue(22),
+        height: Platform.OS === 'ios' ? RFValue(22) : RFValue(22),
+    },
+    entriestotal: {
+        flexDirection: 'row',
+        borderRadius: 12,
+        borderWidth: 3,
+        borderColor: 'rgba(255, 255, 255, 0.125)',
+        width: Platform.OS === 'ios' ? RFValue(26) : RFValue(30),
+        height: Platform.OS === 'ios' ? RFValue(26) : RFValue(30),
+        borderColor: Platform.OS === 'ios' ? '#252524' : '#252524',
+        marginTop: Platform.OS === 'ios' ? RFValue(0) : RFValue(-4),
+    },
+    totaltitle: {
+        fontWeight: 'bold',
+        marginBottom: 10,
+        fontSize: Platform.OS === 'ios' ? RFValue(12) : RFValue(12),
+        color: '#252524',
+    },
+    totaltitle2: {
+        justifyContent: 'center',
+        alignContent: 'center',
+        alignItems: 'center',
+        alignSelf: 'center',
+        fontWeight: 'bold',
+        color: '#252524',
+        // padding: Platform.OS === 'ios' ? RFValue(0) : RFValue(2),
+    },
+
+    total: {
+        marginTop: Platform.OS === 'ios' ? RFValue(18) : RFValue(8),
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignContent: 'center',
+        alignItems: 'center',
+        alignSelf: 'center',
+    },
+    photocompTimeView: {
+
+        justifyContent: 'center',
+        alignContent: 'center',
+        alignItems: 'center',
+        alignSelf: 'center',
+    },
+    photocompTimeHeading: {
+        fontWeight: 'bold',
+        marginVertical: RFValue(1),
+        justifyContent: 'center',
+        alignContent: 'center',
+        alignItems: 'center',
+        alignSelf: 'center',
+        color: '#101010',
+        fontSize: Platform.OS === 'ios' ? RFValue(14) : RFValue(14),
+    },
+    photocompTime: {
+        fontSize: Platform.OS === 'ios' ? RFValue(16) : RFValue(14),
+        fontWeight: 'bold',
+        marginTop: Platform.OS === 'ios' ? RFValue(1) : RFValue(-4),
+        justifyContent: 'center',
+        alignContent: 'center',
+        alignItems: 'center',
+        alignSelf: 'center',
+    },
     spacer: {
         marginVertical: RFPercentage(1),
     },
@@ -96,21 +235,25 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-start',
         fontSize: RFValue(14),
         fontWeight: '900',
+        color: '#101010',
     },
     photocompSeason: {
         alignSelf: 'flex-start',
         fontSize: RFValue(16),
         fontWeight: 'bold',
+        color: '#101010',
     },
     photocompThemeHeading: {
         alignSelf: 'flex-start',
         fontSize: RFValue(14),
         fontWeight: '800',
+        color: '#101010',
     },
     photocompTheme: {
         alignSelf: 'flex-start',
         fontWeight: '300',
         fontSize: RFValue(14),
+
 
     },
     competitions: {
@@ -164,9 +307,46 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         textAlign: 'center',
     },
+
     competitionsEnterText: {
         color: '#111',
         fontSize: RFValue(16),
+        alignSelf: 'center',
+        paddingVertical: RFValue(8),
+        fontWeight: '700',
+    },
+    competitionsClosed: {
+        // backgroundColor: '#FEB62C',
+        // height: RFPercentage(5),
+        // width: RFPercentage(18),
+        // borderRadius: 50,
+        // marginBottom: 15,
+        // shadowColor: 'gray',
+        // textAlign: 'center',
+
+
+        alignItems: 'center',
+        alignSelf: 'center',
+        backgroundColor: '#954242',
+
+        // marginBottom: RFValue(5),
+        shadowColor: 'gray',
+
+        borderRadius: 50,
+        shadowColor: 'gray',
+        shadowRadius: RFPercentage(8),
+        height: RFValue(35),
+        width: RFValue(120),
+        marginLeft: 10,
+        marginTop: Platform.OS === 'ios' ? 0 : -2,
+        alignItems: 'center',
+        alignSelf: 'center',
+        textAlign: 'center',
+    },
+
+    competitionsClosedText: {
+        color: '#111',
+        fontSize: Platform.OS === 'ios' ? 16 : 14,
         alignSelf: 'center',
         paddingVertical: RFValue(8),
         fontWeight: '700',
@@ -200,7 +380,7 @@ const styles = StyleSheet.create({
         shadowRadius: RFPercentage(8),
         height: RFValue(35),
         width: RFValue(120),
-        borderWidth: 1.5,
+        borderWidth: Platform.OS === 'ios' ? 1.5 : 1.8,
         borderColor: '#F2C440',
         borderStyle: 'dashed',
         alignItems: 'center',
@@ -212,18 +392,13 @@ const styles = StyleSheet.create({
 
 
     competitionsBrowseText: {
-        color: '#F2C440',
-        fontSize: RFValue(16),
+
+        // color: '#F2C440',
+        color: Platform.OS === 'ios' ? '#F2C440' : '#111',
+        fontSize: Platform.OS === 'ios' ? 16 : 13,
         alignSelf: 'center',
         paddingVertical: RFValue(8),
         fontWeight: '800',
     },
-    photocompTimeView: {
-        marginVertical: RFValue(-2),
-        alignSelf: 'flex-start',
-    },
-    photocompTimeHeading: {
-        fontWeight: '500',
-        marginVertical: RFValue(1),
-    }
+
 })
