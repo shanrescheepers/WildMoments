@@ -1,7 +1,7 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
-import { globalStylesheet, TextInput, TouchableOpacity, Button, Image, Platform, KeyboardAvoidingView } from 'react-native';
+import { globalStylesheet, TextInput, TouchableOpacity, Button, Image, Platform, KeyboardAvoidingView, Alert } from 'react-native';
 import { SafeAreaView, StyleSheet, Text, View, ImageBackground } from 'react-native';
 // import { styles } from '../utils/styles';
 
@@ -114,8 +114,17 @@ const SignUp = ({ navigation }) => {
     }
     const registerUser = () => {
         console.log("Registering");
-        console.log(email)
-        registerNewUser(username, email, password, profilepicture, instagramHandle);
+        // setLoading(true);
+        if (!email || !password || !username || !profilepicture || !instagramHandle) {
+            //warning alert
+            Alert.alert("Try again", "Please fill all of your details", [
+                { text: 'Try Again', onPress: () => { } }
+            ])
+        } else {
+            console.log(email)
+            registerNewUser(username, email, password, profilepicture, instagramHandle);
+        }
+
         playSound()
         navigation.navigate('WalkthroughScreen')
     }

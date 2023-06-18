@@ -70,7 +70,7 @@ export default function App() {
           <>
             {/* OVER AND BEYOOOOOND */}
 
-            <Stack.Screen name="WalkthroughScreen" component={WalkthroughScreen} options={{ headerShown: false }} />
+            {/* <Stack.Screen name="WalkthroughScreen" component={WalkthroughScreen} options={{ headerShown: false }} /> */}
             {/* <Stack.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }} /> */}
             <Stack.Screen name="Home" component={HomeTab} options={{ headerShown: false }} style={styles.hometab} />
 
