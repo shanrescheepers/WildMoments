@@ -46,7 +46,7 @@ npm install
 
 4. Start the app:
 ```bash
-npm start
+expo start
 ```
 
 5. Use the Expo client app:
