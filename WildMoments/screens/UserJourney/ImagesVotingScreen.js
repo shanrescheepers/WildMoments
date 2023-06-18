@@ -18,7 +18,8 @@ import {
 } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import HeaderComponent from '../../Components/HeaderComponent';
-
+import { voteEntry } from '../../services/firebseDB';
+import { getCurrentUser } from '../../services/firebaseAuth';
 
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -43,7 +44,7 @@ const ImagesVotingScreen = ({ navigation, route }) => {
     }, [])
 
 
-    function next(val) {
+    function next(val, id) {
         // console.log(val);
 
         nposition = position;
@@ -57,7 +58,15 @@ const ImagesVotingScreen = ({ navigation, route }) => {
             setChecked10(true)
 
         }
+        const success = voteEntry(getCurrentUser().uid, id, val)
 
+        if (success) {
+            console.log("Vote added!");
+
+        } else {
+
+            console.log("something went wrong when adding vote")
+        }
         // Wait for 2 seconds (2000 milliseconds)
         new Promise((resolve) => {
             setTimeout(() => {
@@ -114,20 +123,14 @@ const ImagesVotingScreen = ({ navigation, route }) => {
 
 
                 <View style={styles.imageContainer}>
-
-                    <TouchableOpacity onPress={() => next(5)}
-                    >
+                    <TouchableOpacity onPress={() => next(5, currentEntry?.id)} >
                         <Image style={styles.fivepoints} source={isChecked5 ? require('../../assets/pointsIcons/5pointFilledx1.png') : require('../../assets/pointsIcons/5points.png')} ></Image>
                     </TouchableOpacity>
 
-                    {/* <View style={styles.totalLikes}>
-                        <Text>10pts</Text>
-                    </View> */}
-
-                    <TouchableOpacity onPress={() => next(10)}>
-                        <Image style={styles.tenpoints} source={isChecked10 ? require('../../assets/pointsIcons/10pointFilledx1.png') : require('../../assets/pointsIcons/10points.png')} ></Image>
-
-                        {/* <Text>10pts</Text> */}
+                    <TouchableOpacity onPress={() => next(10, currentEntry?.id)}>
+                        <Image style={styles.tenpoints}
+                            source={isChecked10 ? require('../../assets/pointsIcons/10pointFilledx1.png')
+                                : require('../../assets/pointsIcons/10points.png')} ></Image>
                     </TouchableOpacity>
 
                     {/* <Checkbox style={{ borderRadius: 12, width: 20, height: 20 }}></Checkbox> */}

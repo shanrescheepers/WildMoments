@@ -1,4 +1,4 @@
-import { addDoc, collection, doc, setDoc, Timestamp, getDocs, query, where } from "firebase/firestore"
+import { addDoc, collection, doc, setDoc, Timestamp, getDocs, updateDoc, query, where } from "firebase/firestore"
 import { db } from "../firebase"
 
 //User Collection (Back-End, praat met Frontend op AddNewCompsScreen)
@@ -83,7 +83,7 @@ export const getAllEntriesFromDB = async () => {
     try {
         var returnEntries = []
 
-        const snapshot = await getDocs(collection(db, "entries"))
+        const snapshot = await getDocs(collection(db, "entry"))
         snapshot.forEach((doc) => {
             // console.log(doc.id, "=>", doc.data())
 
@@ -119,6 +119,72 @@ export const getJudgeFromDB = async (competitionID, category) => {
     }
 
 }
+
+//CREATE: Add A Competition to Firebase DB
+export const voteEntry = async (userId, entry, val) => {
+    try {
+        console.log(userId, entry, val);
+        console.log("Creating your vote into Entry..." + entry);
+
+        const parentDocRef = doc(db, 'entry', entry);
+        const subcollectionRef = collection(parentDocRef, 'vote');
+
+        // Query the subcollection to check if the user has already voted
+        const querySnapshot = await getDocs(
+            query(subcollectionRef, where('userId', '==', userId))
+        );
+
+        if (!querySnapshot.empty) {
+            // User has already voted, update the vote
+            const voteDocRef = querySnapshot.docs[0].ref;
+            await updateDoc(voteDocRef, { val });
+            console.log("Vote updated for user: " + userId);
+            return true;
+        }
+
+        const newData = {
+            userId,
+            val,
+        };
+
+        const docRef = await addDoc(subcollectionRef, newData);
+
+        if (docRef.id) {
+            return true;
+        } else {
+            return false;
+        }
+    } catch (error) {
+        console.log("Something went wrong when adding/updating your entry: " + error);
+        return false;
+    }
+};
+
+export const getVotesByUserAndEntry = async (userId, entry) => {
+    try {
+        const parentDocRef = doc(db, 'entry', entry);
+        const subcollectionRef = collection(parentDocRef, 'vote');
+
+        const querySnapshot = await getDocs(
+            query(subcollectionRef, where('userId', '==', userId))
+        );
+
+        if (!querySnapshot.empty) {
+            // User has voted, retrieve the vote data
+            const votes = querySnapshot.docs.map((doc) => doc.data());
+            console.log("Votes for user: " + userId);
+            console.log(votes);
+            return votes;
+        } else {
+            // User has not voted
+            console.log("User has not voted for entry: " + entry);
+            return [];
+        }
+    } catch (error) {
+        console.log("Something went wrong when retrieving the votes: " + error);
+        return [];
+    }
+};
 
 
 // import { collection, query, where, getDocs } from 'firebase/firestore';

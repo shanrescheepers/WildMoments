@@ -71,10 +71,18 @@ const SignUp = ({ navigation }) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [username, setUsername] = useState('')
-    const [profilepicture, setProfilepicture] = React.useState("lion");
+    const [instagramHandle, setInstagramHandle] = useState('')
+    // Profile Picture Sets
+    // const [profilepicture, setProfilepicture] = React.useState("lion");
+    const [lionPfp, setLionPfp] = useState(false);
+    const [elephantPfp, setElephantPfp] = useState(false);
+    const [buffaloPfp, setBuffaloPfp] = useState(false);
+    const [leopardPfp, setLeopardpfp] = useState(false);
+    const [photographerPfp, setPhotographerPfp] = useState(false);
+
 
     const registerUser = () => {
-        console.log("REgistering");
+        console.log("Registering");
         console.log(email)
         registerNewUser(username, email, password, profilepicture);
         playSound()
@@ -114,6 +122,15 @@ const SignUp = ({ navigation }) => {
                                 showsHorizontalScrollIndicator={false}
                             >
 
+                                {/*     <TouchableOpacity onPress={() => next(5, currentEntry?.id)} >
+                        <Image style={styles.fivepoints} source={isChecked5 ? require('../../assets/pointsIcons/5pointFilledx1.png') : require('../../assets/pointsIcons/5points.png')} ></Image>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => next(10)}>
+                        <Image style={styles.tenpoints}
+                            source={isChecked10 ? require('../../assets/pointsIcons/10pointFilledx1.png')
+                                : require('../../assets/pointsIcons/10points.png')} ></Image>
+                    </TouchableOpacity> */}
                                 <TouchableOpacity style={styles.profilePicture}>
                                     <Image source={lion} resizeMode="contain" style={styles.lion} />
                                 </TouchableOpacity>
@@ -167,6 +184,15 @@ const SignUp = ({ navigation }) => {
                                     placeholderTextColor='#71563A'
                                     defaultValue={password}
                                     onChangeText={newValue => setPassword(newValue)}
+                                ></TextInput>
+                                <Text style={styles.inputLabel}>Your @Instagram Handle</Text>
+                                <TextInput
+                                    style={styles.inputStyle}
+                                    keyboardType='default'
+                                    placeholder='your @Handle'
+                                    placeholderTextColor='#71563A'
+                                    defaultValue={instagramHandle}
+                                    onChangeText={newValue => setInstagramHandle(newValue)}
                                 ></TextInput>
                             </View>
 
