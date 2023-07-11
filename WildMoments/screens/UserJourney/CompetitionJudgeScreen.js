@@ -14,6 +14,7 @@ import { Inter } from "@expo-google-fonts/dev";
 import { Roboto } from "@expo-google-fonts/dev";
 import { Dimensions } from 'react-native';
 import { useFonts } from 'expo-font';
+import { Asset } from 'expo-asset';
 
 import CompetitionBlockComponent from '../../Components/CompetitionBlockComponent';
 
@@ -29,12 +30,11 @@ const windowHeight = Dimensions.get('window').height;
 
 
 
-
-
 const BrowseAndEnterScreen = ({ navigation, route }) => {
 
     const [entryCategory1, setentryCategory1] = useState([]);
     const [entryCategory2, setentryCategory2] = useState([]);
+    const [cachedImages, setCachedImages] = useState(new Map());
 
 
 
@@ -55,8 +55,21 @@ const BrowseAndEnterScreen = ({ navigation, route }) => {
         // console.log(route.params.competition);
 
         // console.log("Cat2", + cat2);
+        cacheImages(cat1.concat(cat2));
 
     }
+
+    const cacheImages = async (entries) => {
+        const cachedImagesMap = new Map();
+
+        for (const entry of entries) {
+            const imageAsset = Asset.fromURI(entry.photoURL);
+            await imageAsset.downloadAsync();
+            cachedImagesMap.set(entry.id, imageAsset.localUri);
+        }
+
+        setCachedImages(cachedImagesMap);
+    };
 
     return (
         <SafeAreaView
@@ -69,7 +82,7 @@ const BrowseAndEnterScreen = ({ navigation, route }) => {
                 <HeaderComponent />
                 <View style={styles.heading}>
                     <Text style={styles.headingText}>#PhotoCompetition</Text>
-                    <Text style={styles.headingText11}>- Autumn 2023 DB</Text>
+                    <Text style={styles.headingText11}>{route.params.competition.title}</Text>
                     {/* <Text style={styles.headingText2}>Judge top class wildlife images by swiping left or right</Text> */}
                 </View>
 
@@ -102,9 +115,18 @@ const BrowseAndEnterScreen = ({ navigation, route }) => {
                             {entryCategory1.map((entry, i) => {
                                 return (
                                     <View key={entry.id} style={styles.comp1ImageView}>
-                                        <TouchableOpacity  >
+                                        <TouchableOpacity onPress={() => navigation.navigate('ImageScreenView',
+                                            {
+                                                entry: entry,
+                                            }
+                                        )
+                                        }>
                                             <Text style={{ color: '#A27A51', width: RFValue(100), fontSize: RFValue(10), alignSelf: 'center', textAlign: 'center' }}> {entry.title}</Text>
-                                            <Image src={entry.photoURL} resizeMode="contain" style={styles.comp1ImageViewImage} />
+                                            <Image
+                                                source={{ uri: cachedImages.get(entry.id) }}
+                                                resizeMode="contain"
+                                                style={styles.comp1ImageViewImage}
+                                            />
                                         </TouchableOpacity>
                                     </View>
                                 )

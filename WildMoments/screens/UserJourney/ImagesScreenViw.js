@@ -22,84 +22,76 @@ import { voteEntry } from '../../services/firebseDB';
 import { getCurrentUser } from '../../services/firebaseAuth';
 import { getVotesByUserAndEntry } from '../../services/firebseDB';
 import { ScrollView } from 'react-native-gesture-handler';
-import { Asset } from 'expo-asset';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 
-const ImagesVotingScreen = ({ navigation, route }) => {
-    const [entries, setEntries] = useState([]);
-    const [currentEntry, setCurrentEntry] = useState(null);
-    const [position, setPosition] = useState(0);
-    const [allVoted, setAllVoted] = useState(false);
-    const [isChecked5, setChecked5] = useState(false);
-    const [isChecked10, setChecked10] = useState(false);
-    const [cachedImages, setCachedImages] = useState(new Map());
+const ImagesScreenView = ({ navigation, route }) => {
+    const [entry, setEntry] = useState([])
+    const [value, setValue] = useState(null);
+
+    // Get IG Handle
 
     useEffect(() => {
-        setEntries(route.params.entries);
-        setCurrentEntry(route.params.entries[0]);
-        updateVoteState();
-        cacheImages(route.params.entries);
-    }, []);
+        setEntries(route.params.entries)
+        // console.log(entries);
+        seCurrentEntry(route.params.entries[0])
+        updateVoteState()
 
-    const cacheImages = async (entries) => {
-        const cachedImagesMap = new Map();
+    }, [])
 
-        for (const entry of entries) {
-            const imageAsset = Asset.fromURI(entry.photoURL);
-            await imageAsset.downloadAsync();
-            cachedImagesMap.set(entry.id, imageAsset.localUri);
-        }
 
-        setCachedImages(cachedImagesMap);
-    };
 
-    const updateVoteState = async () => {
-        const voteState = await getVotesByUserAndEntry(getCurrentUser().uid, route.params.entries[0].id);
-        const val = voteState[0]?.val;
-
-        if (val === 5) {
-            setChecked5(true);
-        }
-        if (val === 10) {
-            setChecked10(true);
-        }
-    };
 
     function next(val, id) {
-        const nposition = position + 1;
+        // console.log(val);
 
-        setChecked5(false);
-        setChecked10(false);
+        nposition = position;
+        nposition++;
+        console.log(nposition);
+        console.log(route.params.entries.length);
 
-        if (val === 5) {
-            setChecked5(true);
+        setChecked5(false)
+        setChecked10(false)
+
+        if (val == 5) {
+            setChecked5(true)
         }
-        if (val === 10) {
-            setChecked10(true);
+        if (val == 10) {
+            setChecked10(true)
         }
 
-        const success = voteEntry(getCurrentUser().uid, id, val);
+        const success = voteEntry(getCurrentUser().uid, id, val)
 
         if (success) {
             console.log("Vote added!");
+
         } else {
-            console.log("Something went wrong when adding vote.");
+
+            console.log("something went wrong when adding vote")
         }
+        // Wait for 2 seconds (2000 milliseconds)
+        new Promise((resolve) => {
+            setTimeout(() => {
+                // Enable the button after the delay
+                setChecked5(false);
+                setChecked10(false);
+                if (route.params.entries.length <= nposition) {
+                    console.log("Max");
+                    setAllvoted(true)
+                }
+                console.log('Button Pressed and changed icon after Delay');
+                resolve(); // Resolve the Promise
+            }, 1500);
+        }).then(() => {
 
-        setTimeout(() => {
-            setChecked5(false);
-            setChecked10(false);
+            seCurrentEntry(route.params.entries[nposition])
 
-            if (nposition >= route.params.entries.length) {
-                setAllVoted(true);
-            } else {
-                setCurrentEntry(route.params.entries[nposition]);
-                setPosition(nposition);
-            }
-        }, 1500);
+            setPosition(nposition);
+
+        });
+
     }
 
 
@@ -126,17 +118,15 @@ const ImagesVotingScreen = ({ navigation, route }) => {
                     </Text>
                 </View> */}
 
-
                 <Text style={{ color: '#fff', fontSize: Platform.OS === 'ios' ? RFValue(16) : RFValue(16), textAlign: 'center', marginTop: RFValue(10), marginHorizontal: RFValue(10), marginBottom: -10 }}>
                     {currentEntry?.title}
                 </Text>
                 <View style={styles.imageComponent}>
                     <View style={styles.container}>
+                        <ImageBackground source={{ uri: currentEntry?.photoURL }} style={styles.cardImageStyle} >
 
-                        <ImageBackground
-                            source={{ uri: cachedImages.get(currentEntry?.id) }}
-                            style={styles.cardImageStyle}
-                        />
+                            {/* <Text style={{ width: 200, textAlign: 'center', fontSize: 24, }}> {item.title} </Text> */}
+                        </ImageBackground>
                     </View>
                 </View>
                 {!allVoted ? (
@@ -238,7 +228,7 @@ const ImagesVotingScreen = ({ navigation, route }) => {
     );
 };
 
-export default ImagesVotingScreen;
+export default ImagesScreen;
 
 const styles = StyleSheet.create({
     tenpoints: { alignContent: 'center', alignSelf: 'center', justifyContent: 'center', alignItems: 'center' },

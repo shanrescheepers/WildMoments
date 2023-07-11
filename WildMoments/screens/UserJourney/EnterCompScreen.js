@@ -102,7 +102,7 @@ const EnterCompScreen = ({ navigation, route }) => {
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
             aspect: [4, 3],
-            quality: 1,
+            quality: 0.5,
 
 
         });
@@ -221,8 +221,9 @@ const EnterCompScreen = ({ navigation, route }) => {
                 style={styles.background}
             >
                 <HeaderComponent />
+
                 <KeyboardAvoidingView
-                    keyboardVerticalOffset={120}
+                    keyboardVerticalOffset={10}
                     style={{ flex: 1 }}
                     behavior="padding"
                     enabled={true}
@@ -341,34 +342,7 @@ const EnterCompScreen = ({ navigation, route }) => {
                         ></TextInput> */}
                             </View>
 
-                            <View style={styles.buttons}>
-                                <View style={styles.buttonsCheckbox}>
-                                    <Checkbox style={{
-                                        borderRadius: 20, borderStyle: 'dashed',
-                                        borderColor: '#FA993B', width: RFValue(30),
-                                        height: RFValue(30), borderWidth: RFValue(1),
-                                    }}
-                                        value={isChecked} onValueChange={setChecked}
-                                        color={isChecked ? '#FA993B' : undefined} />
 
-                                    <Text style={{ fontSize: RFValue(14), justifyContent: 'center', alignContent: 'center', alignItems: 'center', alignSelf: 'center', fontWeight: '500', color: '#FA993B' }}>I have read & agree to the competition rules</Text>
-                                </View>
-                                <View style={styles.buttonsSubmit}>
-                                    <TouchableOpacity style={styles.submitButton} onPress={uploadImage} >
-                                        <Text style={styles.submitButtonText}>SUBMIT</Text>
-                                    </TouchableOpacity>
-                                </View>
-
-
-                                {/* Validation here */}
-                                {/* <TouchableOpacity style={styles.submitButton}  >
-                            <Text style={styles.submitButtonText}>SIGN UP</Text>
-                        </TouchableOpacity> */}
-
-                                {/* <TouchableOpacity >
-                            <Text style={styles.needAccountButton}>Already have an Account?</Text>
-                        </TouchableOpacity> */}
-                            </View>
 
                             {/* <Toucha
                 <Button style={styles.needAccountButton}
@@ -379,7 +353,36 @@ const EnterCompScreen = ({ navigation, route }) => {
 
                         </View >
                     </ScrollView>
+
                 </KeyboardAvoidingView>
+                <View style={styles.buttons}>
+                    <View style={styles.buttonsCheckbox}>
+                        <Checkbox style={{
+                            borderRadius: 20, borderStyle: 'dashed',
+                            borderColor: '#FA993B', width: RFValue(30),
+                            height: RFValue(30), borderWidth: RFValue(1),
+                        }}
+                            value={isChecked} onValueChange={setChecked}
+                            color={isChecked ? '#FA993B' : undefined} />
+
+                        <Text style={{ fontSize: RFValue(14), justifyContent: 'center', alignContent: 'center', alignItems: 'center', alignSelf: 'center', fontWeight: '500', color: '#FA993B' }}>I have read & agree to the competition rules</Text>
+                    </View>
+                    <View style={styles.buttonsSubmit}>
+                        <TouchableOpacity style={styles.submitButton} onPress={uploadImage} >
+                            <Text style={styles.submitButtonText}>SUBMIT</Text>
+                        </TouchableOpacity>
+                    </View>
+
+
+                    {/* Validation here */}
+                    {/* <TouchableOpacity style={styles.submitButton}  >
+                            <Text style={styles.submitButtonText}>SIGN UP</Text>
+                        </TouchableOpacity> */}
+
+                    {/* <TouchableOpacity >
+                            <Text style={styles.needAccountButton}>Already have an Account?</Text>
+                        </TouchableOpacity> */}
+                </View>
             </ImageBackground>
         </SafeAreaView >
     );
@@ -678,7 +681,8 @@ const styles = StyleSheet.create({
         height: RFValue(45),
         width: RFValue(150),
         borderRadius: RFValue(50),
-        // marginBottom: RFValue(5),
+        marginBottom: Platform.OS === 'ios' ? RFValue(70) : RFValue(20),
+
         shadowColor: 'gray',
     },
     submitButtonText: {

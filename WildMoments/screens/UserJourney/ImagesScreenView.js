@@ -28,80 +28,25 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 
-const ImagesVotingScreen = ({ navigation, route }) => {
-    const [entries, setEntries] = useState([]);
-    const [currentEntry, setCurrentEntry] = useState(null);
-    const [position, setPosition] = useState(0);
-    const [allVoted, setAllVoted] = useState(false);
-    const [isChecked5, setChecked5] = useState(false);
-    const [isChecked10, setChecked10] = useState(false);
-    const [cachedImages, setCachedImages] = useState(new Map());
+const ImagesScreenView = ({ navigation, route }) => {
+    const [currentEntry, setCurrentEntry] = useState();
+    const [cachedImage, setCachedImage] = useState();
 
     useEffect(() => {
-        setEntries(route.params.entries);
-        setCurrentEntry(route.params.entries[0]);
-        updateVoteState();
-        cacheImages(route.params.entries);
+        setCurrentEntry(route.params.entry);
+        console.log(route.params.entry);
+        cacheImage(route.params.entry.photoURL);
     }, []);
 
-    const cacheImages = async (entries) => {
-        const cachedImagesMap = new Map();
+    const cacheImage = async (imageUrl) => {
+        console.log(imageUrl);
+        const imageAsset = Asset.fromURI(imageUrl);
+        await imageAsset.downloadAsync();
+        console.log(imageAsset.localUri);
 
-        for (const entry of entries) {
-            const imageAsset = Asset.fromURI(entry.photoURL);
-            await imageAsset.downloadAsync();
-            cachedImagesMap.set(entry.id, imageAsset.localUri);
-        }
+        setCachedImage(imageAsset.localUri);
 
-        setCachedImages(cachedImagesMap);
     };
-
-    const updateVoteState = async () => {
-        const voteState = await getVotesByUserAndEntry(getCurrentUser().uid, route.params.entries[0].id);
-        const val = voteState[0]?.val;
-
-        if (val === 5) {
-            setChecked5(true);
-        }
-        if (val === 10) {
-            setChecked10(true);
-        }
-    };
-
-    function next(val, id) {
-        const nposition = position + 1;
-
-        setChecked5(false);
-        setChecked10(false);
-
-        if (val === 5) {
-            setChecked5(true);
-        }
-        if (val === 10) {
-            setChecked10(true);
-        }
-
-        const success = voteEntry(getCurrentUser().uid, id, val);
-
-        if (success) {
-            console.log("Vote added!");
-        } else {
-            console.log("Something went wrong when adding vote.");
-        }
-
-        setTimeout(() => {
-            setChecked5(false);
-            setChecked10(false);
-
-            if (nposition >= route.params.entries.length) {
-                setAllVoted(true);
-            } else {
-                setCurrentEntry(route.params.entries[nposition]);
-                setPosition(nposition);
-            }
-        }, 1500);
-    }
-
 
     return (
         <SafeAreaView>
@@ -111,12 +56,7 @@ const ImagesVotingScreen = ({ navigation, route }) => {
                 style={styles.background}
             >
                 <HeaderComponent />
-                <Text style={{ color: '#FAAE3B', fontSize: Platform.OS === 'ios' ? RFValue(18) : RFValue(17), fontWeight: 'bold', textAlign: 'center', marginTop: RFValue(10), }}>
-                    Get ready to vote for your favorites!
-                </Text>
-                <Text style={{ color: '#A27A51', fontSize: Platform.OS === 'ios' ? 10 : 10, textAlign: 'center', marginTop: RFValue(10), marginHorizontal: RFValue(10) }}>
-                    Vote either a 5 or 10 per image. Please wait for the next high res image to load.
-                </Text>
+
                 {/* <View style={styles.titles}>
                     <Text style={styles.titleText1}>
                         Left Swipe = 5pts
@@ -126,119 +66,94 @@ const ImagesVotingScreen = ({ navigation, route }) => {
                     </Text>
                 </View> */}
 
-
                 <Text style={{ color: '#fff', fontSize: Platform.OS === 'ios' ? RFValue(16) : RFValue(16), textAlign: 'center', marginTop: RFValue(10), marginHorizontal: RFValue(10), marginBottom: -10 }}>
                     {currentEntry?.title}
                 </Text>
                 <View style={styles.imageComponent}>
                     <View style={styles.container}>
-
                         <ImageBackground
-                            source={{ uri: cachedImages.get(currentEntry?.id) }}
+                            source={{ uri: cachedImage }}
                             style={styles.cardImageStyle}
                         />
                     </View>
+
                 </View>
-                {!allVoted ? (
 
-                    <>
-                        <View style={styles.imageContainer}>
-                            <TouchableOpacity onPress={() => next(5, currentEntry?.id)} >
-                                <Image style={styles.fivepoints} source={isChecked5 ? require('../../assets/pointsIcons/5pointFilledx1.png') : require('../../assets/pointsIcons/5points.png')} ></Image>
-                            </TouchableOpacity>
 
-                            <TouchableOpacity onPress={() => next(10, currentEntry?.id)}>
-                                <Image style={styles.tenpoints}
-                                    source={isChecked10 ? require('../../assets/pointsIcons/10pointFilledx1.png')
-                                        : require('../../assets/pointsIcons/10points.png')} ></Image>
-                            </TouchableOpacity>
+                <>
 
-                            {/* <Checkbox style={{ borderRadius: 12, width: 20, height: 20 }}></Checkbox> */}
 
-                            {/* filled */}
-                            {/* <Image onPress={() => next(5)} source={require('../../assets/pointsIcons/5pointFilledx4.png')} ></Image>
-                    <Image onPress={() => next(10)} source={require('../../assets/pointsIcons/10pointFilledx4.png')} ></Image> */}
-                        </View>
+                    <ScrollView style={styles.homescreenscrollview}
+                        showsVerticalScrollIndicator={false}
+                        showsHorizontalScrollIndicator={false}
+                        contentContainerStyle={styles.scrollViewContent}
+                    >
+                        <View style={styles.photographerCont}>
+                            <View style={styles.photographerCont2}>
+                                <Image source={require('../../assets/pointsIcons/humanIcon.png')} style={styles.photographerCont2image}></Image>
+                                <Text style={{ color: '#A27A51', }}>    Photographer:  </Text>
+                                <Text style={{ color: '#fff', }}>    {currentEntry?.username} </Text>
 
-                        <ScrollView style={styles.homescreenscrollview}
-                            showsVerticalScrollIndicator={false}
-                            showsHorizontalScrollIndicator={false}
-                            contentContainerStyle={styles.scrollViewContent}
-                        >
-                            <View style={styles.photographerCont}>
-                                <View style={styles.photographerCont2}>
-                                    <Image source={require('../../assets/pointsIcons/humanIcon.png')} style={styles.photographerCont2image}></Image>
-                                    <Text style={{ color: '#A27A51', }}>    Photographer:  </Text>
-                                    <Text style={{ color: '#fff', }}>    {currentEntry?.username} </Text>
-
-                                </View>
-                                {/* 
+                            </View>
+                            {/* 
                         <Text style={{ fontSize: 12 }}>
                             Instagram
                         </Text> */}
 
-                            </View>
+                        </View>
 
-                            {/* Instagram Handle */}
-                            <View style={styles.photographerCont3}>
-                                <Image source={require('../../assets/pointsIcons/ig.png')} style={styles.photographerCont3image}></Image>
+                        {/* Instagram Handle */}
+                        <View style={styles.photographerCont3}>
+                            <Image source={require('../../assets/pointsIcons/ig.png')} style={styles.photographerCont3image}></Image>
 
-                                <Text style={{ color: '#fff', }}>  @{currentEntry?.username} </Text>
-                            </View>
-                            <View style={styles.detailsCont}>
-                                <Text style={styles.detailsCont1}>
-                                    #PhotoCompetition - {route.params?.comptitle}
-                                </Text>
-                                <Text style={styles.detailsCont2}>
-                                    Theme: {route.params?.theme}
-                                </Text>
-                            </View>
+                            <Text style={{ color: '#fff', }}>  @{currentEntry?.username} </Text>
+                        </View>
+                        {/* <View style={styles.detailsCont}>
+                            <Text style={styles.detailsCont1}>
+                                #PhotoCompetition - {currentEntry.comptitle}
+                            </Text>
+                            <Text style={styles.detailsCont2}>
+                                Theme: {currentEntry.theme}
+                            </Text>
+                        </View> */}
 
-                            <View style={styles.tags}>
-                                <Text style={styles.tagtitle}>
-                                    Wildlife
-                                </Text>
-                                <Text style={styles.tagtitle}>
-                                    {currentEntry?.species}
-                                </Text>
-                                <Text style={styles.tagtitle}>
-                                    {currentEntry?.cameraDetail}
+                        <View style={styles.tags}>
+                            <Text style={styles.tagtitle}>
+                                Wildlife
+                            </Text>
+                            <Text style={styles.tagtitle}>
+                                {currentEntry?.species}
+                            </Text>
+                            <Text style={styles.tagtitle}>
+                                {currentEntry?.cameraDetail}
 
-                                </Text>
+                            </Text>
 
-                            </View>
-                            <View style={styles.tags}>
-                                <Text style={styles.tagtitle}>
-                                    {currentEntry?.location}
+                        </View>
+                        <View style={styles.tags}>
+                            <Text style={styles.tagtitle}>
+                                {currentEntry?.location}
 
-                                </Text>
-                                <Text style={styles.tagtitle}>
-                                    {currentEntry?.category}
+                            </Text>
+                            <Text style={styles.tagtitle}>
+                                {currentEntry?.category}
 
-                                </Text>
-                                <Text style={styles.tagtitle}>
-                                    VoteYourFavorite
-                                </Text>
-                            </View>
-                        </ScrollView>
-                    </>
-                ) : (
-                    <View style={styles.tags}>
+                            </Text>
+                            <Text style={styles.tagtitle}>
+                                VoteYourFavorite
+                            </Text>
+                        </View>
+                    </ScrollView>
+                </>
 
-                        <Text style={styles.tagtitle}>
-                            Done voting!
-                        </Text>
-                    </View>
-                )
 
-                }
 
             </ImageBackground>
         </SafeAreaView >
     );
 };
 
-export default ImagesVotingScreen;
+export default ImagesScreenView;
 
 const styles = StyleSheet.create({
     tenpoints: { alignContent: 'center', alignSelf: 'center', justifyContent: 'center', alignItems: 'center' },

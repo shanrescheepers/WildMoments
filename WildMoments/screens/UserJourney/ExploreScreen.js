@@ -17,6 +17,8 @@ import { Roboto } from "@expo-google-fonts/dev";
 import { Dimensions } from 'react-native';
 import { useFonts } from 'expo-font';
 
+import { Asset } from 'expo-asset';
+
 import CompetitionBlockComponent from '../../Components/CompetitionBlockComponent';
 import { getTop10EntriesByVotes } from '../../services/firebseDB';
 // images
@@ -37,23 +39,37 @@ const windowHeight = Dimensions.get('window').height;
 
 const ExploreScreen = ({ navigation }) => {
 
+    const [images, setImages] = useState([]);
+
     useEffect(() => {
-
-        getImages()
-
-    }, [])
-    const [images, setimages] = useState([])
+        getImages();
+    }, []);
 
     const getImages = async () => {
-        const images = await getTop10EntriesByVotes()
-        setimages(images)
-        // console.log("Images", images);
-    }
+        const images = await getTop10EntriesByVotes();
+        cacheImages(images);
+    };
+
+    const cacheImages = async (images) => {
+        const cachedImages = await Promise.all(
+            images.map(async (image) => ({
+                ...image,
+                localUri: await cacheImage(image.photoURL),
+            }))
+        );
+        setImages(cachedImages);
+    };
+
+    const cacheImage = async (imageUrl) => {
+        const imageAsset = Asset.fromURI(imageUrl);
+        await imageAsset.downloadAsync();
+        console.log(imageAsset.localUri);
+        return imageAsset.localUri;
+    };
 
     return (
         <SafeAreaView
         >
-
             <ImageBackground
                 source={require('../../assets/backgroundImage.png')} // Replace with the actual path to your image
                 style={styles.background}
@@ -89,9 +105,18 @@ const ExploreScreen = ({ navigation }) => {
                             <View style={styles.comp1ImageView}>
                                 {images.map((image, i) => {
                                     return (
-                                        <TouchableOpacity style={styles.row} >
-                                            <Image src={image.photoURL} resizeMode="contain"
-                                                style={styles.comp1ImageViewImage} />
+                                        <TouchableOpacity key={i} style={styles.row} onPress={() => navigation.navigate('ImageScreenView',
+                                            //passing the array through
+                                            {
+                                                entry: image,
+                                            }
+                                        )
+                                        }>
+                                            <Image
+                                                source={{ uri: image.localUri }}
+                                                resizeMode="contain"
+                                                style={styles.comp1ImageViewImage}
+                                            />
                                             <Text style={styles.row1} >Votes: {image.vote}</Text>
                                         </TouchableOpacity>
                                     )

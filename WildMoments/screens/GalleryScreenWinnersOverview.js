@@ -17,6 +17,7 @@ import { useFonts } from 'expo-font';
 import CompetitionBlockComponent from '../Components/CompetitionBlockComponent'
 import { getTopEntriesByVotes } from '../services/firebseDB'
 // images
+import { Asset } from 'expo-asset';
 
 import galleryWinnerLogo from '../assets/AppIcons/galleryWinners.png';
 const windowWidth = Dimensions.get('window').width;
@@ -28,20 +29,34 @@ import wildlifeImage1 from '../assets/1.png';
 
 const GalleryScreenWinnersOverview = ({ navigation, route }) => {
 
-    const [competition, setCompetition] = useState()
-    const [topComp, setTopComp] = useState([])
+    const [competition, setCompetition] = useState();
+    const [topComp, setTopComp] = useState([]);
+    const [cachedImages, setCachedImages] = useState(new Map());
+
     useEffect(() => {
-        // console.log(competition);
-        setCompetition(route.params.competition)
-        getComp()
-    }, [])
+        setCompetition(route.params.competition);
+        getComp();
+    }, []);
 
     const getComp = async () => {
-        topCompVal = await getTopEntriesByVotes(route.params.competition.id)
-        setTopComp(topCompVal)
-        // console.log("Top", topCompVal);
+        const topCompVal = await getTopEntriesByVotes(route.params.competition.id);
+        setTopComp(topCompVal);
 
-    }
+        cacheImages(topCompVal);
+    };
+
+    const cacheImages = async (entries) => {
+        const cachedImagesMap = new Map();
+
+        for (const entry of entries) {
+            const imageAsset = Asset.fromURI(entry.photoURL);
+            await imageAsset.downloadAsync();
+            cachedImagesMap.set(entry.id, imageAsset.localUri);
+        }
+
+        setCachedImages(cachedImagesMap);
+    };
+
 
     // const navigation = useNavigation();
     return (
@@ -78,16 +93,25 @@ const GalleryScreenWinnersOverview = ({ navigation, route }) => {
                                 <Text style={styles.firstphotographertitle}>Photographer:</Text>
                                 <Text style={styles.firstphotographertitle2}> {topComp[0]?.username}</Text>
                             </View>
+
                             <View style={styles.firstimageblock}>
-                                {/* <TouchableOpacity onPress={() => navigation.navigate('ImagesScreen',)}> */}
-                                <Image src={topComp[0]?.photoURL} resizeMode="contain" style={styles.firstimageblockimage} />
-                                <View style={styles.firstimageblockimagewinning}>
-                                    <Text style={styles.firstimageblockimagetitle} >Winning Prize : </Text>
-                                    <Text style={styles.firstimageblockimagetitle2} >{competition?.prize}</Text>
-                                </View>
-                                {/* </TouchableOpacity> */}
+                                <TouchableOpacity onPress={() => navigation.navigate('ImageScreenView',
+                                    {
+                                        entry: topComp[0],
+                                    }
+                                )
+                                }>
+                                    <Image src={topComp[0]?.photoURL} resizeMode="contain" style={styles.firstimageblockimage} />
+                                    <View style={styles.firstimageblockimagewinning}>
+                                        <Text style={styles.firstimageblockimagetitle} >Winning Prize : </Text>
+                                        <Text style={styles.firstimageblockimagetitle2} >{competition?.prize}</Text>
+                                    </View>
+                                </TouchableOpacity>
+
                             </View>
+
                         </View>
+
 
                         <View style={styles.second}>
                             <View style={styles.secondtitleborder}>
@@ -97,11 +121,28 @@ const GalleryScreenWinnersOverview = ({ navigation, route }) => {
                                 <Text style={styles.firstphotographertitle}>Photographer:</Text>
                                 <Text style={styles.firstphotographertitle2}>{topComp[1]?.username}</Text>
                             </View>
+
                             <View style={styles.firstimageblock}>
-                                <Image src={topComp[1]?.photoURL} resizeMode="contain" style={styles.firstimageblockimage} />
+
+                                <TouchableOpacity onPress={() => navigation.navigate('ImageScreenView',
+                                    {
+                                        entry: topComp[1],
+                                    }
+                                )
+                                }>
+                                    <Image
+                                        source={{ uri: cachedImages.get(topComp[1]?.id) }}
+                                        resizeMode="contain"
+                                        style={styles.firstimageblockimage}
+                                    />
+                                </TouchableOpacity>
+
 
                             </View>
+
+
                         </View>
+
 
                         <View style={styles.third}>
                             <View style={styles.thirdtitleborder}>
@@ -111,10 +152,24 @@ const GalleryScreenWinnersOverview = ({ navigation, route }) => {
                                 <Text style={styles.firstphotographertitle}>Photographer:</Text>
                                 <Text style={styles.firstphotographertitle2}>{topComp[2]?.username}</Text>
                             </View>
+
                             <View style={styles.firstimageblock}>
-                                <Image src={topComp[2]?.photoURL} resizeMode="contain" style={styles.firstimageblockimage} />
+                                <TouchableOpacity onPress={() => navigation.navigate('ImageScreenView',
+                                    {
+                                        entry: topComp[2],
+                                    }
+                                )
+                                }>
+                                    <Image
+                                        source={{ uri: cachedImages.get(topComp[2]?.id) }}
+                                        resizeMode="contain"
+                                        style={styles.firstimageblockimage}
+                                    />
+                                </TouchableOpacity>
+
 
                             </View>
+
                         </View>
                     </ScrollView>
                 </View>
