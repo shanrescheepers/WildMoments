@@ -82,7 +82,7 @@ const ExploreScreen = ({ navigation }) => {
                 </View>
                 <View style={styles.comp1Heading}>
                     <TouchableOpacity style={styles.judgeButton}>
-                        <Text style={styles.comp1HeadingCatergory}>POPULAR 5 IMAGES</Text>
+                        <Text style={styles.comp1HeadingCatergory}>5 MOST POPULAR OVERALL IMAGES</Text>
                     </TouchableOpacity>
                 </View>
 
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
     scroll: {
         flexGrow: 1,
         padding: 16,
-        height: Platform.OS === 'ios' ? RFValue(900) : RFValue(1000),
+        height: Platform.OS === 'ios' ? RFValue(950) : RFValue(1000),
     },
     touchableOpacity: {
         flexDirection: 'row',
@@ -344,12 +344,12 @@ const styles = StyleSheet.create({
     },
     // COMPETITION CATEGORY 1
     comp1: {
-        marginLeft: Platform.OS === 'ios' ? 32 : 70,
+        marginLeft: Platform.OS === 'ios' ? 20 : 70,
         alignContent: 'center',
         alignSelf: 'center',
         justifyContent: 'center',
         width: Platform.OS === 'ios' ? 150 : 135,
-        height: RFValue(400),
+        height: RFValue(450),
         marginTop: Platform.OS === 'ios' ? 3 : 2,
         marginBottom: Platform.OS === 'ios' ? 12 : 18,
     },

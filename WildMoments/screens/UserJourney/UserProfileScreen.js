@@ -87,8 +87,25 @@ const UserProfileScreen = ({ navigation }) => {
         else if (user.profilepicture == "photographer") {
             setprofileImage(photographer)
         }
-
+        await cacheImage(imageSource);
+        await cacheUserEntryImages(entries);
     }
+
+    const cacheImage = async (imageUrl) => {
+        const imageAsset = Asset.fromURI(imageUrl);
+        await imageAsset.downloadAsync();
+        setprofileImage(imageAsset.localUri);
+    };
+
+    const cacheUserEntryImages = async (entries) => {
+        const cachedEntries = await Promise.all(
+            entries.map(async (entry) => ({
+                ...entry,
+                photoURL: (await cacheImage(entry.photoURL)).localUri,
+            }))
+        );
+        setEntries(cachedEntries);
+    };
 
     if (!fontsLoaded) {
         return <AppLoading />
@@ -109,7 +126,7 @@ const UserProfileScreen = ({ navigation }) => {
 
                         <View style={styles.containerLove}>
                             <Image source={love} resizeMode="contain" style={styles.containerloveimage} />
-                            <Text style={styles.containerlovetitle}>Total accumulated likes</Text>
+                            <Text style={styles.containerlovetitle}>Total accumulated Votes</Text>
                             <Image source={lovecircle} resizeMode="contain" style={styles.containerloveimage} />
                             <Text style={styles.containerlovetitlelikes}>{entriePoints}</Text>
                         </View>
@@ -126,28 +143,25 @@ const UserProfileScreen = ({ navigation }) => {
                             </View>
                             <Text style={{ color: '#46433E', justifyContent: 'center', alignContent: 'center', alignItems: 'center', alignSelf: 'center', marginLeft: Platform.OS === 'ios' ? 18 : 20, marginTop: Platform.OS === 'ios' ? 1 : -1 }}>Scroll left & right</Text>
                             <ScrollView
-                                alwaysBounceHorizontal={true} style={styles.sv}
-                                contentContainerStyle={{ justifyContent: 'space-evenly', alignItems: 'flex-start', flexWrap: 'wrap', gap: 10 }}
+
+                                alwaysBounceHorizontal={true}
                                 horizontal={true}
                                 showsHorizontalScrollIndicator={false}
+                                contentContainerStyle={styles.scrollViewContent}
+                                style={styles.sv}
                             >
-                                <View style={styles.comp1ImageView}>
 
-                                    {entries.map((entries, i) => {
-                                        return (
-                                            <TouchableOpacity>
-                                                <Image src={entries.photoURL} resizeMode="contain" style={styles.comp1ImageViewImage} />
-                                                <Text style={styles.entryTitles}>{entries.title}</Text>
-                                            </TouchableOpacity>
-
-                                        )
-                                        // <Text>competitions.title</Text>
-
-
-                                    })}
-
-
-                                </View>
+                                {entries.map((entries, i) => (
+                                    <TouchableOpacity key={i} onPress={() => navigation.navigate('ImageScreenView',
+                                        {
+                                            entry: entries,
+                                        }
+                                    )
+                                    }>
+                                        <Image source={{ uri: entries.photoURL }} resizeMode="contain" style={styles.comp1ImageViewImage} />
+                                        <Text style={styles.entryTitles}>{entries.title}</Text>
+                                    </TouchableOpacity>
+                                ))}
 
                             </ScrollView>
 
@@ -171,7 +185,14 @@ const styles = StyleSheet.create({
 
     },
     sv: {
-        // width: Platform.OS === 'ios' ? RFPercentage(90) : RFPercentage(90),
+        width: Platform.OS === 'ios' ? 300 : 300,
+        // width: windowWidth,
+        marginTop: Platform.OS === 'ios' ? 30 : 30,
+        paddingHorizontal: 20,
+
+        // flexDirection: 'row',
+        // flexGrow: 1,
+        // height: 100, // Adjust the height according to your needs
 
 
     },
@@ -218,7 +239,7 @@ const styles = StyleSheet.create({
     containerlovetitlelikes: {
         color: '#fff',
         fontSize: Platform.OS === 'ios' ? 12 : 12,
-        marginLeft: Platform.OS === 'ios' ? -32 : -32,
+        marginLeft: Platform.OS === 'ios' ? -35 : -32,
     },
     containerlovetitleentries: {
         color: '#fff',

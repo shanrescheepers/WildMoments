@@ -59,7 +59,6 @@ const ImagesVotingScreen = ({ navigation, route }) => {
     const updateVoteState = async () => {
         const voteState = await getVotesByUserAndEntry(getCurrentUser().uid, route.params.entries[0].id);
         const val = voteState[0]?.val;
-
         if (val === 5) {
             setChecked5(true);
         }
@@ -70,19 +69,15 @@ const ImagesVotingScreen = ({ navigation, route }) => {
 
     function next(val, id) {
         const nposition = position + 1;
-
         setChecked5(false);
         setChecked10(false);
-
         if (val === 5) {
             setChecked5(true);
         }
         if (val === 10) {
             setChecked10(true);
         }
-
         const success = voteEntry(getCurrentUser().uid, id, val);
-
         if (success) {
             console.log("Vote added!");
         } else {

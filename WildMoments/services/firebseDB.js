@@ -15,7 +15,6 @@ export const createUserInDB = async (username, email, uid, profilepicture, insta
             instagramHandle,
         })
         console.log("User added, Doc ID: " + docRef.id + docRef.username + docRef.instagramHandle)
-
     } catch (error) {
         console.log("Something went wrong: " + error)
     }

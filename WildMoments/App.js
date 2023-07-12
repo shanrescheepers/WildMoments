@@ -33,23 +33,22 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       console.log("User Changed");
       if (user) {
         // use logged in
         console.log("User Login");
-
         setLoggedIn(true)
-
       } else {
         console.log("User logout");
-
         setLoggedIn(false)
       }
     })
     return unsubscribe;
   }, [])
+
   return (
 
     <NavigationContainer >
@@ -71,7 +70,7 @@ export default function App() {
           <>
             {/* OVER AND BEYOOOOOND */}
 
-            {/* <Stack.Screen name="WalkthroughScreen" component={WalkthroughScreen} options={{ headerShown: false }} /> */}
+            <Stack.Screen name="WalkthroughScreen" component={WalkthroughScreen} options={{ headerShown: false }} />
             {/* <Stack.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }} /> */}
             <Stack.Screen name="Home" component={HomeTab} options={{ headerShown: false }} style={styles.hometab} />
 

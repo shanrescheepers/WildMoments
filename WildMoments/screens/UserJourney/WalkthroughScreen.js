@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     },
     image: {
         // marginTop: RFValue(-100),
-        top: 2,
+        top: 50,
         position: 'absolute',
         width: 250,
         height: RFValue(600),
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     text: {
-        bottom: -270,
+        bottom: -350,
 
         fontSize: RFValue(15),
         color: 'white',

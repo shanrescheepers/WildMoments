@@ -82,7 +82,6 @@ const CompetitionBlockComponent = ({ competition }) => {
             }
         };
         if (!compClosed) {
-
             setInterval(updateTime, 1000);
         }
     };

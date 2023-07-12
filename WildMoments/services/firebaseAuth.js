@@ -18,25 +18,18 @@ import { createUserInDB } from "./firebseDB";
 export const registerNewUser = (username, email, password, profilepicture, instagramHandle) => {
     // this comes from register screen
     // Add registerNewUser to your Register.js!!! : registerNewUser(name,email,password)
-
     createUserWithEmailAndPassword(auth, email, password)
         // the then is when user was created successfully
         .then(async (userCredential) => {
             // Signed in 
-
             const user = userCredential.user;
             console.log("New user is :" + user)
             updateAuthProfile(username);
-
-            // TODO: Create user in our DB
             await createUserInDB(username, email, user.uid, profilepicture, instagramHandle)
-
-        })
-        .catch((error) => {
+        }).catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
             console.log(errorCode + ": " + errorMessage)
-            // ..
         });
 }
 // // // // // // //
@@ -51,12 +44,10 @@ export const signInUser = async (email, password) => {
             Alert.alert("You're in!", "You have successfully logged in.", [
                 { text: 'Thanks', onPress: () => { } }
             ])
-        })
-        .catch((error) => {
+        }).catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
-            console.log(errorCode + ":  " + errorMessage)
-
+            // console.log(errorCode + ":  " + errorMessage)
             Alert.alert("You're not in!", "You have not logged in." + errorMessage, [
                 { text: 'try again', onPress: () => { } }
             ])

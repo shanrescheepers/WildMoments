@@ -195,7 +195,8 @@ const styles = StyleSheet.create({
         fontSize: Platform.OS === 'ios' ? 14 : 14,
     },
     firstimageblockimagewinning: {
-        marginLeft: Platform.OS === 'ios' ? 24 : 16,
+        marginLeft: Platform.OS === 'ios' ? 1 : 16,
+        marginTop: Platform.OS === 'ios' ? 1 : 1,
     },
     firstimageblockimagetitle: {
         color: '#DAB895',
@@ -325,6 +326,7 @@ const styles = StyleSheet.create({
         flexGrow: 1,
         height: windowHeight,
         marginVertical: Platform.OS === 'ios' ? 20 : 20,
+        // marginLeft: Platform.OS === 'ios' ? 20 : 20,
     },
     spacer: {
         marginVertical: Platform.OS === 'ios' ? 20 : 20,

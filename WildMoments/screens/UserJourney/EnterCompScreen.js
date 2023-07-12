@@ -122,13 +122,9 @@ const EnterCompScreen = ({ navigation, route }) => {
     }
 
     const uploadImage = async () => {
-
-
         if (title == "" || specieDetail == "" || location == "" || cameraDetail == "" || value == "" || image == "" || isChecked === false) {
             console.log("Empty Fields!");
             Alert.alert("Error uploading, please make sure all fields are filled and checked.")
-
-
         } else {
             const blob = await new Promise((resolve, reject) => {
                 const xhr = new XMLHttpRequest();
@@ -141,7 +137,6 @@ const EnterCompScreen = ({ navigation, route }) => {
                 xhr.responseType = 'blob';
                 xhr.open('GET', image, true);
                 xhr.send(null);
-
             })
             const ref = firebase.storage().ref().child(`Pictures/` + title + '-' + specieDetail)
             const snapshot = ref.put(blob)
@@ -151,58 +146,30 @@ const EnterCompScreen = ({ navigation, route }) => {
                 },
                 (error) => {
                     setUploading(false)
-                    console.log(error)
                     Alert.alert("Error uploading, please try again.")
                     blob.close()
                     return
-                },
-                () => {
+                }, () => {
                     snapshot.snapshot.ref.getDownloadURL().then((url) => {
                         setUploading(false)
-
                         var creatorInfo = getCurrentUser()
-
                         var entry = {
-                            title,
-                            species: specieDetail,
-                            location,
-                            cameraDetail,
-                            category: value,
-                            username: creatorInfo.displayName,
-                            profilePhoto: creatorInfo.photoURL,
-                            userId: creatorInfo.uid,
-                            photoURL: url,
-                            createdAt: new Date(),
-                            competitionID: route.params.competition.id,
-                            likes: 0,
+                            title, species: specieDetail, location, cameraDetail, category: value,
+                            username: creatorInfo.displayName, profilePhoto: creatorInfo.photoURL, userId: creatorInfo.uid,
+                            photoURL: url, createdAt: new Date(), competitionID: route.params.competition.id, likes: 0,
                         }
-
-
                         const success = competitionEntry(entry)
                         if (success) {
                             setUploading(false)
-                            console.log("Competition added!");
-
-                            navigation.goBack()
-
-
+                            navigation.navigate("Home")
                         } else {
                             setUploading(false)
-
-                            console.log("something went wrong when adding comp")
                         }
-
-
-                        console.log("Download URL: ", url)
                         Alert.alert("CONGRATULATIONS!", "Your photo was submitted. Goodluck!")
-
                         setImage(url)
                         blob.close()
-                        navigation.goBack()
-
-
+                        navigation.navigate("Home")
                         return url
-
                     })
                 }
             )
@@ -223,7 +190,7 @@ const EnterCompScreen = ({ navigation, route }) => {
                 <HeaderComponent />
 
                 <KeyboardAvoidingView
-                    keyboardVerticalOffset={10}
+                    keyboardVerticalOffset={Platform.OS === 'ios' ? 48 : 40}
                     style={{ flex: 1 }}
                     behavior="padding"
                     enabled={true}

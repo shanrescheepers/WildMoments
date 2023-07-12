@@ -49,7 +49,6 @@ const HomeScreen = ({ navigation }) => {
         setCompetitions(allComps);
         // console.log(competitions.length);
         setRefreshing(false)
-
     }
 
     return (

@@ -84,31 +84,14 @@ const AddNewCompScreen = ({ navigation }) => {
         if (!title || !theme || !prize) {
             //warning alert
             Alert.alert("Try again", "Please fill in all the fields", [
-                { text: 'Try again', onPress: () => { setLoading(false) } }
-            ])
+                { text: 'Try again', onPress: () => { setLoading(false) } }])
         } else {
-            // await signInUser(email, password)
             //firebase CRUD ADD call:
             var creatorInfo = getCurrentUser()
-
             let categories = {
-                category1,
-                category2
+                category1, category2
             }
-
-            var competition = {
-                title,
-                theme,
-                prize,
-                startDate,
-                endDate,
-                categories
-                // username: creatorInfo.displayName,
-                // profilePhoto: creatorInfo.photoURL,
-                // userId: creatorInfo.uid
-            }
-
-
+            var competition = { title, theme, prize, startDate, endDate, categories }
             const success = await createCompetitionInDB(competition)
             if (success) {
                 setLoading(false)
@@ -118,10 +101,8 @@ const AddNewCompScreen = ({ navigation }) => {
                         { text: 'Home', onPress: () => { navigation.goBack() } }
                     ])
                 }
-
             } else {
                 setLoading(false)
-
                 console.log("something went wrong when adding comp")
             }
         }
